@@ -58,7 +58,36 @@
 
 <section class="page" id="adminPage"><button class="back-btn" onclick="goHome()">← Назад</button><div class="game-header"><div><small>ADMIN AREA</small><h2>👑 Админ панель</h2></div><div class="demo-badge">ADMIN</div></div>
 <div class="admin-section"><h3>🪙 Изменить свой баланс</h3><p>Добавление или установка баланса текущего администратора.</p><input class="admin-input" id="adminCoins" type="number" placeholder="Количество монет"><button class="main-btn blue-btn" onclick="adminAddCoins()">➕ Добавить монеты</button><button class="main-btn red-main-btn" onclick="adminSetCoins()">✏️ Установить баланс</button></div>
-<div class="admin-section"><h3>🎁 Создать промокод</h3><p>Укажи код, награду и максимальное количество активаций. После достижения лимита промокод перестанет работать.</p><input class="admin-input" id="newPromoCode" placeholder="Название промокода"><input class="admin-input" id="newPromoReward" type="number" placeholder="Награда в монетах"><input class="admin-input" id="newPromoLimit" type="number" min="1" placeholder="Количество активаций, например 100"><button class="main-btn blue-btn" onclick="createPromo()">🎁 СОЗДАТЬ ПРОМОКОД</button></div>
+<div class="admin-section">
+<h3>🎁 Создать промокод</h3>
+<p>Ты сам указываешь, сколько раз промокод смогут активировать разные пользователи. После достижения указанного числа промокод автоматически перестанет работать.</p>
+
+<input class="admin-input" id="newPromoCode" placeholder="Название промокода, например XVOHY100">
+
+<input class="admin-input" id="newPromoReward" type="number" min="1" placeholder="Награда в монетах">
+
+<div style="margin:12px 0 6px;color:#ffd65a;font-size:12px;font-weight:bold;">
+🔢 МАКСИМАЛЬНОЕ КОЛИЧЕСТВО АКТИВАЦИЙ
+</div>
+
+<input
+  class="admin-input"
+  id="newPromoLimit"
+  type="number"
+  min="1"
+  step="1"
+  placeholder="Например: 100"
+  value="1">
+
+<div class="admin-info" style="margin-bottom:12px;">
+Например, если указать <b>100</b>, промокод смогут активировать только первые 100 разных пользователей.
+После 100-й активации он автоматически станет недоступен.
+</div>
+
+<button class="main-btn blue-btn" onclick="createPromo()">
+🎁 СОЗДАТЬ ПРОМОКОД
+</button>
+</div>
 <div class="admin-section"><h3>📋 Список промокодов</h3><div class="admin-info" id="promoList">Загрузка...</div></div>
 <div class="admin-section"><h3>⚠️ Важно</h3><div class="admin-info">Баланс и промокоды хранятся в Cloud Firestore. Лимит активаций учитывается общей базой для всех пользователей.</div></div>
 </section>
@@ -253,8 +282,9 @@ window.activatePromo=async function(){
       if(!promoSnap.exists()) throw new Error("NOT_FOUND");
       const promo=promoSnap.data();
       if(promo.active===false) throw new Error("INACTIVE");
-      const limit=Number(promo.limit||0), used=Number(promo.usedCount||0);
-      if(limit>0 && used>=limit) throw new Error("LIMIT");
+      const limit=Number(promo.limit), used=Number(promo.usedCount||0);
+      if(!Number.isInteger(limit) || limit <= 0) throw new Error("INVALID");
+      if(used>=limit) throw new Error("LIMIT");
       const userData=userSnap.exists()?userSnap.data():{balance:1000,usedPromos:[]};
       const usedPromos=Array.isArray(userData.usedPromos)?userData.usedPromos:[];
       if(usedPromos.includes(code)) throw new Error("ALREADY_USED");
@@ -300,7 +330,7 @@ window.createPromo=async function(){
       if(old.exists()) throw new Error("EXISTS");
       tx.set(ref,{code,reward:Math.floor(reward),limit,usedCount:0,active:true,createdAt:serverTimestamp(),createdBy:telegramUserId||"demo"});
     });
-    document.getElementById("newPromoCode").value="";document.getElementById("newPromoReward").value="";document.getElementById("newPromoLimit").value="";
+    document.getElementById("newPromoCode").value="";document.getElementById("newPromoReward").value="";document.getElementById("newPromoLimit").value="1";
     await renderPromoList();alert("Промокод создан");
   }catch(e){alert(e.message==="EXISTS"?"Такой промокод уже существует":"Не удалось создать промокод")}
 };
