@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Lucky Demo</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      color: white;
+      background:
+        radial-gradient(
+          circle at top,
+          #2b1535,
+          #08080d 55%
+        );
+    }
+
+    .app {
+      max-width: 600px;
+      min-height: 100vh;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+
+    /* HEADER */
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: #8b8b98;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    h1 span {
+      color: #f4c45c;
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #111;
+      font-weight: bold;
+      background:
+        linear-gradient(
+          135deg,
+          #ffe07a,
+          #d99b28
+        );
+    }
+
+    .user-info strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .user-info small {
+      color: #777;
+      font-size: 11px;
+    }
+
+    /* BALANCE */
+
+    .balance-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 20px;
+
+      border-radius: 22px;
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 210, 90, .15),
+          rgba(255,255,255,.03)
+        );
+    }
+
+    .balance-card p {
+      color: #aaa;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .balance {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .balance-card small {
+      color: #777;
+    }
+
+    .reset-button {
+      width: 45px;
+      height: 45px;
+
+      border: none;
+      border-radius: 14px;
+
+      color: #f4c45c;
+      background: #1c1c25;
+
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* WARNING */
+
+    .warning {
+      display: flex;
+      gap: 10px;
+
+      margin: 15px 0;
+
+      padding: 12px;
+
+      border-radius: 15px;
+
+      color: #aaa;
+
+      background:
+        rgba(255,255,255,.04);
+
+      font-size: 12px;
+    }
+
+    /* TABS */
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .tabs button {
+      flex: 1;
+
+      padding: 14px;
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      border-radius: 14px;
+
+      color: #aaa;
+
+      background:
+        rgba(255,255,255,.04);
+
+      cursor: pointer;
+    }
+
+    .tabs button.active {
+      color: #18120a;
+      font-weight: bold;
+
+      background:
+        #f4c45c;
+    }
+
+    /* GAME CARD */
+
+    .game-card {
+      padding: 20px;
+
+      border-radius: 24px;
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      background:
+        rgba(15,15,22,.9);
+    }
+
+    .game-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .game-title p {
+      color: #777;
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+    }
+
+    .game-title h2 {
+      font-size: 22px;
+    }
+
+    .badge {
+      padding: 6px 10px;
+
+      border-radius: 20px;
+
+      color: #f4c45c;
+      background:
+        rgba(244,196,92,.15);
+
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    /* SLOT */
+
+    .slot-machine {
+      display: grid;
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 10px;
+
+      padding: 12px;
+      margin: 25px 0 15px;
+
+      border-radius: 20px;
+
+      background:
+        #08080d;
+    }
+
+    .reel {
+      aspect-ratio: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 16px;
+
+      font-size: 42px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #292934,
+          #121218
+        );
+    }
+
+    .spinning {
+      animation:
+        shake .1s infinite;
+    }
+
+    @keyframes shake {
+      0% {
+        transform:
+          translateY(-3px);
+      }
+
+      50% {
+        transform:
+          translateY(3px);
+      }
+
+      100% {
+        transform:
+          translateY(-3px);
+      }
+    }
+
+    /* MESSAGE */
+
+    .message {
+      min-height: 25px;
+
+      text-align: center;
+
+      font-size: 13px;
+      font-weight: bold;
+
+      color:
+        #ddd;
+    }
+
+    /* BET */
+
+    .bet-section {
+      margin-top: 22px;
+    }
+
+    .bet-section p {
+      color: #888;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .bet-buttons {
+      display: grid;
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 8px;
+    }
+
+    .bet-buttons button {
+      padding: 11px 5px;
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      border-radius: 11px;
+
+      color: #aaa;
+
+      background:
+        #17171f;
+
+      cursor: pointer;
+    }
+
+    .bet-buttons button.selected {
+      color: #f4c45c;
+
+      border-color:
+        #f4c45c;
+
+      background:
+        rgba(244,196,92,.12);
+    }
+
+    /* SPIN BUTTON */
+
+    .spin-button {
+      width: 100%;
+
+      margin-top: 22px;
+
+      padding: 17px;
+
+      border: none;
+      border-radius: 16px;
+
+      color: #18120a;
+
+      font-size: 15px;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffe07a,
+          #d99b28
+        );
+    }
+
+    .spin-button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    /* PAYOUTS */
+
+    .payouts {
+      margin-top: 20px;
+
+      padding: 14px;
+
+      border-radius: 14px;
+
+      background:
+        rgba(255,255,255,.03);
+    }
+
+    .payouts p {
+      color: #f4c45c;
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+
+    .payouts span {
+      display: block;
+
+      color: #777;
+
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    /* ROULETTE */
+
+    .roulette-wheel {
+      width: 230px;
+      height: 230px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 25px auto;
+
+      border-radius: 50%;
+
+      background:
+        conic-gradient(
+          #b32c37 0deg 30deg,
+          #17171f 30deg 60deg,
+          #b32c37 60deg 90deg,
+          #17171f 90deg 120deg,
+          #b32c37 120deg 150deg,
+          #17171f 150deg 180deg,
+          #b32c37 180deg 210deg,
+          #17171f 210deg 240deg,
+          #b32c37 240deg 270deg,
+          #17171f 270deg 300deg,
+          #b32c37 300deg 330deg,
+          #177443 330deg 360deg
+        );
+
+      box-shadow:
+        inset 0 0 0 10px #282832,
+        0 15px 50px rgba(0,0,0,.5);
+    }
+
+    .roulette-center {
+      width: 85px;
+      height: 85px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border:
+        7px solid #33333d;
+
+      border-radius: 50%;
+
+      background:
+        #09090d;
+
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .wheel-spin {
+      animation:
+        wheel 1.8s
+        cubic-bezier(.12,.85,.2,1);
+    }
+
+    @keyframes wheel {
+      from {
+        transform:
+          rotate(0deg);
+      }
+
+      to {
+        transform:
+          rotate(1440deg);
+      }
+    }
+
+    /* COLORS */
+
+    .color-buttons {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 7px;
+    }
+
+    .color-buttons button {
+      padding: 12px 5px;
+
+      border:
+        2px solid transparent;
+
+      border-radius: 12px;
+
+      color: white;
+
+      font-size: 10px;
+
+      cursor: pointer;
+    }
+
+    .red {
+      background: #9d2631;
+    }
+
+    .black {
+      background: #222229;
+    }
+
+    .green {
+      background: #177443;
+    }
+
+    .selected-color {
+      border-color:
+        white !important;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    footer span {
+      color: #f4c45c;
+
+      font-size: 11px;
+      font-weight: bold;
+
+      letter-spacing: 2px;
+    }
+
+    footer p {
+      color: #555;
+
+      margin-top: 6px;
+
+      font-size: 10px;
+    }
+
+    @media (
+      max-width: 400px
+    ) {
+      .user {
+        display: none;
+      }
+
+      .reel {
+        font-size: 34px;
+      }
+
+      .roulette-wheel {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <header class="header">
+
+      <div>
+        <p class="eyebrow">
+          TELEGRAM WEB APP
+        </p>
+
+        <h1>
+          LUCKY
+          <span>DEMO</span>
+        </h1>
+      </div>
+
+      <div class="user">
+
+        <div
+          class="avatar"
+          id="avatar"
+        >
+          P
+        </div>
+
+        <div class="user-info">
+
+          <strong id="username">
+            Player
+          </strong>
+
+          <small id="userhandle">
+            @demo
+          </small>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="balance-card">
+
+      <div>
+
+        <p>
+          Ваш баланс
+        </p>
+
+        <div
+          class="balance"
+          id="balance"
+        >
+          🪙 1 000
+        </div>
+
+        <small>
+          Виртуальные монеты
+        </small>
+
+      </div>
+
+      <button
+        class="reset-button"
+        onclick="resetBalance()"
+      >
+        ↻
+      </button>
+
+    </section>
+
+
+    <section class="warning">
+
+      <span>
+        🎮
+      </span>
+
+      <p>
+        Демо-режим. Используются только виртуальные монеты.
+      </p>
+
+    </section>
+
+
+    <nav class="tabs">
+
+      <button
+        id="slotTab"
+        class="active"
+        onclick="showGame('slots')"
+      >
+        🎰 Слоты
+      </button>
+
+      <button
+        id="rouletteTab"
+        onclick="showGame('roulette')"
+      >
+        🎡 Рулетка
+      </button>
+
+    </nav>
+
+
+    <!-- SLOTS -->
+
+    <section
+      class="game-card"
+      id="slotsGame"
+    >
+
+      <div class="game-title">
+
+        <div>
+
+          <p>
+            GAME 01
+          </p>
+
+          <h2>
+            Slot Machine
+          </h2>
+
+        </div>
+
+        <span class="badge">
+          DEMO
+        </span>
+
+      </div>
+
+
+      <div class="slot-machine">
+
+        <div
+          class="reel"
+          id="reel1"
+        >
+          🍒
+        </div>
+
+        <div
+          class="reel"
+          id="reel2"
+        >
+          🍋
+        </div>
+
+        <div
+          class="reel"
+          id="reel3"
+        >
+          💎
+        </div>
+
+      </div>
+
+
+      <div
+        class="message"
+        id="slotMessage"
+      >
+        Нажмите SPIN
+      </div>
+
+
+      <div class="bet-section">
+
+        <p>
+          Ставка виртуальными монетами
+        </p>
+
+        <div class="bet-buttons">
+
+          <button onclick="setBet(10)">
+            10
+          </button>
+
+          <button
+            class="selected"
+            onclick="setBet(25)"
+          >
+            25
+          </button>
+
+          <button onclick="setBet(50)">
+            50
+          </button>
+
+          <button onclick="setBet(100)">
+            100
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="spin-button"
+        id="spinButton"
+        onclick="spinSlots()"
+      >
+        🎰 SPIN
+      </button>
+
+
+      <div class="payouts">
+
+        <p>
+          ВЫПЛАТЫ
+        </p>
+
+        <span>
+          Любая пара ×2
+        </span>
+
+        <span>
+          Три одинаковых ×5
+        </span>
+
+        <span>
+          7️⃣ 7️⃣ 7️⃣ ×10
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- ROULETTE -->
+
+    <section
+      class="game-card"
+      id="rouletteGame"
+      style="display:none"
+    >
+
+      <div class="game-title">
+
+        <div>
+
+          <p>
+            GAME 02
+          </p>
+
+          <h2>
+            Roulette
+          </h2>
+
+        </div>
+
+        <span class="badge">
+          DEMO
+        </span>
+
+      </div>
+
+
+      <div
+        class="roulette-wheel"
+        id="rouletteWheel"
+      >
+
+        <div
+          class="roulette-center"
+          id="rouletteNumber"
+        >
+          ?
+        </div>
+
+      </div>
+
+
+      <div
+        class="message"
+        id="rouletteMessage"
+      >
+        Выберите цвет
+      </div>
+
+
+      <div class="color-buttons">
+
+        <button
+          class="red selected-color"
+          onclick="setColor('red', this)"
+        >
+          🔴 Красное ×2
+        </button>
+
+        <button
+          class="black"
+          onclick="setColor('black', this)"
+        >
+          ⚫ Чёрное ×2
+        </button>
+
+        <button
+          class="green"
+          onclick="setColor('green', this)"
+        >
+          🟢 Зелёное ×14
+        </button>
+
+      </div>
+
+
+      <div class="bet-section">
+
+        <p>
+          Ставка
+        </p>
+
+        <div class="bet-buttons">
+
+          <button onclick="setBet(10)">
+            10
+          </button>
+
+          <button
+            class="selected"
+            onclick="setBet(25)"
+          >
+            25
+          </button>
+
+          <button onclick="setBet(50)">
+            50
+          </button>
+
+          <button onclick="setBet(100)">
+            100
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="spin-button"
+        id="rouletteButton"
+        onclick="spinRoulette()"
+      >
+        🎡 КРУТИТЬ
+      </button>
+
+    </section>
+
+
+    <footer>
+
+      <span>
+        LUCKY DEMO
+      </span>
+
+      <p>
+        Virtual coins only • No real money
+      </p>
+
+    </footer>
+
+  </main>
+
+
+  <script>
+
+    /*
+      TELEGRAM
+    */
+
+    const tg = window.Telegram?.WebApp;
+
+    if (tg) {
+
+      tg.ready();
+      tg.expand();
+
+      const user =
+        tg.initDataUnsafe?.user;
+
+      if (user) {
+
+        document
+          .getElementById("username")
+          .textContent =
+          user.first_name || "Player";
+
+        document
+          .getElementById("userhandle")
+          .textContent =
+          user.username
+            ? "@" + user.username
+            : "Telegram";
+
+        document
+          .getElementById("avatar")
+          .textContent =
+          (
+            user.first_name || "P"
+          )[0].toUpperCase();
+
+      }
+
+    }
+
+
+    /*
+      BALANCE
+    */
+
+    let balance =
+      Number(
+        localStorage.getItem(
+          "luckyDemoBalance"
+        )
+      ) || 1000;
+
+
+    function updateBalance() {
+
+      document
+        .getElementById("balance")
+        .textContent =
+        "🪙 " +
+        balance.toLocaleString("ru-RU");
+
+
+      localStorage.setItem(
+        "luckyDemoBalance",
+        balance
+      );
+
+    }
+
+
+    function resetBalance() {
+
+      balance = 1000;
+
+      updateBalance();
+
+    }
+
+
+    updateBalance();
+
+
+    /*
+      NAVIGATION
+    */
+
+    function showGame(game) {
+
+      const slots =
+        document.getElementById(
+          "slotsGame"
+        );
+
+      const roulette =
+        document.getElementById(
+          "rouletteGame"
+        );
+
+      const slotTab =
+        document.getElementById(
+          "slotTab"
+        );
+
+      const rouletteTab =
+        document.getElementById(
+          "rouletteTab"
+        );
+
+
+      if (game === "slots") {
+
+        slots.style.display =
+          "block";
+
+        roulette.style.display =
+          "none";
+
+        slotTab.classList.add(
+          "active"
+        );
+
+        rouletteTab.classList.remove(
+          "active"
+        );
+
+      }
+
+
+      if (game === "roulette") {
+
+        slots.style.display =
+          "none";
+
+        roulette.style.display =
+          "block";
+
+        rouletteTab.classList.add(
+          "active"
+        );
+
+        slotTab.classList.remove(
+          "active"
+        );
+
+      }
+
+    }
+
+
+    /*
+      BET
+    */
+
+    let bet = 25;
+
+
+    function setBet(value) {
+
+      bet = value;
+
+      document
+        .querySelectorAll(
+          ".bet-buttons button"
+        )
+        .forEach(
+          button => {
+
+            if (
+              Number(
+                button.textContent
+              ) === value
+            ) {
+
+              button.classList.add(
+                "selected"
+              );
+
+            } else {
+
+              button.classList.remove(
+                "selected"
+              );
+
+            }
+
+          }
+        );
+
+    }
+
+
+    /*
+      SLOT MACHINE
+    */
+
+    const symbols = [
+      "🍒",
+      "🍋",
+      "🍇",
+      "🔔",
+      "💎",
+      "7️⃣"
+    ];
+
+
+    let slotSpinning = false;
+
+
+    function randomSymbol() {
+
+      return symbols[
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
+      ];
+
+    }
+
+
+    function spinSlots() {
+
+      if (slotSpinning) return;
+
+
+      if (balance < bet) {
+
+        document
+          .getElementById(
+            "slotMessage"
+          )
+          .textContent =
+          "Недостаточно монет 🪙";
+
+        return;
+
+      }
+
+
+      slotSpinning = true;
+
+
+      const button =
+        document.getElementById(
+          "spinButton"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "КРУТИМ...";
+
+
+      balance -= bet;
+
+      updateBalance();
+
+
+      document
+        .getElementById(
+          "slotMessage"
+        )
+        .textContent =
+        "Крутим барабаны...";
+
+
+      const reels = [
+        document.getElementById(
+          "reel1"
+        ),
+
+        document.getElementById(
+          "reel2"
+        ),
+
+        document.getElementById(
+          "reel3"
+        )
+      ];
+
+
+      reels.forEach(
+        reel =>
+          reel.classList.add(
+            "spinning"
+          )
+      );
+
+
+      const animation =
+        setInterval(
+          () => {
+
+            reels.forEach(
+              reel => {
+
+                reel.textContent =
+                  randomSymbol();
+
+              }
+            );
+
+          },
+          100
+        );
+
+
+      setTimeout(
+        () => {
+
+          clearInterval(
+            animation
+          );
+
+
+          const result = [
+            randomSymbol(),
+            randomSymbol(),
+            randomSymbol()
+          ];
+
+
+          reels.forEach(
+            (reel, index) => {
+
+              reel.textContent =
+                result[index];
+
+              reel.classList.remove(
+                "spinning"
+              );
+
+            }
+          );
+
+
+          let multiplier = 0;
+
+
+          if (
+            result[0] === result[1] &&
+            result[1] === result[2]
+          ) {
+
+            multiplier =
+              result[0] === "7️⃣"
+                ? 10
+                : 5;
+
+          } else if (
+
+            result[0] === result[1] ||
+            result[1] === result[2] ||
+            result[0] === result[2]
+
+          ) {
+
+            multiplier = 2;
+
+          }
+
+
+          if (
+            multiplier > 0
+          ) {
+
+            const win =
+              bet *
+              multiplier;
+
+
+            balance += win;
+
+            updateBalance();
+
+
+            document
+              .getElementById(
+                "slotMessage"
+              )
+              .textContent =
+              "🎉 Победа! +" +
+              win +
+              " монет";
+
+          } else {
+
+            document
+              .getElementById(
+                "slotMessage"
+              )
+              .textContent =
+              "😔 Не повезло. Попробуйте ещё!";
+
+          }
+
+
+          button.disabled =
+            false;
+
+
+          button.textContent =
+            "🎰 SPIN";
+
+
+          slotSpinning =
+            false;
+
+        },
+        1500
+      );
+
+    }
+
+
+    /*
+      ROULETTE
+    */
+
+    let rouletteColor =
+      "red";
+
+
+    let rouletteSpinning =
+      false;
+
+
+    function setColor(
+      color,
+      element
+    ) {
+
+      rouletteColor =
+        color;
+
+
+      document
+        .querySelectorAll(
+          ".color-buttons button"
+        )
+        .forEach(
+          button =>
+            button.classList.remove(
+              "selected-color"
+            )
+        );
+
+
+      element.classList.add(
+        "selected-color"
+      );
+
+    }
+
+
+    function spinRoulette() {
+
+      if (
+        rouletteSpinning
+      ) return;
+
+
+      if (
+        balance < bet
+      ) {
+
+        document
+          .getElementById(
+            "rouletteMessage"
+          )
+          .textContent =
+          "Недостаточно монет 🪙";
+
+        return;
+
+      }
+
+
+      rouletteSpinning =
+        true;
+
+
+      const button =
+        document.getElementById(
+          "rouletteButton"
+        );
+
+
+      const wheel =
+        document.getElementById(
+          "rouletteWheel"
+        );
+
+
+      const numberElement =
+        document.getElementById(
+          "rouletteNumber"
+        );
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        "ВРАЩАЕМ...";
+
+
+      balance -= bet;
+
+      updateBalance();
+
+
+      document
+        .getElementById(
+          "rouletteMessage"
+        )
+        .textContent =
+        "Колесо вращается...";
+
+
+      wheel.classList.remove(
+        "wheel-spin"
+      );
+
+
+      void wheel.offsetWidth;
+
+
+      wheel.classList.add(
+        "wheel-spin"
+      );
+
+
+      const animation =
+        setInterval(
+          () => {
+
+            numberElement.textContent =
+              Math.floor(
+                Math.random() * 37
+              );
+
+          },
+          80
+        );
+
+
+      setTimeout(
+        () => {
+
+          clearInterval(
+            animation
+          );
+
+
+          const result =
+            Math.floor(
+              Math.random() * 37
+            );
+
+
+          numberElement.textContent =
+            result;
+
+
+          let resultColor;
+
+
+          if (
+            result === 0
+          ) {
+
+            resultColor =
+              "green";
+
+          } else {
+
+            resultColor =
+              Math.random() > 0.5
+                ? "red"
+                : "black";
+
+          }
+
+
+          if (
+            resultColor ===
+            rouletteColor
+          ) {
+
+            const multiplier =
+              rouletteColor === "green"
+                ? 14
+                : 2;
+
+
+            const win =
+              bet *
+              multiplier;
+
+
+            balance += win;
+
+            updateBalance();
+
+
+            document
+              .getElementById(
+                "rouletteMessage"
+              )
+              .textContent =
+              "🎉 Победа! +" +
+              win +
+              " монет";
+
+          } else {
+
+            document
+              .getElementById(
+                "rouletteMessage"
+              )
+              .textContent =
+              "Выпало " +
+              result +
+              ". Попробуйте ещё";
+
+          }
+
+
+          button.disabled =
+            false;
+
+
+          button.textContent =
+            "🎡 КРУТИТЬ";
+
+
+          rouletteSpinning =
+            false;
+
+        },
+        1800
+      );
+
+    }
+
+  </script>
+
+</body>
+  </html>
