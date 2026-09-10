@@ -13,7 +13,8 @@ button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:tran
 .app{max-width:650px;margin:auto;min-height:100vh;padding:18px 16px 104px}
 .header,.balance-card,.game-title{display:flex;justify-content:space-between;align-items:center}
 .header{margin-bottom:18px}.logo-small{font-size:10px;letter-spacing:2px;color:var(--muted)}.logo{font-size:31px;font-weight:900;margin-top:4px}.logo span{color:var(--gold)}
-.user-box{display:flex;align-items:center;gap:10px}.avatar{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ffe98b,#d59b25);color:#17120a;font-weight:900;font-size:18px}.user-name{font-size:13px;font-weight:700}.user-tag{font-size:10px;color:var(--muted);margin-top:4px}
+.user-box{display:flex;align-items:center;gap:10px}.avatar{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#ffe98b,#d59b25);color:#17120a;font-weight:900;font-size:18px}.avatar img{width:100%;height:100%;object-fit:cover}
+.user-name{font-size:13px;font-weight:700}.user-tag{font-size:10px;color:var(--muted);margin-top:4px}
 .balance-card{padding:18px;border-radius:22px;background:linear-gradient(135deg,rgba(255,214,90,.16),rgba(255,255,255,.025));border:1px solid var(--border);margin-bottom:18px}.balance-label,.balance-info{font-size:11px;color:var(--muted)}.balance{font-size:30px;font-weight:900;margin:5px 0}.reset-btn{border:0;background:var(--card2);color:var(--gold);width:48px;height:48px;border-radius:15px;font-size:22px}
 .page{display:none}.page.active{display:block}.welcome h2{margin:0 0 8px;font-size:24px}.welcome p{margin:0 0 18px;color:var(--muted);font-size:12px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.game-card{min-height:160px;padding:16px;border:1px solid var(--border);border-radius:24px;background:linear-gradient(145deg,#181a25,#0f1017);cursor:pointer}.game-card:active{transform:scale(.98)}.game-icon{font-size:43px;margin-bottom:15px}.game-card h3{margin:0 0 7px;font-size:17px}.game-card p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}.case-card{background:linear-gradient(145deg,#2b2415,#121116)}.danger{background:linear-gradient(145deg,#351821,#121116)}
@@ -28,9 +29,9 @@ button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:tran
 .drop-table{margin-top:14px;padding:14px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--border)}.drop-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px}.drop-row:last-child{border:0}.chance{color:var(--gold);font-weight:700}
 .info-box,.promo-box,.admin-section,.leaderboard{margin-top:18px;padding:18px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid var(--border)}.input-row{display:flex;gap:8px}.input{width:100%;border:1px solid var(--border);background:#101119;color:#fff;border-radius:14px;padding:14px;outline:none}.input:focus{border-color:rgba(255,214,90,.6)}.small-btn{border:0;border-radius:14px;padding:0 17px;background:var(--gold);font-weight:900}.admin-section h3,.leaderboard h3{margin:0 0 8px}.admin-section p,.admin-info{color:var(--muted);font-size:11px;line-height:1.55}.admin-section .input{margin-top:10px}.promo-row{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}.promo-row b{color:var(--gold)}
 .profile-card{padding:18px;border-radius:22px;background:var(--card);border:1px solid var(--border)}.profile-card h3{margin:0 0 8px}.status{font-size:11px;color:var(--muted)}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.stat-card{padding:15px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--border)}.stat-card small{display:block;color:var(--muted);font-size:10px}.stat-card b{display:block;font-size:21px;margin-top:7px;color:var(--gold)}
-.leader-row{display:grid;grid-template-columns:42px 1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}.leader-row:last-child{border:0}.leader-place{font-weight:900;color:var(--gold);text-align:center}.leader-name{font-size:13px;font-weight:700}.leader-id{font-size:10px;color:var(--muted);margin-top:4px}.leader-balance{text-align:right;font-size:12px;font-weight:900;color:var(--gold)}
+.leader-row{display:grid;grid-template-columns:42px 38px 1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}.leader-row:last-child{border:0}.leader-place{font-weight:900;color:var(--gold);text-align:center}.leader-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#ffe98b,#d59b25);color:#17120a;font-weight:900;font-size:16px}.leader-avatar img{width:100%;height:100%;object-fit:cover;display:block}.leader-name{font-size:13px;font-weight:700}.leader-user{font-size:10px;color:var(--muted);margin-top:3px}.leader-id{font-size:10px;color:var(--muted);margin-top:4px}.leader-balance{text-align:right;font-size:12px;font-weight:900;color:var(--gold)}
 .bottom-nav{position:fixed;z-index:10;left:50%;transform:translateX(-50%);bottom:12px;width:min(620px,calc(100% - 24px));display:grid;grid-template-columns:repeat(3,1fr);padding:7px;border:1px solid var(--border);border-radius:24px;background:rgba(28,31,42,.96);backdrop-filter:blur(15px);box-shadow:0 12px 35px rgba(0,0,0,.4)}.nav-btn{border:0;background:transparent;color:var(--muted);padding:9px 5px;border-radius:18px;font-size:11px}.nav-btn span{display:block;font-size:22px;margin-bottom:3px}.nav-btn.active{color:var(--gold);background:rgba(255,214,90,.09)}.footer{margin:28px 0 8px;text-align:center;font-size:10px;color:#565b68}
-@media(max-width:420px){.user-box{display:none}.wheel{width:205px;height:205px}.game-card{min-height:155px}}
+@media(max-width:420px){.user-box{display:none}.wheel{width:205px;height:205px}.game-card{min-height:155px}.leader-row{grid-template-columns:34px 36px 1fr auto;gap:7px}.leader-avatar{width:36px;height:36px}.leader-id{display:none}}
 </style>
 </head>
 <body>
@@ -38,14 +39,12 @@ button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:tran
 <header class="header"><div><div class="logo-small">TELEGRAM MINI APP</div><div class="logo">XVO<span>HY</span></div></div><div class="user-box"><div class="avatar" id="avatar">P</div><div><div class="user-name" id="userName">Player</div><div class="user-tag" id="userTag">Загрузка...</div></div></div></header>
 <section class="balance-card"><div><div class="balance-label">ВАШ БАЛАНС</div><div class="balance" id="balance">🪙 1 000</div><div class="balance-info">Виртуальные монеты</div></div><button class="reset-btn" onclick="resetBalance()">↻</button></section>
 
-<section class="page active" id="gamesPage"><div class="welcome"><h2>Выберите игру 🎮</h2><p>Все игры используют только виртуальные монеты.</p></div>
-<div class="grid">
+<section class="page active" id="gamesPage"><div class="welcome"><h2>Выберите игру 🎮</h2><p>Все игры используют только виртуальные монеты.</p></div><div class="grid">
 <div class="game-card" onclick="openGame('slots')"><div class="game-icon">🎰</div><h3>Слоты</h3><p>Соберите одинаковые символы.</p></div>
 <div class="game-card" onclick="openGame('roulette')"><div class="game-icon">🎡</div><h3>Рулетка</h3><p>Выберите цвет.</p></div>
 <div class="game-card" onclick="openGame('dice')"><div class="game-icon">🎲</div><h3>Dice</h3><p>Угадайте диапазон числа.</p></div>
 <div class="game-card" onclick="openGame('cards')"><div class="game-icon">🃏</div><h3>Карты</h3><p>Угадайте выше или ниже.</p></div>
-</div>
-<div class="promo-box"><h3>🎁 Промокод</h3><div class="input-row"><input class="input" id="promoInput" placeholder="Введите промокод"><button class="small-btn" onclick="activatePromo()">OK</button></div><div class="message" id="promoMessage"></div></div></section>
+</div><div class="promo-box"><h3>🎁 Промокод</h3><div class="input-row"><input class="input" id="promoInput" placeholder="Введите промокод"><button class="small-btn" onclick="activatePromo()">OK</button></div><div class="message" id="promoMessage"></div></div></section>
 
 <section class="page" id="casesPage"><div class="welcome"><h2>Кейсы 📦</h2><p>Открывайте кейсы за виртуальные монеты.</p></div><div class="grid">
 <div class="game-card case-card" onclick="openGame('caseik')"><div class="game-icon">📦</div><h3>Кейсик</h3><p>Стоимость: 100 🪙<br>Шансы дропа внутри кейса.</p></div>
@@ -53,16 +52,15 @@ button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:tran
 </div></section>
 
 <section class="page" id="profilePage"><div class="welcome"><h2>Профиль 🎒</h2><p>Ваш аккаунт и настройки.</p></div>
-<div class="profile-card"><h3 id="profileName">Player</h3><div class="status" id="profileId">Подключение...</div><div class="status" id="authStatus" style="margin-top:8px"></div></div>
+<div class="profile-card"><h3 id="profileName">Player</h3><div class="status" id="profileUsername"></div><div class="status" id="profileId">Подключение...</div><div class="status" id="authStatus" style="margin-top:8px"></div></div>
 <div class="stats-grid"><div class="stat-card"><small>ИГР СЫГРАНО</small><b id="gamesPlayed">0</b></div><div class="stat-card"><small>ПОБЕД</small><b id="wins">0</b></div><div class="stat-card"><small>ВЫИГРАНО МОНЕТ</small><b id="totalWon">0</b></div><div class="stat-card"><small>ВАШ РЕКОРД</small><b id="bestBalance">1 000</b></div></div>
 <div class="leaderboard"><h3>🏆 Таблица лидеров</h3><div class="admin-info">Лучшие игроки по балансу.</div><div id="leaderboardList">Загрузка лидеров...</div><button class="main-btn blue" onclick="loadLeaderboard()">↻ ОБНОВИТЬ</button></div>
 <div id="adminPanel" style="display:none;margin-top:18px">
-<div class="admin-section"><h3>👑 Админ-панель</h3><p>Доступ администратора включён для текущего аккаунта.</p></div>
-<div class="admin-section"><h3>🪙 Изменить баланс другого пользователя</h3><p>Введите Telegram ID пользователя и новый баланс.</p><input class="input" id="targetTelegramId" inputmode="numeric" placeholder="Telegram ID пользователя"><input class="input" id="targetBalance" type="number" min="0" placeholder="Новый баланс"><button class="main-btn blue" onclick="adminSetOtherBalance()">💾 УСТАНОВИТЬ БАЛАНС</button><input class="input" id="targetAddCoins" type="number" min="1" placeholder="Сколько добавить"><button class="main-btn blue" onclick="adminAddOtherBalance()">➕ ДОБАВИТЬ МОНЕТЫ</button></div>
+<div class="admin-section"><h3>👑 Админ-панель</h3><p>Доступ администратора включён для текущего аккаунта. Админка поддерживает числовые и старые строковые Telegram ID.</p></div>
+<div class="admin-section"><h3>🪙 Изменить баланс другого пользователя</h3><p>Введите Telegram ID или @username пользователя. Пользователь должен хотя бы один раз открыть Mini App.</p><input class="input" id="targetUser" placeholder="Telegram ID или @username"><input class="input" id="targetBalance" type="number" min="0" placeholder="Новый баланс"><button class="main-btn blue" onclick="adminSetOtherBalance()">💾 УСТАНОВИТЬ БАЛАНС</button><input class="input" id="targetAddCoins" type="number" min="1" placeholder="Сколько добавить"><button class="main-btn blue" onclick="adminAddOtherBalance()">➕ ДОБАВИТЬ МОНЕТЫ</button></div>
 <div class="admin-section"><h3>🎁 Создать промокод</h3><input class="input" id="newPromoCode" placeholder="Например XVOHY100"><input class="input" id="newPromoReward" type="number" min="1" placeholder="Награда"><input class="input" id="newPromoLimit" type="number" min="1" value="1" placeholder="Максимум активаций"><button class="main-btn blue" onclick="createPromo()">🎁 СОЗДАТЬ ПРОМОКОД</button></div>
 <div class="admin-section"><h3>📋 Промокоды</h3><div class="admin-info" id="promoList">Загрузка...</div></div>
-</div>
-<div class="footer"><b>LUCKY DEMO</b><br>Virtual coins only • Demo project</div></section>
+</div><div class="footer"><b>LUCKY DEMO</b><br>Virtual coins only • Demo project</div></section>
 
 <section class="page" id="slotsGame"><button class="back-btn" onclick="showTab('games')">← Назад</button><div class="game-title"><div><small>GAME 01</small><h2>🎰 Слоты</h2></div><div class="badge">DEMO</div></div><div class="panel"><div class="slot"><div class="reel" id="reel1">🍒</div><div class="reel" id="reel2">💎</div><div class="reel" id="reel3">🍋</div></div><div class="message" id="slotsMessage">Нажмите SPIN</div><div class="bet-title">СТАВКА</div><div class="bet-buttons"><button class="bet-btn" onclick="setBet(10)">10</button><button class="bet-btn selected" onclick="setBet(25)">25</button><button class="bet-btn" onclick="setBet(50)">50</button><button class="bet-btn" onclick="setBet(100)">100</button></div><button class="main-btn" id="slotsButton" onclick="spinSlots()">🎰 SPIN</button></div></section>
 
@@ -87,7 +85,7 @@ import {getFirestore,doc,getDoc,setDoc,updateDoc,collection,getDocs,query,where,
 const firebaseConfig={apiKey:"AIzaSyDEUYVp7ORU5YA83XWof8EgKSmRqbvUBt0",authDomain:"xvohy-games.firebaseapp.com",projectId:"xvohy-games",storageBucket:"xvohy-games.firebasestorage.app",messagingSenderId:"660706039441",appId:"1:660706039441:web:ae8b162341450d047c5130",measurementId:"G-D1G1KHT1YL"};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const ADMIN_TELEGRAM_ID="8849284922",tg=window.Telegram?.WebApp;
-let authUser=null,telegramUserId=null,userKey=null,playerName="Player",playerUsername="",balance=1000,gamesPlayed=0,wins=0,totalWon=0,bestBalance=1000,firebaseReady=false,bet=25,rouletteColor="red",diceChoice="low",cardChoice="higher";
+let authUser=null,telegramUserId=null,userKey=null,playerName="Player",playerUsername="Browser / demo mode",playerPhotoUrl="",balance=1000,gamesPlayed=0,wins=0,totalWon=0,bestBalance=1000,firebaseReady=false,bet=25,rouletteColor="red",diceChoice="low",cardChoice="higher";
 let busy={slots:false,roulette:false,dice:false,cards:false,case:false,all:false};
 const $=id=>document.getElementById(id);
 const txt=(id,v)=>{const e=$(id);if(e)e.textContent=v};
@@ -99,102 +97,112 @@ function updateUI(){balance=Math.max(0,Math.floor(balance));bestBalance=Math.max
 function refreshAdminPanel(){const p=$("adminPanel");if(p)p.style.display=isAdmin()?"block":"none"}
 function adminCheck(){refreshAdminPanel();if(!isAdmin()){alert("Нет доступа администратора");return false}return true}
 function addGameResult(didWin,reward=0){gamesPlayed++;if(didWin)wins++;if(reward>0)totalWon+=Math.floor(reward);bestBalance=Math.max(bestBalance,balance)}
+function escapeHtml(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
 
-async function loadCurrentUser(){
- if(!firebaseReady||!userKey)return;
- const snap=await getDoc(userRef()); if(!snap.exists())return;
- const d=snap.data(); balance=Number(d.balance??0); gamesPlayed=Number(d.gamesPlayed??0); wins=Number(d.wins??0); totalWon=Number(d.totalWon??0); bestBalance=Number(d.bestBalance??balance); updateUI();
-}
-async function saveUser(){
- if(!firebaseReady||!userKey)return;
- bestBalance=Math.max(bestBalance,balance); updateUI();
- await updateDoc(userRef(),{balance,gamesPlayed,wins,totalWon,bestBalance,telegramId:telegramUserId||null,name:playerName,username:playerUsername,updatedAt:serverTimestamp()});
-}
+async function loadCurrentUser(){if(!firebaseReady||!userKey)return;const snap=await getDoc(userRef());if(!snap.exists())return;const d=snap.data();balance=Number(d.balance??0);gamesPlayed=Number(d.gamesPlayed??0);wins=Number(d.wins??0);totalWon=Number(d.totalWon??0);bestBalance=Number(d.bestBalance??balance);updateUI()}
+async function saveUser(){if(!firebaseReady||!userKey)return;bestBalance=Math.max(bestBalance,balance);updateUI();await updateDoc(userRef(),{balance,gamesPlayed,wins,totalWon,bestBalance,telegramId:telegramUserId||null,name:playerName,username:playerUsername,photoUrl:playerPhotoUrl||null,updatedAt:serverTimestamp()})}
 
-window.showTab=async tab=>{
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active")); const p=$(tab+"Page");if(p)p.classList.add("active");
- document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));$("bottomNav").style.display="grid";window.scrollTo({top:0,behavior:"smooth"});
- if(tab==="profile"){await loadCurrentUser();refreshAdminPanel();loadLeaderboard();if(isAdmin())renderPromoList()}
-};
+window.showTab=async tab=>{document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));const p=$(tab+"Page");if(p)p.classList.add("active");document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));$("bottomNav").style.display="grid";window.scrollTo({top:0,behavior:"smooth"});if(tab==="profile"){await loadCurrentUser();refreshAdminPanel();loadLeaderboard();if(isAdmin())renderPromoList()}};
 window.openGame=game=>{const map={slots:"slotsGame",roulette:"rouletteGame",dice:"diceGame",cards:"cardsGame",caseik:"caseikGame",allornothing:"allornothingGame"};document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));$(map[game])?.classList.add("active");$("bottomNav").style.display="none";window.scrollTo(0,0)};
 window.resetBalance=async()=>{balance=1000;bestBalance=Math.max(bestBalance,balance);await saveUser()};
 window.setBet=v=>{bet=v;document.querySelectorAll(".bet-btn").forEach(b=>b.classList.toggle("selected",Number(b.textContent)===v))};
 
 async function initTelegram(){
- if(tg){tg.ready();tg.expand();const u=tg.initDataUnsafe?.user;if(u){telegramUserId=Number(u.id);playerName=u.first_name||u.username||"Player";playerUsername=u.username?"@"+u.username:"Telegram";txt("userName",playerName);txt("profileName",playerName);txt("avatar",playerName.charAt(0).toUpperCase());txt("userTag",playerUsername);txt("profileId","Telegram ID: "+telegramUserId)}}
- if(!telegramUserId){playerName="Player";playerUsername="Browser / demo mode";txt("profileId","Telegram Mini App не передал Telegram ID");txt("userTag",playerUsername)}
+ if(tg){tg.ready();tg.expand();const u=tg.initDataUnsafe?.user;if(u){
+  telegramUserId=Number(u.id);playerName=u.first_name||u.username||"Player";playerUsername=u.username?"@"+u.username:"Без username";playerPhotoUrl=u.photo_url||"";
+  txt("userName",playerName);txt("profileName",playerName);txt("profileUsername",playerUsername);txt("userTag",playerUsername);txt("profileId","Telegram ID: "+telegramUserId);
+  const av=$("avatar");if(playerPhotoUrl)av.innerHTML=`<img src="${escapeHtml(playerPhotoUrl)}" alt="avatar" referrerpolicy="no-referrer">`;else av.textContent=playerName.charAt(0).toUpperCase();
+ }}
+ if(!telegramUserId){txt("profileId","Telegram Mini App не передал Telegram ID");txt("profileUsername","Browser / demo mode");txt("userTag","Browser / demo mode")}
  refreshAdminPanel();
 }
+
 async function loadUser(){
  userKey=authUser.uid;const ref=userRef(),snap=await getDoc(ref);
- if(!snap.exists()){await setDoc(ref,{balance:1000,telegramId:telegramUserId||null,name:playerName,username:playerUsername,gamesPlayed:0,wins:0,totalWon:0,bestBalance:1000,usedPromos:[],createdAt:serverTimestamp(),updatedAt:serverTimestamp()})}
- else await updateDoc(ref,{telegramId:telegramUserId||null,name:playerName,username:playerUsername,updatedAt:serverTimestamp()});
+ if(!snap.exists())await setDoc(ref,{balance:1000,telegramId:telegramUserId||null,name:playerName,username:playerUsername,photoUrl:playerPhotoUrl||null,gamesPlayed:0,wins:0,totalWon:0,bestBalance:1000,usedPromos:[],createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+ else await updateDoc(ref,{telegramId:telegramUserId||null,name:playerName,username:playerUsername,photoUrl:playerPhotoUrl||null,updatedAt:serverTimestamp()});
  firebaseReady=true;await loadCurrentUser();txt("authStatus","Firebase: подключено ✓");
 }
 
 const symbols=["🍒","🍋","🍇","🔔","💎","7️⃣"],randSym=()=>symbols[Math.floor(Math.random()*symbols.length)];
-window.spinSlots=async()=>{
- if(busy.slots||balance<bet){if(balance<bet)txt("slotsMessage","Недостаточно монет 🪙");return}busy.slots=true;$("slotsButton").disabled=true;balance-=bet;await saveUser();
- const reels=[$("reel1"),$("reel2"),$("reel3")];reels.forEach(r=>r.classList.add("spin"));const iv=setInterval(()=>reels.forEach(r=>r.textContent=randSym()),100);
- setTimeout(async()=>{clearInterval(iv);const r=[randSym(),randSym(),randSym()];reels.forEach((x,i)=>{x.textContent=r[i];x.classList.remove("spin")});let m=0;if(r[0]===r[1]&&r[1]===r[2])m=r[0]==="7️⃣"?10:5;else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2])m=2;const reward=bet*m;if(reward){balance+=reward;addGameResult(true,reward);txt("slotsMessage","🎉 Победа! +"+reward+" 🪙")}else{addGameResult(false);txt("slotsMessage","😔 Не повезло")}await saveUser();$("slotsButton").disabled=false;busy.slots=false},1500);
-};
+window.spinSlots=async()=>{if(busy.slots||balance<bet){if(balance<bet)txt("slotsMessage","Недостаточно монет 🪙");return}busy.slots=true;$("slotsButton").disabled=true;balance-=bet;await saveUser();const reels=[$("reel1"),$("reel2"),$("reel3")];reels.forEach(r=>r.classList.add("spin"));const iv=setInterval(()=>reels.forEach(r=>r.textContent=randSym()),100);setTimeout(async()=>{clearInterval(iv);const r=[randSym(),randSym(),randSym()];reels.forEach((x,i)=>{x.textContent=r[i];x.classList.remove("spin")});let m=0;if(r[0]===r[1]&&r[1]===r[2])m=r[0]==="7️⃣"?10:5;else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2])m=2;const reward=bet*m;if(reward){balance+=reward;addGameResult(true,reward);txt("slotsMessage","🎉 Победа! +"+reward+" 🪙")}else{addGameResult(false);txt("slotsMessage","😔 Не повезло")}await saveUser();$("slotsButton").disabled=false;busy.slots=false},1500)};
+
 window.setRouletteColor=(c,e)=>{rouletteColor=c;document.querySelectorAll(".color").forEach(x=>x.classList.remove("selected"));e.classList.add("selected")};
 const redNums=[1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36],getRouletteColor=n=>n===0?"green":redNums.includes(n)?"red":"black";
-window.spinRoulette=()=>{
- if(busy.roulette||balance<bet){if(balance<bet)txt("rouletteMessage","Недостаточно монет 🪙");return}busy.roulette=true;$("rouletteButton").disabled=true;balance-=bet;saveUser();const w=$("rouletteWheel");w.classList.remove("wheel-spin");void w.offsetWidth;w.classList.add("wheel-spin");
- setTimeout(async()=>{const n=Math.floor(Math.random()*37),c=getRouletteColor(n);txt("rouletteNumber",n);let reward=0;if(c===rouletteColor){reward=bet*(c==="green"?14:2);balance+=reward;addGameResult(true,reward);txt("rouletteMessage","🎉 Выпало "+n+"! +"+reward+" 🪙")}else{addGameResult(false);txt("rouletteMessage","Выпало "+n+". Не повезло")}await saveUser();$("rouletteButton").disabled=false;busy.roulette=false},1800);
-};
+window.spinRoulette=()=>{if(busy.roulette||balance<bet){if(balance<bet)txt("rouletteMessage","Недостаточно монет 🪙");return}busy.roulette=true;$("rouletteButton").disabled=true;balance-=bet;saveUser();const w=$("rouletteWheel");w.classList.remove("wheel-spin");void w.offsetWidth;w.classList.add("wheel-spin");setTimeout(async()=>{const n=Math.floor(Math.random()*37),c=getRouletteColor(n);txt("rouletteNumber",n);let reward=0;if(c===rouletteColor){reward=bet*(c==="green"?14:2);balance+=reward;addGameResult(true,reward);txt("rouletteMessage","🎉 Выпало "+n+"! +"+reward+" 🪙")}else{addGameResult(false);txt("rouletteMessage","Выпало "+n+". Не повезло")}await saveUser();$("rouletteButton").disabled=false;busy.roulette=false},1800)};
+
 window.setDiceChoice=(c,e)=>{diceChoice=c;document.querySelectorAll("#diceGame .choice-btn").forEach(x=>x.classList.remove("selected"));e.classList.add("selected")};
-window.rollDice=()=>{
- if(busy.dice||balance<bet){if(balance<bet)txt("diceMessage","Недостаточно монет 🪙");return}busy.dice=true;$("diceButton").disabled=true;balance-=bet;saveUser();const faces=["⚀","⚁","⚂","⚃","⚄","⚅"],d=$("dice");d.classList.add("dice-roll");
- setTimeout(async()=>{const n=Math.floor(Math.random()*6)+1;d.textContent=faces[n-1];d.classList.remove("dice-roll");const won=(diceChoice==="low"&&n<=3)||(diceChoice==="high"&&n>=4);if(won){const reward=bet*2;balance+=reward;addGameResult(true,reward);txt("diceMessage","🎉 Выпало "+n+"! +"+reward+" 🪙")}else{addGameResult(false);txt("diceMessage","😔 Выпало "+n)}await saveUser();$("diceButton").disabled=false;busy.dice=false},1200);
-};
+window.rollDice=()=>{if(busy.dice||balance<bet){if(balance<bet)txt("diceMessage","Недостаточно монет 🪙");return}busy.dice=true;$("diceButton").disabled=true;balance-=bet;saveUser();const faces=["⚀","⚁","⚂","⚃","⚄","⚅"],d=$("dice");d.classList.add("dice-roll");setTimeout(async()=>{const n=Math.floor(Math.random()*6)+1;d.textContent=faces[n-1];d.classList.remove("dice-roll");const won=(diceChoice==="low"&&n<=3)||(diceChoice==="high"&&n>=4);if(won){const reward=bet*2;balance+=reward;addGameResult(true,reward);txt("diceMessage","🎉 Выпало "+n+"! +"+reward+" 🪙")}else{addGameResult(false);txt("diceMessage","😔 Выпало "+n)}await saveUser();$("diceButton").disabled=false;busy.dice=false},1200)};
+
 window.setCardChoice=(c,e)=>{cardChoice=c;document.querySelectorAll("#cardsGame .choice-btn").forEach(x=>x.classList.remove("selected"));e.classList.add("selected")};
-window.playCards=()=>{
- if(busy.cards||balance<bet){if(balance<bet)txt("cardsMessage","Недостаточно монет 🪙");return}busy.cards=true;$("cardsButton").disabled=true;const cur=Number($("currentCard").textContent);balance-=bet;saveUser();
- setTimeout(async()=>{const next=Math.floor(Math.random()*13)+1;$("nextCard").textContent=next;const won=(cardChoice==="higher"&&next>cur)||(cardChoice==="lower"&&next<cur);if(won){const reward=bet*2;balance+=reward;addGameResult(true,reward);txt("cardsMessage","🎉 Победа! +"+reward+" 🪙")}else if(next===cur){balance+=bet;addGameResult(false);txt("cardsMessage","🤝 Ничья!")}else{addGameResult(false);txt("cardsMessage","😔 Не повезло")}await saveUser();setTimeout(()=>{$("currentCard").textContent=next;$("nextCard").textContent="?";txt("cardsMessage","Следующая карта выше или ниже "+next+"?")},1200);$("cardsButton").disabled=false;busy.cards=false},900);
-};
+window.playCards=()=>{if(busy.cards||balance<bet){if(balance<bet)txt("cardsMessage","Недостаточно монет 🪙");return}busy.cards=true;$("cardsButton").disabled=true;const cur=Number($("currentCard").textContent);balance-=bet;saveUser();setTimeout(async()=>{const next=Math.floor(Math.random()*13)+1;$("nextCard").textContent=next;const won=(cardChoice==="higher"&&next>cur)||(cardChoice==="lower"&&next<cur);if(won){const reward=bet*2;balance+=reward;addGameResult(true,reward);txt("cardsMessage","🎉 Победа! +"+reward+" 🪙")}else if(next===cur){balance+=bet;addGameResult(false);txt("cardsMessage","🤝 Ничья!")}else{addGameResult(false);txt("cardsMessage","😔 Не повезло")}await saveUser();setTimeout(()=>{$("currentCard").textContent=next;$("nextCard").textContent="?";txt("cardsMessage","Следующая карта выше или ниже "+next+"?")},1200);$("cardsButton").disabled=false;busy.cards=false},900)};
 
-window.openCaseik=()=>{
- const price=100;if(busy.case||balance<price){if(balance<price)txt("caseikMessage","Недостаточно монет 🪙");return}busy.case=true;$("caseikButton").disabled=true;balance-=price;saveUser();$("caseikBox").classList.add("case-shake");
- setTimeout(async()=>{const r=Math.random()*100;let reward=r<40?25:r<70?50:r<88?100:r<97?250:1000;$("caseikBox").classList.remove("case-shake");txt("caseikReward",reward+" 🪙");balance+=reward;const profit=Math.max(0,reward-price);addGameResult(reward>=price,profit);txt("caseikMessage",reward>=price?"🎉 Вам выпало "+reward+" 🪙":"😔 Вам выпало "+reward+" 🪙");await saveUser();$("caseikButton").disabled=false;busy.case=false},1800);
-};
-window.openAllOrNothing=()=>{
- const price=500;if(busy.all||balance<price){if(balance<price)txt("allMessage","Недостаточно монет 🪙");return}busy.all=true;$("allButton").disabled=true;balance-=price;saveUser();$("allBox").classList.add("case-shake");
- setTimeout(async()=>{const jackpot=Math.random()<0.2;const reward=jackpot?1500:1;$("allBox").classList.remove("case-shake");txt("allReward",reward+" 🪙");balance+=reward;if(jackpot){addGameResult(true,reward);txt("allMessage","🔥 ДЖЕКПОТ! Выпало 1500 🪙")}else{addGameResult(false,0);txt("allMessage","🪙 Выпала 1 монета")}await saveUser();$("allButton").disabled=false;busy.all=false},2000);
-};
+window.openCaseik=()=>{const price=100;if(busy.case||balance<price){if(balance<price)txt("caseikMessage","Недостаточно монет 🪙");return}busy.case=true;$("caseikButton").disabled=true;balance-=price;saveUser();$("caseikBox").classList.add("case-shake");setTimeout(async()=>{const r=Math.random()*100,reward=r<40?25:r<70?50:r<88?100:r<97?250:1000;$("caseikBox").classList.remove("case-shake");txt("caseikReward",reward+" 🪙");balance+=reward;const profit=Math.max(0,reward-price);addGameResult(reward>=price,profit);txt("caseikMessage",reward>=price?"🎉 Вам выпало "+reward+" 🪙":"😔 Вам выпало "+reward+" 🪙");await saveUser();$("caseikButton").disabled=false;busy.case=false},1800)};
+window.openAllOrNothing=()=>{const price=500;if(busy.all||balance<price){if(balance<price)txt("allMessage","Недостаточно монет 🪙");return}busy.all=true;$("allButton").disabled=true;balance-=price;saveUser();$("allBox").classList.add("case-shake");setTimeout(async()=>{const jackpot=Math.random()<0.2,reward=jackpot?1500:1;$("allBox").classList.remove("case-shake");txt("allReward",reward+" 🪙");balance+=reward;if(jackpot){addGameResult(true,reward);txt("allMessage","🔥 ДЖЕКПОТ! Выпало 1500 🪙")}else{addGameResult(false);txt("allMessage","🪙 Выпала 1 монета")}await saveUser();$("allButton").disabled=false;busy.all=false},2000)};
 
-window.activatePromo=async()=>{
- const code=$("promoInput").value.trim().toUpperCase();if(!code){txt("promoMessage","Введите промокод");return}if(!firebaseReady){txt("promoMessage","Подключение...");return}
- try{const result=await runTransaction(db,async t=>{const pr=doc(db,"promos",code),ur=userRef(),ps=await t.get(pr),us=await t.get(ur);if(!ps.exists())throw Error("NOT_FOUND");const promo=ps.data(),u=us.exists()?us.data():{},used=Array.isArray(u.usedPromos)?u.usedPromos:[];if(promo.active===false)throw Error("INACTIVE");if(used.includes(code))throw Error("USED");if(Number(promo.usedCount||0)>=Number(promo.limit||0))throw Error("LIMIT");const amount=Number(promo.reward);if(!Number.isFinite(amount)||amount<=0)throw Error("INVALID");const nb=Number(u.balance||0)+amount;t.set(ur,{balance:nb,usedPromos:[...used,code],bestBalance:Math.max(Number(u.bestBalance||0),nb),updatedAt:serverTimestamp()},{merge:true});t.update(pr,{usedCount:Number(promo.usedCount||0)+1,lastActivatedAt:serverTimestamp()});return{amount,newBalance:nb}});balance=result.newBalance;bestBalance=Math.max(bestBalance,balance);updateUI();txt("promoMessage","🎉 Получено +"+result.amount+" 🪙");$("promoInput").value=""}catch(e){txt("promoMessage",({NOT_FOUND:"❌ Такого промокода нет",INACTIVE:"⚠️ Промокод отключён",USED:"⚠️ Вы уже использовали этот промокод",LIMIT:"⚠️ Лимит исчерпан",INVALID:"❌ Ошибка промокода"})[e.message]||"❌ Не удалось активировать")}
-};
+window.activatePromo=async()=>{const code=$("promoInput").value.trim().toUpperCase();if(!code){txt("promoMessage","Введите промокод");return}if(!firebaseReady){txt("promoMessage","Подключение...");return}try{const result=await runTransaction(db,async t=>{const pr=doc(db,"promos",code),ur=userRef(),ps=await t.get(pr),us=await t.get(ur);if(!ps.exists())throw Error("NOT_FOUND");const promo=ps.data(),u=us.exists()?us.data():{},used=Array.isArray(u.usedPromos)?u.usedPromos:[];if(promo.active===false)throw Error("INACTIVE");if(used.includes(code))throw Error("USED");if(Number(promo.usedCount||0)>=Number(promo.limit||0))throw Error("LIMIT");const amount=Number(promo.reward);if(!Number.isFinite(amount)||amount<=0)throw Error("INVALID");const nb=Number(u.balance||0)+amount;t.set(ur,{balance:nb,usedPromos:[...used,code],bestBalance:Math.max(Number(u.bestBalance||0),nb),updatedAt:serverTimestamp()},{merge:true});t.update(pr,{usedCount:Number(promo.usedCount||0)+1,lastActivatedAt:serverTimestamp()});return{amount,newBalance:nb}});balance=result.newBalance;bestBalance=Math.max(bestBalance,balance);updateUI();txt("promoMessage","🎉 Получено +"+result.amount+" 🪙");$("promoInput").value=""}catch(e){txt("promoMessage",({NOT_FOUND:"❌ Такого промокода нет",INACTIVE:"⚠️ Промокод отключён",USED:"⚠️ Вы уже использовали этот промокод",LIMIT:"⚠️ Лимит исчерпан",INVALID:"❌ Ошибка промокода"})[e.message]||"❌ Не удалось активировать")}};
 
-function escapeHtml(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-window.loadLeaderboard=async()=>{
- const list=$("leaderboardList");if(!list)return;list.textContent="Загрузка лидеров...";
- try{const snap=await getDocs(query(collection(db,"users"),orderBy("balance","desc"),limit(20)));if(snap.empty){list.textContent="Игроков пока нет.";return}let html="",place=1;snap.docs.forEach(s=>{const d=s.data(),name=escapeHtml(String(d.name||"Player")),tid=d.telegramId?String(d.telegramId):"Нет Telegram ID",b=formatNumber(d.balance||0),medal=place===1?"🥇":place===2?"🥈":place===3?"🥉":"#"+place;html+=`<div class="leader-row"><div class="leader-place">${medal}</div><div><div class="leader-name">${name}</div><div class="leader-id">ID: ${escapeHtml(tid)}</div></div><div class="leader-balance">🪙 ${b}</div></div>`;place++});list.innerHTML=html}catch(e){console.error(e);list.innerHTML='<div class="admin-info">Не удалось загрузить лидеров.</div>'}
-};
+window.loadLeaderboard=async()=>{const list=$("leaderboardList");if(!list)return;list.textContent="Загрузка лидеров...";try{const snap=await getDocs(query(collection(db,"users"),orderBy("balance","desc"),limit(20)));if(snap.empty){list.textContent="Игроков пока нет.";return}let html="",place=1;snap.docs.forEach(s=>{const d=s.data(),name=escapeHtml(String(d.name||"Player")),username=escapeHtml(String(d.username||"Без username")),tid=d.telegramId?String(d.telegramId):"Нет Telegram ID",photo=String(d.photoUrl||"").trim(),initial=escapeHtml(String(d.name||"P").charAt(0).toUpperCase()),avatar=photo?`<div class="leader-avatar"><img src="${escapeHtml(photo)}" alt="${name}" referrerpolicy="no-referrer"></div>`:`<div class="leader-avatar">${initial}</div>`,b=formatNumber(d.balance||0),medal=place===1?"🥇":place===2?"🥈":place===3?"🥉":"#"+place;html+=`<div class="leader-row"><div class="leader-place">${medal}</div>${avatar}<div><div class="leader-name">${name}</div><div class="leader-user">${username}</div><div class="leader-id">ID: ${escapeHtml(tid)}</div></div><div class="leader-balance">🪙 ${b}</div></div>`;place++});list.innerHTML=html}catch(e){console.error(e);list.innerHTML='<div class="admin-info">Не удалось загрузить лидеров.</div>'}};
 
-async function findUserByTelegramId(id){const snap=await getDocs(query(collection(db,"users"),where("telegramId","==",Number(id))));if(snap.empty)throw Error("USER_NOT_FOUND");return snap.docs[0].ref}
-async function syncIfCurrent(reference){
- if(!userKey)return; if(reference.id===userKey)await loadCurrentUser();
- await loadLeaderboard();
+// ===== ADMIN BALANCE: ID OR USERNAME =====
+function normalizeUsername(value){return String(value||"").trim().replace(/^@+/,"").toLowerCase()}
+async function findUserByTarget(target){
+ const raw=String(target||"").trim();
+ if(!raw)throw Error("BAD_TARGET");
+ if(/^\d+$/.test(raw)){
+  const numericId=Number(raw);
+  if(!Number.isSafeInteger(numericId))throw Error("BAD_ID");
+  let snap=await getDocs(query(collection(db,"users"),where("telegramId","==",numericId),limit(1)));
+  if(!snap.empty)return snap.docs[0].ref;
+  snap=await getDocs(query(collection(db,"users"),where("telegramId","==",raw),limit(1)));
+  if(!snap.empty)return snap.docs[0].ref;
+  throw Error("USER_NOT_FOUND");
+ }
+ const username=normalizeUsername(raw);
+ if(!/^[a-z0-9_]{3,64}$/i.test(username))throw Error("BAD_USERNAME");
+ for(const candidate of ["@"+username,username,"@"+username.toLowerCase(),username.toLowerCase()]){
+  const snap=await getDocs(query(collection(db,"users"),where("username","==",candidate),limit(1)));
+  if(!snap.empty)return snap.docs[0].ref;
+ }
+ // Fallback for usernames saved with different case/old format.
+ const all=await getDocs(collection(db,"users"));
+ const match=all.docs.find(d=>normalizeUsername(d.data().username)===username);
+ if(match)return match.ref;
+ throw Error("USER_NOT_FOUND");
 }
+function adminErrorText(e){
+ const code=String(e?.code||""),message=String(e?.message||"");
+ if(message==="USER_NOT_FOUND")return "❌ Пользователь не найден. Он должен хотя бы один раз открыть Mini App и иметь сохранённый username/ID.";
+ if(message==="BAD_ID")return "❌ Введите правильный Telegram ID.";
+ if(message==="BAD_TARGET")return "❌ Введите Telegram ID или @username.";
+ if(message==="BAD_USERNAME")return "❌ Введите правильный username, например @username.";
+ if(code.includes("permission-denied"))return "❌ Firestore Rules запрещают изменение users. Нужно разрешить администратору обновление документов.";
+ if(code.includes("failed-precondition"))return "❌ Firebase требует дополнительную настройку Firestore.";
+ return "❌ Ошибка: "+(message||code||"Неизвестная ошибка");
+}
+async function syncIfCurrent(reference){if(!userKey)return;if(reference.id===userKey)await loadCurrentUser();await loadLeaderboard()}
 window.adminSetOtherBalance=async()=>{
- if(!adminCheck())return;const id=Number($("targetTelegramId").value),nb=Number($("targetBalance").value);if(!Number.isSafeInteger(id)||!Number.isFinite(nb)||nb<0){alert("Введите правильный Telegram ID и баланс");return}
- try{const ref=await findUserByTelegramId(id),value=Math.floor(nb);await runTransaction(db,async t=>{const s=await t.get(ref);if(!s.exists())throw Error("USER_NOT_FOUND");const old=s.data();t.update(ref,{balance:value,bestBalance:Math.max(Number(old.bestBalance||0),value),updatedAt:serverTimestamp()})});await syncIfCurrent(ref);alert("✅ Баланс пользователя установлен")}catch(e){alert(e.message==="USER_NOT_FOUND"?"❌ Пользователь ещё не запускал приложение":"❌ "+(e.message||"Ошибка"))}
+ if(!adminCheck())return;
+ const target=$("targetUser").value.trim(),nb=Number($("targetBalance").value);
+ if(!target||!Number.isFinite(nb)||nb<0){alert("Введите пользователя и правильный баланс");return}
+ try{
+  const ref=await findUserByTarget(target),value=Math.floor(nb);
+  await runTransaction(db,async t=>{const snap=await t.get(ref);if(!snap.exists())throw Error("USER_NOT_FOUND");const old=snap.data();t.update(ref,{balance:value,bestBalance:Math.max(Number(old.bestBalance||0),value),updatedAt:serverTimestamp()})});
+  await syncIfCurrent(ref);$("targetBalance").value="";alert("✅ Баланс установлен: "+formatNumber(value)+" 🪙");
+ }catch(e){console.error("adminSetOtherBalance",e);alert(adminErrorText(e))}
 };
 window.adminAddOtherBalance=async()=>{
- if(!adminCheck())return;const id=Number($("targetTelegramId").value),amount=Number($("targetAddCoins").value);if(!Number.isSafeInteger(id)||!Number.isFinite(amount)||amount<=0){alert("Введите правильные данные");return}
- try{const ref=await findUserByTelegramId(id);await runTransaction(db,async t=>{const s=await t.get(ref);if(!s.exists())throw Error("USER_NOT_FOUND");const d=s.data(),next=Number(d.balance||0)+Math.floor(amount);t.update(ref,{balance:next,bestBalance:Math.max(Number(d.bestBalance||0),next),updatedAt:serverTimestamp()})});await syncIfCurrent(ref);alert("✅ Монеты добавлены")}catch(e){alert(e.message==="USER_NOT_FOUND"?"❌ Пользователь ещё не запускал приложение":"❌ "+(e.message||"Ошибка"))}
+ if(!adminCheck())return;
+ const target=$("targetUser").value.trim(),amount=Number($("targetAddCoins").value);
+ if(!target||!Number.isFinite(amount)||amount<=0){alert("Введите пользователя и количество монет");return}
+ try{
+  const ref=await findUserByTarget(target),add=Math.floor(amount);
+  const next=await runTransaction(db,async t=>{const snap=await t.get(ref);if(!snap.exists())throw Error("USER_NOT_FOUND");const d=snap.data(),current=Math.max(0,Number(d.balance||0)),newBalance=current+add;t.update(ref,{balance:newBalance,bestBalance:Math.max(Number(d.bestBalance||0),newBalance),updatedAt:serverTimestamp()});return newBalance});
+  await syncIfCurrent(ref);$("targetAddCoins").value="";alert("✅ Добавлено "+formatNumber(add)+" 🪙\nНовый баланс: "+formatNumber(next)+" 🪙");
+ }catch(e){console.error("adminAddOtherBalance",e);alert(adminErrorText(e))}
 };
-window.createPromo=async()=>{
- if(!adminCheck())return;const code=$("newPromoCode").value.trim().toUpperCase(),reward=Number($("newPromoReward").value),promoLimit=Number($("newPromoLimit").value);if(!/^[A-Z0-9_-]{3,40}$/.test(code)){alert("Код: 3–40 символов A-Z, 0-9, _ или -");return}if(!Number.isFinite(reward)||reward<=0||!Number.isInteger(promoLimit)||promoLimit<=0){alert("Введите правильные значения");return}
- try{const ref=doc(db,"promos",code);await runTransaction(db,async t=>{if((await t.get(ref)).exists())throw Error("EXISTS");t.set(ref,{code,reward:Math.floor(reward),limit:promoLimit,usedCount:0,active:true,createdAt:serverTimestamp(),createdByTelegramId:telegramUserId||null})});$("newPromoCode").value="";$("newPromoReward").value="";$("newPromoLimit").value=1;await renderPromoList();alert("✅ Промокод создан")}catch(e){alert(e.message==="EXISTS"?"Такой промокод уже существует":"❌ "+(e.message||"Ошибка"))}
-};
-async function renderPromoList(){
- if(!isAdmin())return;try{const snap=await getDocs(collection(db,"promos"));if(snap.empty){$("promoList").textContent="Промокодов пока нет.";return}const promos=snap.docs.map(s=>s.data()).sort((a,b)=>String(a.code).localeCompare(String(b.code)));$("promoList").innerHTML=promos.map(p=>{const used=Number(p.usedCount||0),lim=Number(p.limit||0);return `<div class="promo-row"><b>🎟️ ${escapeHtml(String(p.code))}</b><br>Награда: +${formatNumber(p.reward)} 🪙<br>Активаций: ${used} / ${lim} • Осталось: ${Math.max(0,lim-used)}</div>`}).join("")}catch(e){console.error(e);$("promoList").textContent="Не удалось загрузить список."}
-}
+window.createPromo=async()=>{if(!adminCheck())return;const code=$("newPromoCode").value.trim().toUpperCase(),reward=Number($("newPromoReward").value),promoLimit=Number($("newPromoLimit").value);if(!/^[A-Z0-9_-]{3,40}$/.test(code)){alert("Код: 3–40 символов A-Z, 0-9, _ или -");return}if(!Number.isFinite(reward)||reward<=0||!Number.isInteger(promoLimit)||promoLimit<=0){alert("Введите правильные значения");return}try{const ref=doc(db,"promos",code);await runTransaction(db,async t=>{if((await t.get(ref)).exists())throw Error("EXISTS");t.set(ref,{code,reward:Math.floor(reward),limit:promoLimit,usedCount:0,active:true,createdAt:serverTimestamp(),createdByTelegramId:telegramUserId||null})});$("newPromoCode").value="";$("newPromoReward").value="";$("newPromoLimit").value=1;await renderPromoList();alert("✅ Промокод создан")}catch(e){alert(e.message==="EXISTS"?"Такой промокод уже существует":"❌ "+(e.message||"Ошибка"))}};
+async function renderPromoList(){if(!isAdmin())return;try{const snap=await getDocs(collection(db,"promos"));if(snap.empty){$("promoList").textContent="Промокодов пока нет.";return}const promos=snap.docs.map(s=>s.data()).sort((a,b)=>String(a.code).localeCompare(String(b.code)));$("promoList").innerHTML=promos.map(p=>{const used=Number(p.usedCount||0),lim=Number(p.limit||0);return `<div class="promo-row"><b>🎟️ ${escapeHtml(String(p.code))}</b><br>Награда: +${formatNumber(p.reward)} 🪙<br>Активаций: ${used} / ${lim} • Осталось: ${Math.max(0,lim-used)}</div>`}).join("")}catch(e){console.error(e);$("promoList").textContent="Не удалось загрузить список."}}
 
 await initTelegram();
 try{const credential=await signInAnonymously(auth);authUser=credential.user;await loadUser()}catch(e){console.error(e);txt("authStatus",e.code==="auth/configuration-not-found"?"Firebase Authentication: включите Anonymous Authentication":"Ошибка Firebase: "+(e.code||e.message));alert("Не удалось войти в Firebase Authentication. В Firebase Console включите Authentication → Sign-in method → Anonymous.")}
