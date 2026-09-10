@@ -302,7 +302,10 @@ window.activatePromo=async function(){
   }
 };
 
-function isAdmin(){return telegramUserId===ADMIN_ID || (!tg && localStorage.getItem("xvohyDemoAdmin")==="true")}
+function isAdmin(){
+  if (telegramUserId !== null && Number(telegramUserId) === Number(ADMIN_ID)) return true;
+  return localStorage.getItem("xvohyDemoAdmin") === "true";
+}
 
 window.adminAddCoins=async function(){
   if(!isAdmin())return;const input=document.getElementById("adminCoins"),amount=Number(input.value);
@@ -316,23 +319,77 @@ window.adminSetCoins=async function(){
 };
 
 window.createPromo=async function(){
-  if(!isAdmin())return;
-  const code=document.getElementById("newPromoCode").value.trim().toUpperCase();
-  const reward=Number(document.getElementById("newPromoReward").value);
-  const limit=Number(document.getElementById("newPromoLimit").value);
-  if(!code || !/^[A-Z0-9_-]{3,40}$/.test(code))return alert("Код: от 3 до 40 символов, только A-Z, цифры, _ или -");
-  if(!Number.isFinite(reward)||reward<=0)return alert("Введите правильную награду");
-  if(!Number.isInteger(limit)||limit<=0)return alert("Введите количество активаций больше 0");
+  if(!isAdmin()){
+    alert("Нет доступа к админ-панели. Telegram ID: " + (telegramUserId ?? "не получен"));
+    return;
+  }
+
+  const codeInput=document.getElementById("newPromoCode");
+  const rewardInput=document.getElementById("newPromoReward");
+  const limitInput=document.getElementById("newPromoLimit");
+
+  const code=codeInput.value.trim().toUpperCase();
+  const reward=Number(rewardInput.value);
+  const limit=Number(limitInput.value);
+
+  if(!code || !/^[A-Z0-9_-]{3,40}$/.test(code)){
+    alert("Код: от 3 до 40 символов, только A-Z, цифры, _ или -");
+    return;
+  }
+  if(!Number.isFinite(reward) || reward<=0){
+    alert("Введите правильную награду");
+    return;
+  }
+  if(!Number.isInteger(limit) || limit<=0){
+    alert("Введите максимальное количество активаций больше 0");
+    return;
+  }
+
   try{
     const ref=doc(db,"promos",code);
+
     await runTransaction(db,async tx=>{
       const old=await tx.get(ref);
       if(old.exists()) throw new Error("EXISTS");
-      tx.set(ref,{code,reward:Math.floor(reward),limit,usedCount:0,active:true,createdAt:serverTimestamp(),createdBy:telegramUserId||"demo"});
+
+      tx.set(ref,{
+        code:code,
+        reward:Math.floor(reward),
+        limit:Math.floor(limit),
+        usedCount:0,
+        active:true,
+        createdAt:serverTimestamp(),
+        createdBy:String(telegramUserId ?? "demo")
+      });
     });
-    document.getElementById("newPromoCode").value="";document.getElementById("newPromoReward").value="";document.getElementById("newPromoLimit").value="1";
-    await renderPromoList();alert("Промокод создан");
-  }catch(e){alert(e.message==="EXISTS"?"Такой промокод уже существует":"Не удалось создать промокод")}
+
+    codeInput.value="";
+    rewardInput.value="";
+    limitInput.value="1";
+
+    await renderPromoList();
+    alert("✅ Промокод "+code+" создан. Лимит активаций: "+limit);
+
+  }catch(e){
+    console.error("Ошибка создания промокода:", e);
+
+    if(e.message==="EXISTS"){
+      alert("Такой промокод уже существует");
+      return;
+    }
+
+    if(e.code==="permission-denied"){
+      alert("❌ Firebase запретил создание промокода. Открой Firestore Database → Rules и разреши запись для коллекции promos.");
+      return;
+    }
+
+    if(e.code==="unavailable"){
+      alert("❌ Нет соединения с Firebase. Проверь интернет и настройки Firestore.");
+      return;
+    }
+
+    alert("❌ Не удалось создать промокод: "+(e.message || e.code || "неизвестная ошибка"));
+  }
 };
 
 async function renderPromoList(){
