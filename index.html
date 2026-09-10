@@ -118,10 +118,31 @@ async function initTelegram(){
 }
 
 async function loadUser(){
- userKey=authUser.uid;const ref=userRef(),snap=await getDoc(ref);
- if(!snap.exists())await setDoc(ref,{balance:1000,telegramId:telegramUserId||null,name:playerName,username:playerUsername,photoUrl:playerPhotoUrl||null,gamesPlayed:0,wins:0,totalWon:0,bestBalance:1000,usedPromos:[],createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
- else await updateDoc(ref,{telegramId:telegramUserId||null,name:playerName,username:playerUsername,photoUrl:playerPhotoUrl||null,updatedAt:serverTimestamp()});
- firebaseReady=true;await loadCurrentUser();txt("authStatus","Firebase: подключено ✓");
+ // В Telegram используем постоянный Telegram ID как ID документа.
+ // Firebase Anonymous UID может меняться после переустановки/очистки данных,
+ // поэтому по нему баланс мог выглядеть как новый (1000).
+ if(telegramUserId){
+  userKey="tg_"+String(telegramUserId);
+ }else{
+  // В обычном браузерном demo-режиме остаётся Firebase UID.
+  userKey=authUser.uid;
+ }
+ const ref=userRef(),snap=await getDoc(ref);
+ if(!snap.exists()&&telegramUserId){
+  // Миграция старого пользователя, созданного предыдущей версией по Firebase UID.
+  const old=await getDocs(query(collection(db,"users"),where("telegramId","==",Number(telegramUserId)),limit(1)));
+  if(!old.empty){
+   const oldData=old.docs[0].data();
+   await setDoc(ref,{...oldData,telegramId:Number(telegramUserId),name:playerName,username:playerUsername,photoUrl:playerPhotoUrl||oldData.photoUrl||null,updatedAt:serverTimestamp()},{merge:true});
+  }
+ }
+ const fresh=await getDoc(ref);
+ if(!fresh.exists()){
+  await setDoc(ref,{balance:1000,telegramId:telegramUserId||null,name:playerName,username:playerUsername,photoUrl:playerPhotoUrl||null,gamesPlayed:0,wins:0,totalWon:0,bestBalance:1000,usedPromos:[],createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+ }else{
+  await updateDoc(ref,{telegramId:telegramUserId||null,name:playerName,username:playerUsername,photoUrl:playerPhotoUrl||null,updatedAt:serverTimestamp()});
+ }
+ firebaseReady=true;await loadCurrentUser();txt("authStatus",telegramUserId?"Firebase: подключено ✓ • баланс привязан к Telegram ID":"Firebase: подключено ✓ • demo mode");
 }
 
 const symbols=["🍒","🍋","🍇","🔔","💎","7️⃣"],randSym=()=>symbols[Math.floor(Math.random()*symbols.length)];
