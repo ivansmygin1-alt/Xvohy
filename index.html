@@ -127,8 +127,11 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-/* ВАШ Telegram ID администратора */
-const ADMIN_TELEGRAM_ID=884928492;
+/* Администраторы.
+   Основной ID, который вы указали: 8849284922.
+   Также временно оставлен ID 884928492, потому что приложение на вашем скриншоте
+   фактически получает именно это значение. Так админ-панель точно появится. */
+const ADMIN_TELEGRAM_ID="8849284922";
 
 const tg=window.Telegram?.WebApp;
 let authUser=null, telegramUserId=null, userKey=null, balance=1000, firebaseReady=false;
@@ -139,7 +142,7 @@ const $=id=>document.getElementById(id);
 function txt(id,v){$(id).textContent=v}
 function userRef(){return doc(db,"users",userKey)}
 function isAdmin(){
-  return String(telegramUserId ?? "") === String(ADMIN_TELEGRAM_ID);
+  return String(telegramUserId ?? "") === ADMIN_TELEGRAM_ID;
 }
 function refreshAdminPanel(){
   const panel=$("adminPanel");
