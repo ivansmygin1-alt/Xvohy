@@ -128,7 +128,7 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 /* ВАШ Telegram ID администратора */
-const ADMIN_TELEGRAM_ID=8849284922;
+const ADMIN_TELEGRAM_ID=884928492;
 
 const tg=window.Telegram?.WebApp;
 let authUser=null, telegramUserId=null, userKey=null, balance=1000, firebaseReady=false;
@@ -138,8 +138,18 @@ let busy={slots:false,roulette:false,dice:false,cards:false,case:false,all:false
 const $=id=>document.getElementById(id);
 function txt(id,v){$(id).textContent=v}
 function userRef(){return doc(db,"users",userKey)}
-function isAdmin(){return Number(telegramUserId)===Number(ADMIN_TELEGRAM_ID)}
-function adminCheck(){if(!isAdmin()){alert("Нет доступа администратора");return false}return true}
+function isAdmin(){
+  return String(telegramUserId ?? "") === String(ADMIN_TELEGRAM_ID);
+}
+function refreshAdminPanel(){
+  const panel=$("adminPanel");
+  if(panel) panel.style.display=isAdmin()?"block":"none";
+}
+function adminCheck(){
+  refreshAdminPanel();
+  if(!isAdmin()){alert("Нет доступа администратора");return false}
+  return true;
+}
 
 window.showTab=function(tab){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
@@ -147,7 +157,7 @@ window.showTab=function(tab){
  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
  $("bottomNav").style.display="grid";
  window.scrollTo({top:0,behavior:"smooth"});
- if(tab==="profile"&&isAdmin()) renderPromoList();
+ if(tab==="profile"){refreshAdminPanel(); if(isAdmin()) renderPromoList();}
 }
 window.openGame=function(game){
  const map={slots:"slotsGame",roulette:"rouletteGame",dice:"diceGame",cards:"cardsGame",caseik:"caseikGame",allornothing:"allornothingGame"};
@@ -160,7 +170,7 @@ async function initTelegram(){
   if(u){telegramUserId=Number(u.id);const n=u.first_name||"Player";txt("userName",n);txt("profileName",n);txt("avatar",n[0].toUpperCase());txt("userTag",u.username?"@"+u.username:"Telegram");txt("profileId","Telegram ID: "+telegramUserId)}
  }
  if(!telegramUserId){txt("profileId","Telegram Mini App не передал Telegram ID");txt("userTag","Browser / demo mode")}
- if(isAdmin()){$("adminPanel").style.display="block"}
+ refreshAdminPanel()
 }
 
 async function loadUser(){
