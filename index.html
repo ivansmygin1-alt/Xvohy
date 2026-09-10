@@ -131,7 +131,7 @@ const db=getFirestore(app);
    Основной ID, который вы указали: 8849284922.
    Также временно оставлен ID 884928492, потому что приложение на вашем скриншоте
    фактически получает именно это значение. Так админ-панель точно появится. */
-const ADMIN_TELEGRAM_ID = "8849284922";
+const ADMIN_TELEGRAM_ID="8849284922";
 
 const tg=window.Telegram?.WebApp;
 let authUser=null, telegramUserId=null, userKey=null, balance=1000, firebaseReady=false;
@@ -185,33 +185,7 @@ async function loadUser(){
  else {balance=Number(snap.data().balance??1000);await updateDoc(ref,{telegramId:telegramUserId||null,updatedAt:serverTimestamp()})}
  firebaseReady=true;updateBalance(false);txt("authStatus","Firebase: подключено ✓");
 }
-function updateBalance(save=true){
-  balance = Math.max(0, Math.floor(Number(balance) || 0));
-
-  setText(
-    "balance",
-    "🪙 " + balance.toLocaleString("ru-RU")
-  );
-
-  // Резервная копия для Telegram WebView/Safari.
-  if (userKey) {
-    try {
-      localStorage.setItem("xvohy_balance_" + userKey, String(balance));
-    } catch (e) {
-      console.warn("Не удалось сохранить локальный баланс:", e);
-    }
-  }
-
-  if (save && firebaseReady) {
-    updateDoc(currentUserRef(), {
-      balance,
-      updatedAt: serverTimestamp()
-    }).catch(error => {
-      console.error("Ошибка сохранения баланса:", error);
-    });
-  }
-}
-
+function updateBalance(save=true){balance=Math.max(0,Math.floor(balance));txt("balance","🪙 "+balance.toLocaleString("ru-RU"));if(save&&firebaseReady)updateDoc(userRef(),{balance,updatedAt:serverTimestamp()}).catch(console.error)}
 window.resetBalance=function(){balance=1000;updateBalance()}
 
 window.setBet=function(v){bet=v;document.querySelectorAll(".bet-btn").forEach(b=>b.classList.toggle("selected",Number(b.textContent)===v))}
