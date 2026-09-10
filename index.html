@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Xvohy Games</title>
@@ -20,6 +19,7 @@
   --muted: #8c8c9a;
   --green: #35c76f;
   --red: #e64b55;
+  --blue: #5e8dff;
   --border: rgba(255,255,255,.08);
 }
 
@@ -37,7 +37,8 @@ body {
     radial-gradient(circle at top, #29213d 0%, #11111a 45%, #08080d 100%);
 }
 
-button {
+button,
+input {
   font-family: inherit;
 }
 
@@ -115,11 +116,12 @@ button {
   padding: 18px;
   border: 1px solid var(--border);
   border-radius: 22px;
-  background: linear-gradient(
-    135deg,
-    rgba(255,214,90,.15),
-    rgba(255,255,255,.03)
-  );
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,214,90,.15),
+      rgba(255,255,255,.03)
+    );
 }
 
 .balance-label {
@@ -223,6 +225,15 @@ button {
 
 .case-card.danger {
   background: linear-gradient(145deg, #32151d, #121116);
+}
+
+.admin-card {
+  display: none;
+  background: linear-gradient(145deg, #1f2342, #11111a);
+}
+
+.admin-card.visible {
+  display: block;
 }
 
 /* GAME PAGE */
@@ -332,6 +343,16 @@ button {
   cursor: not-allowed;
 }
 
+.blue-btn {
+  color: white;
+  background: linear-gradient(135deg, #5e8dff, #415fe0);
+}
+
+.red-main-btn {
+  color: white;
+  background: linear-gradient(135deg, #e64b55, #a92e38);
+}
+
 /* SLOTS */
 
 .slot-machine {
@@ -361,27 +382,6 @@ button {
   0% { transform: translateY(-3px); }
   50% { transform: translateY(3px); }
   100% { transform: translateY(-3px); }
-}
-
-.rules {
-  margin-top: 18px;
-  padding: 13px;
-  border-radius: 15px;
-  background: rgba(255,255,255,.035);
-}
-
-.rules strong {
-  display: block;
-  color: var(--gold);
-  font-size: 10px;
-  margin-bottom: 8px;
-}
-
-.rules span {
-  display: block;
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 5px;
 }
 
 /* ROULETTE */
@@ -634,6 +634,88 @@ button {
   border-bottom: none;
 }
 
+/* PROMOCODE */
+
+.promo-box {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.035);
+  border: 1px solid var(--border);
+}
+
+.promo-box h3 {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.text-input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  outline: none;
+  color: white;
+  background: #11111a;
+}
+
+.small-btn {
+  padding: 0 16px;
+  border: none;
+  border-radius: 14px;
+  color: #17120a;
+  font-weight: bold;
+  background: var(--gold);
+  cursor: pointer;
+}
+
+/* ADMIN */
+
+.admin-section {
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px solid rgba(94,141,255,.25);
+  border-radius: 20px;
+  background: rgba(94,141,255,.05);
+}
+
+.admin-section h3 {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.admin-section p {
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.admin-input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  outline: none;
+  color: white;
+  background: #101019;
+}
+
+.admin-info {
+  padding: 13px;
+  border-radius: 13px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+  background: rgba(255,255,255,.04);
+}
+
 /* FOOTER */
 
 .footer {
@@ -744,6 +826,36 @@ button {
       <p>Стоимость: 500 🪙</p>
     </div>
 
+    <div
+      class="game-card admin-card"
+      id="adminCard"
+      onclick="openGame('admin')">
+
+      <div class="game-icon">👑</div>
+      <h3>Админ панель</h3>
+      <p>Управление монетами и промокодами.</p>
+
+    </div>
+
+  </div>
+
+  <div class="promo-box">
+    <h3>🎁 Промокод</h3>
+
+    <div class="input-row">
+      <input
+        class="text-input"
+        id="promoInput"
+        placeholder="Введите промокод">
+
+      <button
+        class="small-btn"
+        onclick="activatePromo()">
+        OK
+      </button>
+    </div>
+
+    <div class="message" id="promoMessage"></div>
   </div>
 
   <div class="rules">
@@ -757,346 +869,402 @@ button {
 
 <section class="page" id="slotsPage">
 
-  <button class="back-btn" onclick="goHome()">← Назад к играм</button>
+<button class="back-btn" onclick="goHome()">← Назад к играм</button>
 
-  <div class="game-header">
-    <div>
-      <small>GAME 01</small>
-      <h2>🎰 Слоты</h2>
-    </div>
+<div class="game-header">
+<div>
+<small>GAME 01</small>
+<h2>🎰 Слоты</h2>
+</div>
+<div class="demo-badge">DEMO</div>
+</div>
 
-    <div class="demo-badge">DEMO</div>
-  </div>
+<div class="game-box">
 
-  <div class="game-box">
+<div class="slot-machine">
+<div class="reel" id="reel1">🍒</div>
+<div class="reel" id="reel2">💎</div>
+<div class="reel" id="reel3">🍋</div>
+</div>
 
-    <div class="slot-machine">
-      <div class="reel" id="reel1">🍒</div>
-      <div class="reel" id="reel2">💎</div>
-      <div class="reel" id="reel3">🍋</div>
-    </div>
+<div class="message" id="slotsMessage">Нажмите SPIN</div>
 
-    <div class="message" id="slotsMessage">
-      Нажмите SPIN
-    </div>
+<div class="bet-title">СТАВКА</div>
 
-    <div class="bet-title">СТАВКА</div>
+<div class="bet-buttons">
+<button class="bet-btn" onclick="setBet(10)">10</button>
+<button class="bet-btn selected" onclick="setBet(25)">25</button>
+<button class="bet-btn" onclick="setBet(50)">50</button>
+<button class="bet-btn" onclick="setBet(100)">100</button>
+</div>
 
-    <div class="bet-buttons">
-      <button class="bet-btn" onclick="setBet(10)">10</button>
-      <button class="bet-btn selected" onclick="setBet(25)">25</button>
-      <button class="bet-btn" onclick="setBet(50)">50</button>
-      <button class="bet-btn" onclick="setBet(100)">100</button>
-    </div>
+<button class="main-btn" id="slotsButton" onclick="spinSlots()">
+🎰 SPIN
+</button>
 
-    <button class="main-btn" id="slotsButton" onclick="spinSlots()">
-      🎰 SPIN
-    </button>
-
-    <div class="rules">
-      <strong>ВЫИГРЫШИ</strong>
-      <span>Любая пара ×2</span>
-      <span>Три одинаковых ×5</span>
-      <span>7️⃣ 7️⃣ 7️⃣ ×10</span>
-    </div>
-
-  </div>
+</div>
 </section>
 
 <!-- ROULETTE -->
 
 <section class="page" id="roulettePage">
 
-  <button class="back-btn" onclick="goHome()">← Назад к играм</button>
+<button class="back-btn" onclick="goHome()">← Назад к играм</button>
 
-  <div class="game-header">
-    <div>
-      <small>GAME 02</small>
-      <h2>🎡 Рулетка</h2>
-    </div>
+<div class="game-header">
+<div>
+<small>GAME 02</small>
+<h2>🎡 Рулетка</h2>
+</div>
+<div class="demo-badge">DEMO</div>
+</div>
 
-    <div class="demo-badge">DEMO</div>
-  </div>
+<div class="game-box">
 
-  <div class="game-box">
+<div class="wheel-wrap">
+<div class="roulette-wheel" id="rouletteWheel">
+<div class="roulette-center" id="rouletteNumber">?</div>
+</div>
+</div>
 
-    <div class="wheel-wrap">
-      <div class="roulette-wheel" id="rouletteWheel">
-        <div class="roulette-center" id="rouletteNumber">?</div>
-      </div>
-    </div>
+<div class="message" id="rouletteMessage">Выберите цвет</div>
 
-    <div class="message" id="rouletteMessage">
-      Выберите цвет
-    </div>
+<div class="color-buttons">
+<button class="color-btn red-btn selected-color" onclick="setRouletteColor('red',this)">
+🔴 Красное ×2
+</button>
 
-    <div class="color-buttons">
-      <button class="color-btn red-btn selected-color"
-        onclick="setRouletteColor('red', this)">
-        🔴 Красное ×2
-      </button>
+<button class="color-btn black-btn" onclick="setRouletteColor('black',this)">
+⚫ Чёрное ×2
+</button>
 
-      <button class="color-btn black-btn"
-        onclick="setRouletteColor('black', this)">
-        ⚫ Чёрное ×2
-      </button>
+<button class="color-btn green-btn" onclick="setRouletteColor('green',this)">
+🟢 Зелёное ×14
+</button>
+</div>
 
-      <button class="color-btn green-btn"
-        onclick="setRouletteColor('green', this)">
-        🟢 Зелёное ×14
-      </button>
-    </div>
+<div class="bet-title">СТАВКА</div>
 
-    <div class="bet-title">СТАВКА</div>
+<div class="bet-buttons">
+<button class="bet-btn" onclick="setBet(10)">10</button>
+<button class="bet-btn selected" onclick="setBet(25)">25</button>
+<button class="bet-btn" onclick="setBet(50)">50</button>
+<button class="bet-btn" onclick="setBet(100)">100</button>
+</div>
 
-    <div class="bet-buttons">
-      <button class="bet-btn" onclick="setBet(10)">10</button>
-      <button class="bet-btn selected" onclick="setBet(25)">25</button>
-      <button class="bet-btn" onclick="setBet(50)">50</button>
-      <button class="bet-btn" onclick="setBet(100)">100</button>
-    </div>
+<button class="main-btn" id="rouletteButton" onclick="spinRoulette()">
+🎡 КРУТИТЬ
+</button>
 
-    <button class="main-btn" id="rouletteButton" onclick="spinRoulette()">
-      🎡 КРУТИТЬ
-    </button>
-
-  </div>
+</div>
 </section>
 
 <!-- DICE -->
 
 <section class="page" id="dicePage">
 
-  <button class="back-btn" onclick="goHome()">← Назад к играм</button>
+<button class="back-btn" onclick="goHome()">← Назад к играм</button>
 
-  <div class="game-header">
-    <div>
-      <small>GAME 03</small>
-      <h2>🎲 Dice</h2>
-    </div>
+<div class="game-header">
+<div>
+<small>GAME 03</small>
+<h2>🎲 Dice</h2>
+</div>
+<div class="demo-badge">DEMO</div>
+</div>
 
-    <div class="demo-badge">DEMO</div>
-  </div>
+<div class="game-box">
 
-  <div class="game-box">
+<div class="dice-area">
+<div class="dice" id="dice">⚄</div>
+</div>
 
-    <div class="dice-area">
-      <div class="dice" id="dice">⚄</div>
-    </div>
+<div class="message" id="diceMessage">Выберите вариант</div>
 
-    <div class="message" id="diceMessage">
-      Выберите вариант
-    </div>
+<div class="dice-choice">
+<button class="choice-btn selected-choice" onclick="setDiceChoice('low',this)">
+⬇️ 1–3
+</button>
 
-    <div class="dice-choice">
-      <button class="choice-btn selected-choice"
-        onclick="setDiceChoice('low', this)">
-        ⬇️ 1–3
-      </button>
+<button class="choice-btn" onclick="setDiceChoice('high',this)">
+⬆️ 4–6
+</button>
+</div>
 
-      <button class="choice-btn"
-        onclick="setDiceChoice('high', this)">
-        ⬆️ 4–6
-      </button>
-    </div>
+<div class="bet-title">СТАВКА</div>
 
-    <div class="bet-title">СТАВКА</div>
+<div class="bet-buttons">
+<button class="bet-btn" onclick="setBet(10)">10</button>
+<button class="bet-btn selected" onclick="setBet(25)">25</button>
+<button class="bet-btn" onclick="setBet(50)">50</button>
+<button class="bet-btn" onclick="setBet(100)">100</button>
+</div>
 
-    <div class="bet-buttons">
-      <button class="bet-btn" onclick="setBet(10)">10</button>
-      <button class="bet-btn selected" onclick="setBet(25)">25</button>
-      <button class="bet-btn" onclick="setBet(50)">50</button>
-      <button class="bet-btn" onclick="setBet(100)">100</button>
-    </div>
+<button class="main-btn" id="diceButton" onclick="rollDice()">
+🎲 БРОСИТЬ
+</button>
 
-    <button class="main-btn" id="diceButton" onclick="rollDice()">
-      🎲 БРОСИТЬ
-    </button>
-
-  </div>
+</div>
 </section>
 
 <!-- CARDS -->
 
 <section class="page" id="cardsPage">
 
-  <button class="back-btn" onclick="goHome()">← Назад к играм</button>
+<button class="back-btn" onclick="goHome()">← Назад к играм</button>
 
-  <div class="game-header">
-    <div>
-      <small>GAME 04</small>
-      <h2>🃏 Карты</h2>
-    </div>
+<div class="game-header">
+<div>
+<small>GAME 04</small>
+<h2>🃏 Карты</h2>
+</div>
+<div class="demo-badge">DEMO</div>
+</div>
 
-    <div class="demo-badge">DEMO</div>
-  </div>
+<div class="game-box">
 
-  <div class="game-box">
+<div class="card-area">
+<div class="play-card" id="currentCard">7</div>
+<div class="play-card back" id="nextCard">?</div>
+</div>
 
-    <div class="card-area">
-      <div class="play-card" id="currentCard">7</div>
-      <div class="play-card back" id="nextCard">?</div>
-    </div>
+<div class="message" id="cardsMessage">
+Следующая карта будет выше или ниже 7?
+</div>
 
-    <div class="message" id="cardsMessage">
-      Следующая карта будет выше или ниже 7?
-    </div>
+<div class="card-choice">
+<button class="choice-btn selected-choice" onclick="setCardChoice('higher',this)">
+⬆️ ВЫШЕ
+</button>
 
-    <div class="card-choice">
-      <button class="choice-btn selected-choice"
-        onclick="setCardChoice('higher', this)">
-        ⬆️ ВЫШЕ
-      </button>
+<button class="choice-btn" onclick="setCardChoice('lower',this)">
+⬇️ НИЖЕ
+</button>
+</div>
 
-      <button class="choice-btn"
-        onclick="setCardChoice('lower', this)">
-        ⬇️ НИЖЕ
-      </button>
-    </div>
+<div class="bet-title">СТАВКА</div>
 
-    <div class="bet-title">СТАВКА</div>
+<div class="bet-buttons">
+<button class="bet-btn" onclick="setBet(10)">10</button>
+<button class="bet-btn selected" onclick="setBet(25)">25</button>
+<button class="bet-btn" onclick="setBet(50)">50</button>
+<button class="bet-btn" onclick="setBet(100)">100</button>
+</div>
 
-    <div class="bet-buttons">
-      <button class="bet-btn" onclick="setBet(10)">10</button>
-      <button class="bet-btn selected" onclick="setBet(25)">25</button>
-      <button class="bet-btn" onclick="setBet(50)">50</button>
-      <button class="bet-btn" onclick="setBet(100)">100</button>
-    </div>
+<button class="main-btn" id="cardsButton" onclick="playCards()">
+🃏 ОТКРЫТЬ КАРТУ
+</button>
 
-    <button class="main-btn" id="cardsButton" onclick="playCards()">
-      🃏 ОТКРЫТЬ КАРТУ
-    </button>
-
-  </div>
+</div>
 </section>
 
-<!-- CASEIK -->
+<!-- CASE 1 -->
 
 <section class="page" id="caseikPage">
 
-  <button class="back-btn" onclick="goHome()">← Назад к играм</button>
+<button class="back-btn" onclick="goHome()">← Назад к играм</button>
 
-  <div class="game-header">
-    <div>
-      <small>CASE 01</small>
-      <h2>📦 Кейсик</h2>
-    </div>
+<div class="game-header">
+<div>
+<small>CASE 01</small>
+<h2>📦 Кейсик</h2>
+</div>
+<div class="demo-badge">100 🪙</div>
+</div>
 
-    <div class="demo-badge">100 🪙</div>
-  </div>
+<div class="game-box">
 
-  <div class="game-box">
+<div class="case-opening">
+<div class="case-box" id="caseikBox">📦</div>
+</div>
 
-    <div class="case-opening">
-      <div class="case-box" id="caseikBox">📦</div>
-    </div>
+<div class="reward-box">
+<div class="reward-title">ВОЗМОЖНАЯ НАГРАДА</div>
+<div class="reward-value" id="caseikReward">?</div>
+</div>
 
-    <div class="reward-box">
-      <div class="reward-title">ВОЗМОЖНАЯ НАГРАДА</div>
-      <div class="reward-value" id="caseikReward">?</div>
-    </div>
+<div class="message" id="caseikMessage">
+Откройте кейс за 100 🪙
+</div>
 
-    <div class="message" id="caseikMessage">
-      Откройте кейс за 100 🪙
-    </div>
+<button class="main-btn" id="caseikButton" onclick="openCaseik()">
+📦 ОТКРЫТЬ ЗА 100 🪙
+</button>
 
-    <button class="main-btn" id="caseikButton" onclick="openCaseik()">
-      📦 ОТКРЫТЬ ЗА 100 🪙
-    </button>
+<div class="case-info">
+<h3>🎁 Награды</h3>
 
-    <div class="case-info">
-      <h3>🎁 Награды</h3>
+<div class="reward-row"><span>10 🪙</span><span>45%</span></div>
+<div class="reward-row"><span>25 🪙</span><span>30%</span></div>
+<div class="reward-row"><span>50 🪙</span><span>15%</span></div>
+<div class="reward-row"><span>100 🪙</span><span>8%</span></div>
+<div class="reward-row"><span>1000 🪙</span><span>2%</span></div>
 
-      <div class="reward-row">
-        <span>10 🪙</span>
-        <span>45%</span>
-      </div>
+</div>
 
-      <div class="reward-row">
-        <span>25 🪙</span>
-        <span>30%</span>
-      </div>
-
-      <div class="reward-row">
-        <span>50 🪙</span>
-        <span>15%</span>
-      </div>
-
-      <div class="reward-row">
-        <span>100 🪙</span>
-        <span>8%</span>
-      </div>
-
-      <div class="reward-row">
-        <span>1000 🪙</span>
-        <span>2%</span>
-      </div>
-    </div>
-
-  </div>
+</div>
 </section>
 
-<!-- ALL OR NOTHING -->
+<!-- CASE 2 -->
 
 <section class="page" id="allornothingPage">
 
-  <button class="back-btn" onclick="goHome()">← Назад к играм</button>
+<button class="back-btn" onclick="goHome()">← Назад к играм</button>
 
-  <div class="game-header">
-    <div>
-      <small>CASE 02</small>
-      <h2>🎲 Все Или Ничего</h2>
-    </div>
+<div class="game-header">
+<div>
+<small>CASE 02</small>
+<h2>🎲 Все Или Ничего</h2>
+</div>
+<div class="demo-badge">500 🪙</div>
+</div>
 
-    <div class="demo-badge">500 🪙</div>
-  </div>
+<div class="game-box">
 
-  <div class="game-box">
+<div class="case-opening">
+<div class="case-box all-or-nothing" id="allOrNothingBox">🎁</div>
+</div>
 
-    <div class="case-opening">
-      <div class="case-box all-or-nothing" id="allOrNothingBox">🎁</div>
-    </div>
+<div class="reward-box">
+<div class="reward-title">ВОЗМОЖНАЯ НАГРАДА</div>
+<div class="reward-value" id="allOrNothingReward">?</div>
+</div>
 
-    <div class="reward-box">
-      <div class="reward-title">ВОЗМОЖНАЯ НАГРАДА</div>
-      <div class="reward-value" id="allOrNothingReward">?</div>
-    </div>
+<div class="message" id="allOrNothingMessage">
+Рискните 500 🪙
+</div>
 
-    <div class="message" id="allOrNothingMessage">
-      Рискните 500 🪙
-    </div>
+<button class="main-btn" id="allOrNothingButton" onclick="openAllOrNothing()">
+🎲 ОТКРЫТЬ ЗА 500 🪙
+</button>
 
-    <button class="main-btn"
-      id="allOrNothingButton"
-      onclick="openAllOrNothing()">
-      🎲 ОТКРЫТЬ ЗА 500 🪙
-    </button>
+<div class="case-info">
+<h3>🎁 Награды</h3>
+<div class="reward-row"><span>1 🪙</span><span>80%</span></div>
+<div class="reward-row"><span>1500 🪙</span><span>20%</span></div>
+</div>
 
-    <div class="case-info">
-      <h3>🎁 Награды</h3>
+</div>
+</section>
 
-      <div class="reward-row">
-        <span>1 🪙</span>
-        <span>80%</span>
-      </div>
+<!-- ADMIN -->
 
-      <div class="reward-row">
-        <span>1500 🪙</span>
-        <span>20%</span>
-      </div>
-    </div>
+<section class="page" id="adminPage">
 
-  </div>
+<button class="back-btn" onclick="goHome()">← Назад</button>
+
+<div class="game-header">
+<div>
+<small>ADMIN AREA</small>
+<h2>👑 Админ панель</h2>
+</div>
+<div class="demo-badge">ADMIN</div>
+</div>
+
+<div class="admin-section">
+
+<h3>🪙 Изменить свой баланс</h3>
+
+<p>
+Добавление или установка баланса для текущего устройства.
+</p>
+
+<input
+class="admin-input"
+id="adminCoins"
+type="number"
+placeholder="Количество монет">
+
+<button
+class="main-btn blue-btn"
+onclick="adminAddCoins()">
+
+➕ Добавить монеты
+
+</button>
+
+<button
+class="main-btn red-main-btn"
+onclick="adminSetCoins()">
+
+✏️ Установить баланс
+
+</button>
+
+</div>
+
+<div class="admin-section">
+
+<h3>🎁 Создать промокод</h3>
+
+<input
+class="admin-input"
+id="newPromoCode"
+placeholder="Название промокода">
+
+<input
+class="admin-input"
+id="newPromoReward"
+type="number"
+placeholder="Награда в монетах">
+
+<button
+class="main-btn blue-btn"
+onclick="createPromo()">
+
+🎁 СОЗДАТЬ ПРОМОКОД
+
+</button>
+
+</div>
+
+<div class="admin-section">
+
+<h3>📋 Список промокодов</h3>
+
+<div
+class="admin-info"
+id="promoList">
+
+Промокодов пока нет.
+
+</div>
+
+</div>
+
+<div class="admin-section">
+
+<h3>⚠️ Важно</h3>
+
+<div class="admin-info">
+
+Эта версия является локальной демо-версией.<br><br>
+
+Промокоды и баланс хранятся только в браузере через localStorage.<br><br>
+
+Чтобы выдавать монеты другим Telegram-пользователям, нужна Firebase или другая серверная база данных.
+
+</div>
+
+</div>
+
 </section>
 
 <footer class="footer">
-  <strong>XVOHY GAMES</strong>
-  Virtual coins only • Demo project
+<strong>LUCKY DEMO</strong>
+Virtual coins only • Demo project
 </footer>
 
 </div>
 
 <script>
+
+/* ADMIN */
+
+const ADMIN_ID = 8849284922;
+
+let telegramUserId = null;
+
 
 /* TELEGRAM */
 
@@ -1111,6 +1279,8 @@ if (tg) {
 
   if (user) {
 
+    telegramUserId = user.id;
+
     const firstName = user.first_name || "Player";
 
     document.getElementById("userName").textContent = firstName;
@@ -1122,7 +1292,36 @@ if (tg) {
       user.username
         ? "@" + user.username
         : "Telegram";
+
+    if (Number(user.id) === ADMIN_ID) {
+
+      document
+        .getElementById("adminCard")
+        .classList
+        .add("visible");
+
+    }
+
   }
+}
+
+
+/* DEMO ADMIN FOR GITHUB PAGES PREVIEW */
+
+if (!tg) {
+
+  const isLocalAdmin =
+    localStorage.getItem("xvohyDemoAdmin") === "true";
+
+  if (isLocalAdmin) {
+
+    document
+      .getElementById("adminCard")
+      .classList
+      .add("visible");
+
+  }
+
 }
 
 
@@ -1136,12 +1335,18 @@ function updateBalance() {
   document.getElementById("balance").textContent =
     "🪙 " + balance.toLocaleString("ru-RU");
 
-  localStorage.setItem("xvohyBalance", balance);
+  localStorage.setItem(
+    "xvohyBalance",
+    balance
+  );
 }
 
 function resetBalance() {
+
   balance = 1000;
+
   updateBalance();
+
 }
 
 updateBalance();
@@ -1155,15 +1360,24 @@ function setBet(value) {
 
   bet = value;
 
-  document.querySelectorAll(".bet-btn").forEach(button => {
+  document
+    .querySelectorAll(".bet-btn")
+    .forEach(button => {
 
-    if (Number(button.textContent) === value) {
-      button.classList.add("selected");
-    } else {
-      button.classList.remove("selected");
-    }
+      if (
+        Number(button.textContent) === value
+      ) {
 
-  });
+        button.classList.add("selected");
+
+      } else {
+
+        button.classList.remove("selected");
+
+      }
+
+    });
+
 }
 
 
@@ -1171,26 +1385,58 @@ function setBet(value) {
 
 function openGame(game) {
 
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.remove("active");
-  });
+  if (
+    game === "admin" &&
+    telegramUserId !== ADMIN_ID &&
+    tg
+  ) {
 
-  document.getElementById(game + "Page")
-    .classList.add("active");
+    alert("Нет доступа");
+
+    return;
+
+  }
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+
+      page.classList.remove("active");
+
+    });
+
+  document
+    .getElementById(game + "Page")
+    .classList
+    .add("active");
 
   window.scrollTo(0, 0);
+
+  if (game === "admin") {
+
+    renderPromoList();
+
+  }
+
 }
 
 function goHome() {
 
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.remove("active");
-  });
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
 
-  document.getElementById("homePage")
-    .classList.add("active");
+      page.classList.remove("active");
+
+    });
+
+  document
+    .getElementById("homePage")
+    .classList
+    .add("active");
 
   window.scrollTo(0, 0);
+
 }
 
 
@@ -1208,7 +1454,13 @@ const symbols = [
 let slotsBusy = false;
 
 function randomSymbol() {
-  return symbols[Math.floor(Math.random() * symbols.length)];
+
+  return symbols[
+    Math.floor(
+      Math.random() * symbols.length
+    )
+  ];
+
 }
 
 function spinSlots() {
@@ -1216,19 +1468,25 @@ function spinSlots() {
   if (slotsBusy) return;
 
   if (balance < bet) {
-    document.getElementById("slotsMessage").textContent =
+
+    document
+      .getElementById("slotsMessage")
+      .textContent =
       "Недостаточно монет 🪙";
+
     return;
+
   }
 
   slotsBusy = true;
 
-  const button = document.getElementById("slotsButton");
+  const button =
+    document.getElementById("slotsButton");
 
   button.disabled = true;
-  button.textContent = "КРУТИМ...";
 
   balance -= bet;
+
   updateBalance();
 
   const reels = [
@@ -1237,12 +1495,21 @@ function spinSlots() {
     document.getElementById("reel3")
   ];
 
-  reels.forEach(reel => reel.classList.add("spinning"));
+  reels.forEach(reel => {
+
+    reel.classList.add("spinning");
+
+  });
 
   const interval = setInterval(() => {
+
     reels.forEach(reel => {
-      reel.textContent = randomSymbol();
+
+      reel.textContent =
+        randomSymbol();
+
     });
+
   }, 100);
 
   setTimeout(() => {
@@ -1255,63 +1522,105 @@ function spinSlots() {
       randomSymbol()
     ];
 
-    reels.forEach((reel, index) => {
-      reel.textContent = result[index];
-      reel.classList.remove("spinning");
-    });
+    reels.forEach(
+      (reel, index) => {
+
+        reel.textContent =
+          result[index];
+
+        reel.classList
+          .remove("spinning");
+
+      }
+    );
 
     let multiplier = 0;
 
-    if (result[0] === result[1] && result[1] === result[2]) {
-      multiplier = result[0] === "7️⃣" ? 10 : 5;
+    if (
+      result[0] === result[1] &&
+      result[1] === result[2]
+    ) {
+
+      multiplier =
+        result[0] === "7️⃣"
+          ? 10
+          : 5;
+
     }
+
     else if (
+
       result[0] === result[1] ||
       result[1] === result[2] ||
       result[0] === result[2]
+
     ) {
+
       multiplier = 2;
+
     }
 
     if (multiplier > 0) {
 
-      const win = bet * multiplier;
+      const win =
+        bet * multiplier;
 
       balance += win;
+
       updateBalance();
 
-      document.getElementById("slotsMessage").textContent =
-        "🎉 Победа! +" + win + " 🪙";
+      document
+        .getElementById("slotsMessage")
+        .textContent =
+        "🎉 Победа! +" +
+        win +
+        " 🪙";
 
-    } else {
+    }
 
-      document.getElementById("slotsMessage").textContent =
+    else {
+
+      document
+        .getElementById("slotsMessage")
+        .textContent =
         "😔 Не повезло";
+
     }
 
     button.disabled = false;
-    button.textContent = "🎰 SPIN";
 
     slotsBusy = false;
 
   }, 1500);
+
 }
 
 
 /* ROULETTE */
 
 let rouletteColor = "red";
+
 let rouletteBusy = false;
 
-function setRouletteColor(color, element) {
+function setRouletteColor(
+  color,
+  element
+) {
 
   rouletteColor = color;
 
-  document.querySelectorAll(".color-btn").forEach(button => {
-    button.classList.remove("selected-color");
-  });
+  document
+    .querySelectorAll(".color-btn")
+    .forEach(button => {
 
-  element.classList.add("selected-color");
+      button.classList
+        .remove("selected-color");
+
+    });
+
+  element.classList
+    .add("selected-color");
+
 }
 
 function spinRoulette() {
@@ -1319,98 +1628,163 @@ function spinRoulette() {
   if (rouletteBusy) return;
 
   if (balance < bet) {
-    document.getElementById("rouletteMessage").textContent =
+
+    document
+      .getElementById("rouletteMessage")
+      .textContent =
       "Недостаточно монет 🪙";
+
     return;
+
   }
 
   rouletteBusy = true;
 
   const button =
-    document.getElementById("rouletteButton");
+    document.getElementById(
+      "rouletteButton"
+    );
 
   const wheel =
-    document.getElementById("rouletteWheel");
+    document.getElementById(
+      "rouletteWheel"
+    );
 
   const number =
-    document.getElementById("rouletteNumber");
+    document.getElementById(
+      "rouletteNumber"
+    );
 
   button.disabled = true;
-  button.textContent = "ВРАЩАЕМ...";
 
   balance -= bet;
+
   updateBalance();
 
-  wheel.classList.remove("wheel-spin");
-  void wheel.offsetWidth;
-  wheel.classList.add("wheel-spin");
+  wheel.classList
+    .remove("wheel-spin");
 
-  const interval = setInterval(() => {
-    number.textContent =
-      Math.floor(Math.random() * 37);
-  }, 80);
+  void wheel.offsetWidth;
+
+  wheel.classList
+    .add("wheel-spin");
+
+  const interval =
+    setInterval(() => {
+
+      number.textContent =
+        Math.floor(
+          Math.random() * 37
+        );
+
+    }, 80);
 
   setTimeout(() => {
 
     clearInterval(interval);
 
     const result =
-      Math.floor(Math.random() * 37);
+      Math.floor(
+        Math.random() * 37
+      );
 
     number.textContent = result;
 
     let resultColor;
 
     if (result === 0) {
+
       resultColor = "green";
+
     } else {
+
       resultColor =
-        Math.random() < .5 ? "red" : "black";
+        Math.random() < .5
+          ? "red"
+          : "black";
+
     }
 
-    if (resultColor === rouletteColor) {
+    if (
+      resultColor === rouletteColor
+    ) {
 
       const multiplier =
-        rouletteColor === "green" ? 14 : 2;
+        rouletteColor === "green"
+          ? 14
+          : 2;
 
-      const win = bet * multiplier;
+      const win =
+        bet * multiplier;
 
       balance += win;
+
       updateBalance();
 
-      document.getElementById("rouletteMessage").textContent =
-        "🎉 Победа! +" + win + " 🪙";
+      document
+        .getElementById(
+          "rouletteMessage"
+        )
+        .textContent =
+        "🎉 Победа! +" +
+        win +
+        " 🪙";
 
-    } else {
+    }
 
-      document.getElementById("rouletteMessage").textContent =
-        "Выпало " + result + ". Не повезло";
+    else {
+
+      document
+        .getElementById(
+          "rouletteMessage"
+        )
+        .textContent =
+        "Выпало " +
+        result +
+        ". Не повезло";
+
     }
 
     button.disabled = false;
-    button.textContent = "🎡 КРУТИТЬ";
 
     rouletteBusy = false;
 
   }, 1800);
+
 }
 
 
 /* DICE */
 
 let diceChoice = "low";
+
 let diceBusy = false;
 
-function setDiceChoice(choice, element) {
+function setDiceChoice(
+  choice,
+  element
+) {
 
   diceChoice = choice;
 
-  document.querySelectorAll("#dicePage .choice-btn")
+  document
+    .querySelectorAll(
+      "#dicePage .choice-btn"
+    )
     .forEach(button => {
-      button.classList.remove("selected-choice");
+
+      button.classList
+        .remove(
+          "selected-choice"
+        );
+
     });
 
-  element.classList.add("selected-choice");
+  element.classList
+    .add(
+      "selected-choice"
+    );
+
 }
 
 function rollDice() {
@@ -1418,22 +1792,34 @@ function rollDice() {
   if (diceBusy) return;
 
   if (balance < bet) {
-    document.getElementById("diceMessage").textContent =
+
+    document
+      .getElementById("diceMessage")
+      .textContent =
       "Недостаточно монет 🪙";
+
     return;
+
   }
 
   diceBusy = true;
 
-  const dice = document.getElementById("dice");
-  const button = document.getElementById("diceButton");
+  const dice =
+    document.getElementById("dice");
+
+  const button =
+    document.getElementById(
+      "diceButton"
+    );
 
   button.disabled = true;
 
   balance -= bet;
+
   updateBalance();
 
-  dice.classList.add("dice-roll");
+  dice.classList
+    .add("dice-roll");
 
   const faces = [
     "⚀",
@@ -1444,43 +1830,79 @@ function rollDice() {
     "⚅"
   ];
 
-  const interval = setInterval(() => {
+  const interval =
+    setInterval(() => {
 
-    dice.textContent =
-      faces[Math.floor(Math.random() * 6)];
+      dice.textContent =
+        faces[
+          Math.floor(
+            Math.random() * 6
+          )
+        ];
 
-  }, 80);
+    }, 80);
 
   setTimeout(() => {
 
     clearInterval(interval);
 
     const result =
-      Math.floor(Math.random() * 6) + 1;
+      Math.floor(
+        Math.random() * 6
+      ) + 1;
 
-    dice.textContent = faces[result - 1];
+    dice.textContent =
+      faces[result - 1];
 
-    dice.classList.remove("dice-roll");
+    dice.classList
+      .remove("dice-roll");
 
     const win =
-      (diceChoice === "low" && result <= 3) ||
-      (diceChoice === "high" && result >= 4);
+
+      (
+        diceChoice === "low" &&
+        result <= 3
+      )
+
+      ||
+
+      (
+        diceChoice === "high" &&
+        result >= 4
+      );
 
     if (win) {
 
-      const reward = bet * 2;
+      const reward =
+        bet * 2;
 
       balance += reward;
+
       updateBalance();
 
-      document.getElementById("diceMessage").textContent =
-        "🎉 Выпало " + result + "! +" +
-        reward + " 🪙";
+      document
+        .getElementById(
+          "diceMessage"
+        )
+        .textContent =
+        "🎉 Выпало " +
+        result +
+        "! +" +
+        reward +
+        " 🪙";
 
-    } else {
+    }
 
-      document.getElementById("diceMessage").textContent =
-        "😔 Выпало " + result;
+    else {
+
+      document
+        .getElementById(
+          "diceMessage"
+        )
+        .textContent =
+        "😔 Выпало " +
+        result;
+
     }
 
     button.disabled = false;
@@ -1488,24 +1910,41 @@ function rollDice() {
     diceBusy = false;
 
   }, 1200);
+
 }
 
 
 /* CARDS */
 
 let cardChoice = "higher";
+
 let cardsBusy = false;
 
-function setCardChoice(choice, element) {
+function setCardChoice(
+  choice,
+  element
+) {
 
   cardChoice = choice;
 
-  document.querySelectorAll("#cardsPage .choice-btn")
+  document
+    .querySelectorAll(
+      "#cardsPage .choice-btn"
+    )
     .forEach(button => {
-      button.classList.remove("selected-choice");
+
+      button.classList
+        .remove(
+          "selected-choice"
+        );
+
     });
 
-  element.classList.add("selected-choice");
+  element.classList
+    .add(
+      "selected-choice"
+    );
+
 }
 
 function playCards() {
@@ -1513,87 +1952,151 @@ function playCards() {
   if (cardsBusy) return;
 
   if (balance < bet) {
-    document.getElementById("cardsMessage").textContent =
+
+    document
+      .getElementById(
+        "cardsMessage"
+      )
+      .textContent =
       "Недостаточно монет 🪙";
+
     return;
+
   }
 
   cardsBusy = true;
 
   const currentCard =
-    document.getElementById("currentCard");
+    document.getElementById(
+      "currentCard"
+    );
 
   const nextCard =
-    document.getElementById("nextCard");
+    document.getElementById(
+      "nextCard"
+    );
 
   const button =
-    document.getElementById("cardsButton");
+    document.getElementById(
+      "cardsButton"
+    );
 
   const current =
-    Number(currentCard.textContent);
+    Number(
+      currentCard.textContent
+    );
 
   button.disabled = true;
 
   balance -= bet;
+
   updateBalance();
 
-  nextCard.textContent = "🃏";
+  nextCard.textContent =
+    "🃏";
 
   setTimeout(() => {
 
     const result =
-      Math.floor(Math.random() * 13) + 1;
+      Math.floor(
+        Math.random() * 13
+      ) + 1;
 
-    nextCard.textContent = result;
+    nextCard.textContent =
+      result;
 
     const win =
-      (cardChoice === "higher" && result > current) ||
-      (cardChoice === "lower" && result < current);
+
+      (
+        cardChoice === "higher" &&
+        result > current
+      )
+
+      ||
+
+      (
+        cardChoice === "lower" &&
+        result < current
+      );
 
     if (win) {
 
-      const reward = bet * 2;
+      const reward =
+        bet * 2;
 
       balance += reward;
+
       updateBalance();
 
-      document.getElementById("cardsMessage").textContent =
-        "🎉 Победа! " + result +
-        " — +" + reward + " 🪙";
+      document
+        .getElementById(
+          "cardsMessage"
+        )
+        .textContent =
+        "🎉 Победа! +" +
+        reward +
+        " 🪙";
 
-    } else if (result === current) {
+    }
+
+    else if (
+      result === current
+    ) {
 
       balance += bet;
+
       updateBalance();
 
-      document.getElementById("cardsMessage").textContent =
-        "🤝 Ничья! Ставка возвращена";
+      document
+        .getElementById(
+          "cardsMessage"
+        )
+        .textContent =
+        "🤝 Ничья!";
 
-    } else {
+    }
 
-      document.getElementById("cardsMessage").textContent =
-        "😔 Выпала карта " + result;
+    else {
+
+      document
+        .getElementById(
+          "cardsMessage"
+        )
+        .textContent =
+        "😔 Выпала карта " +
+        result;
+
     }
 
     setTimeout(() => {
 
-      currentCard.textContent = result;
-      nextCard.textContent = "?";
+      currentCard.textContent =
+        result;
 
-      document.getElementById("cardsMessage").textContent =
+      nextCard.textContent =
+        "?";
+
+      document
+        .getElementById(
+          "cardsMessage"
+        )
+        .textContent =
         "Следующая карта будет выше или ниже " +
-        result + "?";
+        result +
+        "?";
 
     }, 1300);
 
     button.disabled = false;
+
     cardsBusy = false;
 
   }, 900);
+
 }
 
 
-/* CASE 1: CASEIK */
+/* CASEIK */
 
 let caseikBusy = false;
 
@@ -1604,93 +2107,139 @@ function openCaseik() {
   if (caseikBusy) return;
 
   if (balance < price) {
-    document.getElementById("caseikMessage").textContent =
+
+    document
+      .getElementById(
+        "caseikMessage"
+      )
+      .textContent =
       "Недостаточно монет 🪙";
+
     return;
+
   }
 
   caseikBusy = true;
 
   const box =
-    document.getElementById("caseikBox");
+    document.getElementById(
+      "caseikBox"
+    );
 
   const rewardElement =
-    document.getElementById("caseikReward");
+    document.getElementById(
+      "caseikReward"
+    );
 
   const message =
-    document.getElementById("caseikMessage");
+    document.getElementById(
+      "caseikMessage"
+    );
 
   const button =
-    document.getElementById("caseikButton");
+    document.getElementById(
+      "caseikButton"
+    );
 
   balance -= price;
+
   updateBalance();
 
   button.disabled = true;
-  button.textContent = "ОТКРЫВАЕМ...";
 
-  rewardElement.textContent = "?";
-  message.textContent = "📦 Кейс открывается...";
+  box.classList
+    .add(
+      "case-opening-animation"
+    );
 
-  box.classList.add("case-opening-animation");
+  const rewards = [
+    10,
+    25,
+    50,
+    100,
+    1000
+  ];
 
-  const rewards = [10, 25, 50, 100, 1000];
+  const interval =
+    setInterval(() => {
 
-  const interval = setInterval(() => {
+      rewardElement.textContent =
+        rewards[
+          Math.floor(
+            Math.random() *
+            rewards.length
+          )
+        ] +
+        " 🪙";
 
-    rewardElement.textContent =
-      rewards[Math.floor(Math.random() * rewards.length)] +
-      " 🪙";
-
-  }, 100);
+    }, 100);
 
   setTimeout(() => {
 
     clearInterval(interval);
 
-    box.classList.remove("case-opening-animation");
+    box.classList
+      .remove(
+        "case-opening-animation"
+      );
 
-    const random = Math.random() * 100;
+    const random =
+      Math.random() * 100;
 
     let reward;
 
     if (random < 45) {
+
       reward = 10;
+
     }
+
     else if (random < 75) {
+
       reward = 25;
+
     }
+
     else if (random < 90) {
+
       reward = 50;
+
     }
+
     else if (random < 98) {
+
       reward = 100;
+
     }
+
     else {
+
       reward = 1000;
+
     }
 
     rewardElement.textContent =
       reward + " 🪙";
 
     balance += reward;
+
     updateBalance();
 
     message.textContent =
       "🎉 Вам выпало: " +
-      reward + " 🪙";
+      reward +
+      " 🪙";
 
     button.disabled = false;
-    button.textContent =
-      "📦 ОТКРЫТЬ ЗА 100 🪙";
 
     caseikBusy = false;
 
   }, 1800);
+
 }
 
 
-/* CASE 2: ALL OR NOTHING */
+/* ALL OR NOTHING */
 
 let allOrNothingBusy = false;
 
@@ -1701,87 +2250,411 @@ function openAllOrNothing() {
   if (allOrNothingBusy) return;
 
   if (balance < price) {
-    document.getElementById("allOrNothingMessage").textContent =
+
+    document
+      .getElementById(
+        "allOrNothingMessage"
+      )
+      .textContent =
       "Недостаточно монет 🪙";
+
     return;
+
   }
 
   allOrNothingBusy = true;
 
   const box =
-    document.getElementById("allOrNothingBox");
+    document.getElementById(
+      "allOrNothingBox"
+    );
 
   const rewardElement =
-    document.getElementById("allOrNothingReward");
+    document.getElementById(
+      "allOrNothingReward"
+    );
 
   const message =
-    document.getElementById("allOrNothingMessage");
+    document.getElementById(
+      "allOrNothingMessage"
+    );
 
   const button =
-    document.getElementById("allOrNothingButton");
+    document.getElementById(
+      "allOrNothingButton"
+    );
 
   balance -= price;
+
   updateBalance();
 
   button.disabled = true;
-  button.textContent = "РЕШАЕТСЯ СУДЬБА...";
 
-  rewardElement.textContent = "?";
-  message.textContent =
-    "🎲 Все или ничего...";
+  box.classList
+    .add(
+      "case-opening-animation"
+    );
 
-  box.classList.add("case-opening-animation");
+  const interval =
+    setInterval(() => {
 
-  const rewards = [1, 1500];
+      rewardElement.textContent =
+        Math.random() < .5
+          ? "1 🪙"
+          : "1500 🪙";
 
-  const interval = setInterval(() => {
-
-    rewardElement.textContent =
-      rewards[Math.floor(Math.random() * rewards.length)] +
-      " 🪙";
-
-  }, 100);
+    }, 100);
 
   setTimeout(() => {
 
     clearInterval(interval);
 
-    box.classList.remove("case-opening-animation");
+    box.classList
+      .remove(
+        "case-opening-animation"
+      );
 
-    const random = Math.random() * 100;
-
-    let reward;
- 
-    if (random < 80) {
-      reward = 1;
-    } else {
-      reward = 1500;
-    }
+    const reward =
+      Math.random() < .8
+        ? 1
+        : 1500;
 
     rewardElement.textContent =
       reward + " 🪙";
 
     balance += reward;
+
     updateBalance();
 
     if (reward === 1500) {
 
       message.textContent =
-        "🔥 ДЖЕКПОТ! Вам выпало 1500 🪙";
+        "🔥 ДЖЕКПОТ! 1500 🪙";
 
-    } else {
+    }
+
+    else {
 
       message.textContent =
         "😔 Выпала 1 🪙";
+
     }
 
     button.disabled = false;
-    button.textContent =
-      "🎲 ОТКРЫТЬ ЗА 500 🪙";
 
     allOrNothingBusy = false;
 
   }, 2000);
+
+}
+
+
+/* PROMOCODES */
+
+function getPromos() {
+
+  return JSON.parse(
+    localStorage.getItem(
+      "xvohyPromos"
+    ) || "{}"
+  );
+
+}
+
+function savePromos(promos) {
+
+  localStorage.setItem(
+    "xvohyPromos",
+    JSON.stringify(promos)
+  );
+
+}
+
+function getUsedPromos() {
+
+  return JSON.parse(
+    localStorage.getItem(
+      "xvohyUsedPromos"
+    ) || "[]"
+  );
+
+}
+
+function saveUsedPromos(list) {
+
+  localStorage.setItem(
+    "xvohyUsedPromos",
+    JSON.stringify(list)
+  );
+
+}
+
+function activatePromo() {
+
+  const input =
+    document.getElementById(
+      "promoInput"
+    );
+
+  const message =
+    document.getElementById(
+      "promoMessage"
+    );
+
+  const code =
+    input.value
+      .trim()
+      .toUpperCase();
+
+  if (!code) {
+
+    message.textContent =
+      "Введите промокод";
+
+    return;
+
+  }
+
+  const promos =
+    getPromos();
+
+  const used =
+    getUsedPromos();
+
+  if (!promos[code]) {
+
+    message.textContent =
+      "❌ Такого промокода нет";
+
+    return;
+
+  }
+
+  if (used.includes(code)) {
+
+    message.textContent =
+      "⚠️ Вы уже использовали этот промокод";
+
+    return;
+
+  }
+
+  const reward =
+    Number(promos[code]);
+
+  balance += reward;
+
+  updateBalance();
+
+  used.push(code);
+
+  saveUsedPromos(used);
+
+  message.textContent =
+    "🎉 Получено +" +
+    reward +
+    " 🪙";
+
+  input.value = "";
+
+}
+
+
+/* ADMIN FUNCTIONS */
+
+function isAdmin() {
+
+  return (
+    telegramUserId === ADMIN_ID ||
+    (
+      !tg &&
+      localStorage.getItem(
+        "xvohyDemoAdmin"
+      ) === "true"
+    )
+  );
+
+}
+
+function adminAddCoins() {
+
+  if (!isAdmin()) return;
+
+  const input =
+    document.getElementById(
+      "adminCoins"
+    );
+
+  const amount =
+    Number(input.value);
+
+  if (
+    !amount ||
+    amount <= 0
+  ) {
+
+    alert(
+      "Введите количество"
+    );
+
+    return;
+
+  }
+
+  balance += amount;
+
+  updateBalance();
+
+  input.value = "";
+
+  alert(
+    "Добавлено " +
+    amount +
+    " монет"
+  );
+
+}
+
+function adminSetCoins() {
+
+  if (!isAdmin()) return;
+
+  const input =
+    document.getElementById(
+      "adminCoins"
+    );
+
+  const amount =
+    Number(input.value);
+
+  if (
+    amount < 0 ||
+    !Number.isFinite(amount)
+  ) {
+
+    alert(
+      "Введите правильное число"
+    );
+
+    return;
+
+  }
+
+  balance = amount;
+
+  updateBalance();
+
+  input.value = "";
+
+  alert(
+    "Баланс установлен"
+  );
+
+}
+
+function createPromo() {
+
+  if (!isAdmin()) return;
+
+  const codeInput =
+    document.getElementById(
+      "newPromoCode"
+    );
+
+  const rewardInput =
+    document.getElementById(
+      "newPromoReward"
+    );
+
+  const code =
+    codeInput.value
+      .trim()
+      .toUpperCase();
+
+  const reward =
+    Number(
+      rewardInput.value
+    );
+
+  if (
+    !code ||
+    !reward ||
+    reward <= 0
+  ) {
+
+    alert(
+      "Заполните название и награду"
+    );
+
+    return;
+
+  }
+
+  const promos =
+    getPromos();
+
+  promos[code] = reward;
+
+  savePromos(promos);
+
+  codeInput.value = "";
+  rewardInput.value = "";
+
+  renderPromoList();
+
+  alert(
+    "Промокод создан"
+  );
+
+}
+
+function renderPromoList() {
+
+  const list =
+    document.getElementById(
+      "promoList"
+    );
+
+  const promos =
+    getPromos();
+
+  const codes =
+    Object.keys(promos);
+
+  if (
+    codes.length === 0
+  ) {
+
+    list.textContent =
+      "Промокодов пока нет.";
+
+    return;
+
+  }
+
+  list.innerHTML = "";
+
+  codes.forEach(code => {
+
+    const row =
+      document.createElement(
+        "div"
+      );
+
+    row.style.marginBottom =
+      "8px";
+
+    row.textContent =
+      "🎟️ " +
+      code +
+      " — +" +
+      promos[code] +
+      " 🪙";
+
+    list.appendChild(row);
+
+  });
+
 }
 
 </script>
