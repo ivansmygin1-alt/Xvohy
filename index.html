@@ -1,179 +1,47 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XVOHY Games Pro</title>
-    <script src="https://telegram.org"></script>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 15px;
-            padding-bottom: 80px;
-            user-select: none;
-        }
-        h2, h3, h4 { margin-top: 10px; margin-bottom: 5px; }
-        
-        /* Кнопки действий */
-        .btn-action {
-            background: #2563eb; color: #fff; border: none; 
-            padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;
-        }
-        .btn-back {
-            background: #333; color: #fff; border: none; padding: 5px 10px; 
-            border-radius: 4px; margin-bottom: 10px; cursor: pointer;
-        }
-
-        /* Экраны приложения */
-        .app-screen { display: none; }
-        .app-screen.active { display: block; }
-
-        /* Всплывающее окно админки */
-        .admin-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
-            z-index: 10000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .admin-modal.open { display: block; }
-        .admin-card {
-            background: #1e1e1e; padding: 15px; border-radius: 10px; 
-            border: 1px solid #dc2626; margin-bottom: 15px;
-        }
-
-        /* Элементы админки */
-        .admin-btn {
-            background: #333; color: #fff; border: 1px solid #444;
-            padding: 8px; margin: 4px 0; border-radius: 6px; width: 100%; text-align: left; cursor: pointer;
-        }
-
-        /* Нижняя панель навигации (3 кнопки как в оригинале) */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
-            background: #1a1a1a; display: flex; justify-content: space-around;
-            align-items: center; border-top: 1px solid #2d2d2d; z-index: 999;
-        }
-        .nav-item {
-            background: none; border: none; color: #777; font-size: 12px;
-            display: flex; flex-direction: column; align-items: center; cursor: pointer; flex: 1;
-        }
-        .nav-item strong { font-size: 16px; margin-bottom: 2px; }
-        .nav-item.active { color: #ffffff; }
-
-        /* Иконка админки по умолчанию скрыта */
-        #admin-gear-btn { display: none; cursor: pointer; font-size: 20px; }
-        
-        .game-block, .case-block {
-            background: #1a1a1a; padding: 15px; border-radius: 8px; 
-            margin-bottom: 15px; border: 1px solid #2d2d2d;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- ВЕРХНИЙ БЛОК БАЛАНСА -->
-    <div style="text-align: center; margin-bottom: 15px;">
-        <span style="font-size: 14px; color: #888; font-weight: bold;">XVOHY Games Pro</span><br>
-        <span style="font-size: 10px; color: #555; letter-spacing: 1px;">TELEGRAM MINI APP</span>
-    </div>
-
-    <div style="background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #2d2d2d; position: relative;">
-        <div style="font-size: 11px; color: #888;">ВАШ БАЛАНС</div>
-        <div style="font-size: 26px; font-weight: bold; margin: 5px 0;">🪙 <span id="balance-val">1 000</span></div>
-        <div style="font-size: 11px; color: #555;">Виртуальные монеты</div>
-        
-        <!-- Кнопки управления вверху справа -->
-        <div style="position: absolute; right: 15px; top: 15px; display: flex; gap: 10px; align-items: center;">
-            <!-- Шестеренка админа: показывается только вам -->
-            <span id="admin-gear-btn" onclick="toggleAdminModal(true)">⚙</span>
-            <span style="cursor:pointer; font-size: 20px;" onclick="location.reload()">↻</span>
-        </div>
-    </div>
-
-    <hr style="border: 0; border-top: 1px solid #2d2d2d; margin: 15px 0;">
-
-    <!-- ================= ЭКРАНЫ ИГРЫ/КЕЙСЫ/ПРОФИЛЬ ================= -->
-
-    <!-- ОСНОВНАЯ ВКЛАДКА: ИГРЫ -->
-    <div id="screen-main-games" class="app-screen active">
-        <h2>Выберите игру 🎮</h2>
-        <p style="color: #888; font-size: 13px; margin-top: -5px;">Все игры используют только виртуальные монеты.</p>
-
-        <div class="game-block" onclick="openGame('slots')"><h3>🎰 Слоты</h3><p style="color:#aaa; font-size:13px;">Анимация барабанов и выигрыши.</p></div>
-        <div class="game-block" onclick="openGame('roulette')"><h3>🎡 Рулетка</h3><p style="color:#aaa; font-size:13px;">Красное, чёрное или зелёное.</p></div>
-        <div class="game-block" onclick="openGame('dice')"><h3>🎲 Dice</h3><p style="color:#aaa; font-size:13px;">Угадайте диапазон числа.</p></div>
-        <div class="game-block" onclick="openGame('cards')"><h3>🃏 Карты</h3><p style="color:#aaa; font-size:13px;">Угадайте: выше или ниже.</p></div>
-
-        <div class="game-block">
-            <h3>🎁 Промокод</h3>
-            <button class="btn-action" onclick="alert('Промокод активирован!')">Активировать</button>
-        </div>
-    </div>
-
-    <!-- ОСНОВНАЯ ВКЛАДКА: КЕЙСЫ -->
-    <div id="screen-main-cases" class="app-screen">
-        <h2>Кейсы 📦</h2>
-        <p style="color: #888; font-size: 13px; margin-top: -5px;">Открывайте сундуки и получайте ценные призы.</p>
-
-        <div class="case-block" onclick="openGame('case-100')"><h3>КЕЙСИК</h3><p>Стоимость: <strong>100 🪙</strong></p><p style="color:#aaa; font-size:13px;">Получите случайную награду.</p></div>
-        <div class="case-block" onclick="openGame('case-500')"><h3>ВСЁ ИЛИ НИЧЕГО</h3><p>Стоимость: <strong>500 🪙</strong></p><p style="color:#aaa; font-size:13px;">1 🪙 — 80% | 1500 🪙 — 20%</p></div>
-    </div>
-
-    <!-- ОСНОВНАЯ ВКЛАДКА: ПРОФИЛЬ -->
-    <div id="screen-main-profile" class="app-screen">
-        <h2>Профиль 🎒</h2>
-        <p style="color: #22c55e; font-size: 13px; margin-top: -5px;">Подключено успешно</p>
-
-        <div class="game-block">
-            <p>Имя игрока: <strong id="user-name-text">Player</strong></p>
-            <p>Telegram ID: <strong id="user-id-text">Демо-режим</strong></p>
-            <p>Игр сыграно: <strong>0</strong></p>
-            <p>Побед: <strong>0</strong></p>
-            <p>Всего выиграно: <strong>0</strong></p>
-            <p>Лучший баланс: <strong>1 000</strong></p>
-        </div>
-        
-        <h3>🏆 Лидерборд</h3>
-        <button class="btn-action" style="background:#333;" onclick="alert('Рейтинг обновлен!')">↻ Обновить</button>
-    </div>
-
-    <!-- ================= ПОД-ЭКРАНЫ ИГР (ОТКРЫВАЮТСЯ ВНУТРИ) ================= -->
-    <div id="screen-slots" class="app-screen"><button class="btn-back" onclick="backToMain()">← Назад</button><h2>Слоты 🎰</h2><p>DEMO</p><div style="font-size:30px; margin:15px 0;">🍒 💎 🍋</div><p>Нажмите SPIN</p><input type="number" value="100" style="background:#222; color:#fff; border:1px solid #444; padding:8px; border-radius:5px; width:80px;"><br><br><button class="btn-action">SPIN</button></div>
-    <div id="screen-roulette" class="app-screen"><button class="btn-back" onclick="backToMain()">← Назад</button><h2>Рулетка 🎡</h2><p>DEMO</p><div style="margin:10px 0;"><span style="color:red">🔴 ×2</span> | <span style="color:gray">⚫ ×2</span> | <span style="color:green">🟢 ×14</span></div><p>Выберите цвет и ставку</p><button class="btn-action">КРУТИТЬ</button></div>
-    <div id="screen-dice" class="app-screen"><button class="btn-back" onclick="backToMain()">← Назад</button><h2>Dice 🎲</h2><p>DEMO</p><div style="font-size:30px; margin:10px 0;">⚄</div><p>⬇ 1–3 ×2 | ⬆ 4–6 ×2</p><button class="btn-action">БРОСИТЬ</button></div>
-    <div id="screen-cards" class="app-screen"><button class="btn-back" onclick="backToMain()">← Назад</button><h2>Карты 🃏</h2><p>DEMO</p><div style="font-size:30px; margin:10px 0;">7⃣</div><p>Текущая карта: 7</p><p>⬇ Ниже | ⬆ Выше | 🎯 Равно ×5</p></div>
-    <div id="screen-case-100" class="app-screen"><button class="btn-back" onclick="backToMain()">← Назад</button><h2>Кейсик 📦</h2><p>100 🪙</p><p>50 🪙 100 🪙 250 🪙 500 🪙 1000 🪙</p><button class="btn-action">ОТКРЫТЬ ЗА 100 🪙</button></div>
-    <div id="screen-case-500" class="app-screen"><button class="btn-back" onclick="backToMain()">← Назад</button><h2>Всё или ничего 🟥⚫</h2><p>500 🪙</p><p>1 🪙 — 80% | 1500 🪙 — 20%</p><button class="btn-action">ИГРАТЬ ЗА 500 🪙</button></div>
-
-
-    <!-- ================= ОКНО АДМИН-ПАНЕЛИ (МОДАЛЬНОЕ) ================= -->
-    <div id="admin-modal-window" class="admin-modal">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3>👑 Owner Admin Panel</h3>
-            <span style="font-size:24px; cursor:pointer;" onclick="toggleAdminModal(false)">✕</span>
-        </div>
-        <hr style="border-top:1px solid #444;">
-
-        <div class="admin-card">
-            <h4>👥 Управление Игроками</h4>
-            <button class="admin-btn" onclick="alert('Игроки загружены!')">🔄 Загрузить игроков</button>
-            <p style="font-size:12px; color:#888;">Нажмите кнопку выше (работает и оффлайн)</p>
-            <button class="btn-action" style="width:100%; margin-top:5px;">Применить</button>
-        </div>
-
-        <div class="admin-card">
-            <h4>🎯 Режим шансов (RTP)</h4>
-            <button class="admin-btn" style="border-left:3px solid #22c55e;">🎲 Честная игра</button>
-            <button class="admin-btn" style="border-left:3px solid #3b82f6;">🚀 ПОДКРУТКА 100% (Победы)</button>
-            <button class="admin-btn" style="border-left:3px solid #ef4444;">💀 СЛИВ 100% (Проигрыши)</button>
-        </div>
-
-        <div class="admin-card">
-            <h4>🎟 Создать промокод</h4>
-Используйте код с осторожностью.ОК🔥 Полный сброс приложения🎮Игры📦Кейсы👤Профильconst tg = window.Telegram.WebApp;tg.expand();// СТРОГАЯ ЗАЩИТА: Доступ только для вашего аккаунтаconst MY_SECRET_ADMIN_ID = 8849284922;let activeMainTab = 'screen-main-games';// Навигация по нижней панели (Игры / Кейсы / Профиль)function switchMainTab(targetId, btnElement) {activeMainTab = targetId;backToMain(); // Сбрасываем открытые под-игрыdocument.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));btnElement.classList.add('active');}// Открытие игры или кейса (скрывает главное меню и панель)function openGame(gameType) {document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));document.getElementById('screen-' + gameType).classList.add('active');document.getElementById('main-nav-bar').style.display = 'none'; // Скрываем низ во время игры}// Возврат на текущую главную вкладку из игрыfunction backToMain() {document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));document.getElementById(activeMainTab).classList.add('active');document.getElementById('main-nav-bar').style.display = 'flex'; // Возвращаем меню}// Открытие / закрытие модального окна админкиfunction toggleAdminModal(show) {const modal = document.getElementById('admin-modal-window');if (show) modal.classList.add('open');else modal.classList.remove('open');}// Проверка Telegram данныхif (tg.initDataUnsafe && tg.initDataUnsafe.user) {const user = tg.initDataUnsafe.user;document.getElementById('user-name-text').innerText = user.first_name;document.getElementById('user-id-text').innerText = user.id;// Кнопка ⚙ показывается только если ваш ID совпадает на 100%if (user.id === MY_SECRET_ADMIN_ID) {document.getElementById('admin-gear-btn').style.display = 'inline-block';}} else {// Режим ПК/Браузера для тестовdocument.getElementById('admin-gear-btn').style.display = 'inline-block';}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>XVOHY Games Pro</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{
+  --bg:#090a10;--bg2:#0d0f17;--card:#12141d;--card2:#181b26;
+  --gold:#ffd65a;--gold2:#dca62d;--text:#f2f3f7;--muted:#9da3b3;
+  --line:#2a2e3d;--red:#ff4b5c;--green:#32d583;--blue:#62a7ff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100%;overflow-x:hidden}
+body{padding-bottom:92px}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:720px;margin:auto;padding:14px 14px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;margin:6px 2px 18px}
+.brand small{display:block;color:var(--muted);letter-spacing:4px;font-size:10px;margin-bottom:4px}
+.logo{font-weight:900;font-size:31px;letter-spacing:1px}.logo span{color:var(--gold)}
+.userbox{display:flex;gap:9px;align-items:center;background:var(--card);border:1px solid var(--line);padding:8px 11px;border-radius:16px}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#17130a;font-weight:900}
+.username{font-size:13px;font-weight:700}.usertag{font-size:11px;color:var(--muted);margin-top:3px}
+.balance{background:linear-gradient(110deg,rgba(255,214,90,.13),rgba(255,255,255,.02));border:1px solid #39384a;border-radius:28px;padding:24px 22px;display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+.balance-label{color:var(--muted);font-size:13px;letter-spacing:.6px}.money{font-size:40px;font-weight:900;margin:8px 0}
+.balance-sub{color:var(--muted);font-size:14px}
+.reset{width:56px;height:56px;border:0;border-radius:18px;background:#171a27;color:var(--gold);font-size:24px;display:grid;place-items:center}
+.page{display:none}.page.active{display:block}
+.welcome h2{font-size:32px;margin:0 0 9px}.welcome p{color:var(--muted);font-size:16px;margin:0 0 24px;line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.game-card{background:linear-gradient(145deg,var(--card),#0e1018);border:1px solid var(--line);border-radius:30px;padding:24px 18px;min-height:310px;transition:.18s;display:flex;flex-direction:column;align-items:center;text-align:center}
+.game-card:active{transform:scale(.98)}
+.game-icon-box{height:160px;width:100%;border:1px solid #282d3c;border-radius:24px;display:grid;place-items:center;background:radial-gradient(circle,rgba(255,214,90,.08),transparent 70%);margin-bottom:14px;overflow:hidden}
+.game-card h3{font-size:22px;margin:8px 0 6px}.game-card p{color:var(--muted);font-size:14px;line-height:1.4;margin:0}
+.promo-box,.panel,.profile-card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px;margin-top:22px}
+.promo-box h3,.panel h3{margin:0 0 16px;font-size:23px}
+.input-row{display:flex;gap:10px}.input-row input,.field input,.field select{width:100%;background:#0d1018;border:1px solid #303548;border-radius:15px;color:white;padding:15px;outline:none}
+.gold-btn,.action-btn{border:0;border-radius:15px;padding:15px 18px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#17130a}
+.secondary{background:#1a1e2b;color:var(--text);border:1px solid #303548}
+.danger{background:rgba(255,75,92,.15);color:var(--red);border:1px solid rgba(255,75,92,.3)}
+.game-page{display:none}.game-page.active{display:block}
+.back{border:1px solid var(--line);background:var(--card);color:var(--text);padding:11px 16px;border-radius:14px;margin-bottom:18px}
+.game-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.game-title h2{margin:0;font-size:28px}.badge{font-size:11px;color:#17130a;background:var(--gold);border-radius:999px;padding:6px 9px;font-weight:900}
+.machine,.roulette-board,.dice-board,.cards-board,.case-board,.rocket-board{background:var(-
+... 
