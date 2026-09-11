@@ -82,6 +82,21 @@ button{cursor:pointer}
 .admin-tools{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
 .admin-tools button{min-height:48px}
 .admin-note{color:var(--muted);font-size:12px;line-height:1.4;margin:0 0 12px}
+
+/* === CASE ICONS + ADMIN UI === */
+.case-card .game-icon{position:relative;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 50% 35%,rgba(255,214,90,.16),transparent 62%),linear-gradient(145deg,#171a27,#0a0c13)}
+.case-visual{width:118px;height:118px;position:relative;display:grid;place-items:center}
+.case-box{width:78px;height:62px;border-radius:10px 10px 14px 14px;background:linear-gradient(145deg,#ffd65a,#c58a20);border:3px solid #ffe38a;box-shadow:0 12px 28px rgba(0,0,0,.45);position:relative}
+.case-box:before{content:"";position:absolute;left:0;right:0;top:13px;height:12px;background:#9f6b16;border-top:2px solid #ffe38a;border-bottom:2px solid #ffe38a}
+.case-box:after{content:"";position:absolute;top:-11px;left:34px;width:10px;height:22px;border-radius:4px;background:#ffe38a;box-shadow:0 0 0 2px #9f6b16}
+.case-spark{position:absolute;font-size:25px;animation:caseSpark 1.8s ease-in-out infinite}
+.case-spark.s1{top:4px;right:4px}.case-spark.s2{bottom:8px;left:3px;animation-delay:-.8s}
+@keyframes caseSpark{50%{transform:translateY(-7px) scale(1.12);opacity:.7}}
+.case-card:nth-child(2) .game-icon{background:radial-gradient(circle at 50% 40%,rgba(255,75,92,.22),transparent 62%),linear-gradient(145deg,#1c151e,#0a0c13)}
+.risk-visual{font-size:74px;filter:drop-shadow(0 10px 16px rgba(0,0,0,.5));letter-spacing:-18px}
+.admin-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.admin-status{font-size:11px;color:var(--green);background:rgba(50,213,131,.1);border:1px solid rgba(50,213,131,.25);padding:5px 8px;border-radius:999px}
+
 </style>
 </head>
 <body>
@@ -110,8 +125,8 @@ button{cursor:pointer}
   <section class="page" id="casesPage">
     <div class="welcome"><h2>Кейсы 📦</h2><p>Красивые XVOHY-кейсы только за виртуальные монеты.</p></div>
     <div class="grid">
-      <div class="game-card case-card" onclick="openGame('caseik')"><div class="game-icon">📦✨</div><h3>Кейсик</h3><p>Стоимость: <b>100 🪙</b><br>Откройте и получите случайную награду.</p></div>
-      <div class="game-card case-card" onclick="openGame('allornothing')"><div class="game-icon">🟥⚫</div><h3>Всё или ничего</h3><p>Стоимость: <b>500 🪙</b><br>1 🪙 — 80%<br>1500 🪙 — 20%</p></div>
+      <div class="game-card case-card" onclick="openGame('caseik')"><div class="game-icon"><div class="case-visual"><span class="case-spark s1">✨</span><span class="case-spark s2">✦</span><div class="case-box"></div></div></div><h3>Кейсик</h3><p>Стоимость: <b>100 🪙</b><br>Откройте и получите случайную награду.</p></div>
+      <div class="game-card case-card" onclick="openGame('allornothing')"><div class="game-icon"><div class="case-visual"><div class="risk-visual">🟥⚫</div></div></div><h3>Всё или ничего</h3><p>Стоимость: <b>500 🪙</b><br>1 🪙 — 80%<br>1500 🪙 — 20%</p></div>
     </div>
   </section>
 
@@ -129,7 +144,7 @@ button{cursor:pointer}
     </div>
     <div class="panel"><h3>🏆 Лидерборд</h3><div id="leaderboard"></div><button class="action-btn secondary" style="width:100%;margin-top:14px" onclick="loadLeaderboard()">↻ Обновить</button></div>
     <div class="panel" id="adminLogin"><h3>🔐 Админ-доступ</h3><p class="admin-note">Локальная DEMO-защита панели.</p><div class="input-row"><input id="adminCode" type="password" placeholder="Код администратора"><button class="gold-btn" onclick="loginAdmin()">Войти</button></div></div>
-<div class="panel admin" id="adminPanel"><h3>🛠 Админ-панель</h3><p class="admin-note">Изменения сохраняются только в этом браузере. Для настоящей админки нужен сервер.</p><div class="input-row"><input id="adminAmount" type="number" placeholder="Монеты"><button class="gold-btn" onclick="adminAdd()">Добавить</button></div><div class="input-row" style="margin-top:10px"><input id="newPromo" placeholder="Промокод"><input id="newPromoReward" type="number" placeholder="Награда"><button class="gold-btn" onclick="createPromo()">Создать</button></div><div class="admin-tools"><button class="action-btn secondary" onclick="adminSetBalance()">💰 Установить баланс</button><button class="action-btn secondary" onclick="adminResetStats()">📊 Сбросить статистику</button><button class="action-btn secondary" onclick="adminResetAll()">♻️ Полный сброс</button><button class="action-btn secondary" onclick="toggleAdmin()">🔒 Скрыть</button></div></div>
+<div class="panel admin" id="adminPanel"><div class="admin-panel-head"><h3>🛠 Админ-панель</h3><span class="admin-status">OWNER</span></div><p class="admin-note">Изменения сохраняются только в этом браузере. Для настоящей админки нужен сервер.</p><div class="input-row"><input id="adminAmount" type="number" placeholder="Монеты"><button class="gold-btn" onclick="adminAdd()">Добавить</button></div><div class="input-row" style="margin-top:10px"><input id="newPromo" placeholder="Промокод"><input id="newPromoReward" type="number" placeholder="Награда"><button class="gold-btn" onclick="createPromo()">Создать</button></div><div class="admin-tools"><button class="action-btn secondary" onclick="adminSetBalance()">💰 Установить баланс</button><button class="action-btn secondary" onclick="adminResetStats()">📊 Сбросить статистику</button><button class="action-btn secondary" onclick="adminResetAll()">♻️ Полный сброс</button><button class="action-btn secondary" onclick="toggleAdmin()">🔒 Скрыть</button></div></div>
     <div class="panel"><b>LUCKY DEMO</b><br><span style="color:var(--muted)">Virtual coins only • Demo project</span></div>
   </section>
 
