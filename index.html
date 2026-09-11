@@ -4,279 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XVOHY Games Pro</title>
-    <!-- Подключаем Telegram Web Apps API -->
     <script src="https://telegram.org"></script>
     <style>
-        :root {
-            --tg-theme-bg-color: #18181b;
-            --tg-theme-text-color: #ffffff;
-            --tg-theme-button-color: #2563eb;
-            --tg-theme-button-text-color: #ffffff;
-            --tg-theme-secondary-bg-color: #27272a;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--tg-theme-bg-color);
-            color: var(--tg-theme-text-color);
+            background-color: #151515;
+            color: #ffffff;
             margin: 0;
-            padding: 0;
-            padding-bottom: 80px; /* Отступ под нижнюю панель */
-            user-select: none;
-        }
-
-        .header {
             padding: 15px;
-            background: var(--tg-theme-secondary-bg-color);
-            text-align: center;
-            border-bottom: 1px solid #3f3f46;
+            padding-bottom: 85px;
         }
-
-        /* Стили вкладок (экранов) */
-        .tab-content {
-            display: none;
-            padding: 20px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Карточки */
-        .card {
-            background: var(--tg-theme-secondary-bg-color);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #3f3f46;
-        }
-
-        .btn {
-            background: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-        }
+        h2, h3 { margin-top: 10px; margin-bottom: 10px; }
+        .balance-box { background: #222; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
+        .game-item, .case-item { background: #1c1c1c; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #333; }
         
-        .btn:disabled {
-            background: #4b5563;
-            cursor: not-allowed;
-        }
+        /* Стили экранов */
+        .tab-page { display: none; }
+        .tab-page.active { display: block; }
 
-        /* Модуль игры Ракета */
-        .rocket-area {
-            background: #09090b;
-            border-radius: 12px;
-            height: 180px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 15px;
-            border: 1px dashed #3f3f46;
-        }
-
-        .multiplier {
-            font-size: 42px;
-            font-weight: bold;
-            color: #22c55e;
-            z-index: 10;
-            transition: color 0.2s;
-        }
-
-        .multiplier.crashed {
-            color: #ef4444;
-        }
-
-        .rocket-animation {
-            font-size: 40px;
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            transition: transform 0.1s linear;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .input-group input {
-            flex: 1;
-            background: #09090b;
-            border: 1px solid #3f3f46;
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        /* Фикс нижней панели */
+        /* Исправленная нижняя панель */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 65px;
-            background: var(--tg-theme-secondary-bg-color);
+            height: 60px;
+            background: #1c1c1c;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 1px solid #3f3f46;
-            z-index: 1000;
+            border-top: 1px solid #333;
+            z-index: 9999;
         }
-
-        .nav-item {
-            flex: 1;
-            text-align: center;
+        .nav-btn {
             background: none;
             border: none;
-            color: #a1a1aa;
+            color: #888;
             font-size: 11px;
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            padding: 5px 0;
+            flex: 1;
         }
-
-        .nav-item span {
-            font-size: 18px;
-            margin-bottom: 2px;
-        }
-
-        .nav-item.active {
-            color: var(--tg-theme-button-color);
-        }
-
-        /* Таблица Лидерборда */
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .leaderboard-table th, .leaderboard-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #3f3f46;
-        }
-
-        .leader-row.me {
-            background: rgba(37, 99, 235, 0.15);
-            border-left: 3px solid var(--tg-theme-button-color);
-        }
-
-        #admin-nav-btn { display: none; }
-        .admin-badge { background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; display: inline-block; }
+        .nav-btn span { font-size: 18px; margin-bottom: 2px; }
+        .nav-btn.active { color: #2563eb; }
+        
+        /* Кнопка админа по умолчанию скрыта */
+        #admin-btn { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h2>XVOHY Games Pro</h2>
-        <div>🪙 Баланс: <span id="balance">1 000</span></div>
+    <div style="text-align: center; margin-bottom: 10px;">
+        <span style="font-weight: bold; color: #888;">XVOHY Games Pro</span>
+        <h3 style="margin: 5px 0;">TELEGRAM MINI APP</h3>
     </div>
 
-    <!-- ВКЛАДКА: ИГРЫ -->
-    <div id="games" class="tab-content active">
-        <h3>Ракета 🚀</h3>
+    <div class="balance-box">
+        <div style="font-size: 12px; color: #aaa;">ВАШ БАЛАНС</div>
+        <div style="font-size: 24px; font-weight: bold; margin: 5px 0;">🪙 <span id="user-balance">1 000</span></div>
+        <div style="font-size: 12px; color: #666;">Виртуальные монеты</div>
+    </div>
+
+    <!-- ЭКРАН 1: ИГРЫ -->
+    <div id="page-games" class="tab-page active">
+        <h2>Выберите игру 🎮</h2>
+        <p style="color: #888; font-size: 14px;">Все игры используют только виртуальные монеты.</p>
+
+        <div class="game-item">
+            <h3>🚀 Ракета</h3>
+            <p style="color: #aaa; font-size: 14px;">Успей забрать выигрыш до краша!</p>
+        </div>
+        <div class="game-item">
+            <h3>🎰 Слоты</h3>
+            <p style="color: #aaa; font-size: 14px;">Крути барабаны и ищи комбинации.</p>
+        </div>
+        <div class="game-item">
+            <h3>🎡 Рулетка</h3>
+            <p style="color: #aaa; font-size: 14px;">Красное, чёрное или зелёное.</p>
+        </div>
+        <div class="game-item">
+            <h3>🎲 Dice</h3>
+            <p style="color: #aaa; font-size: 14px;">Угадай диапазон выпавшего числа.</p>
+        </div>
+        <div class="game-item">
+            <h3>🃏 Карты</h3>
+            <p style="color: #aaa; font-size: 14px;">Угадай — следующая карта выше или ниже.</p>
+        </div>
         
-        <div class="rocket-area">
-            <div id="rocket-mult" class="multiplier">1.00x</div>
-            <div id="rocket-graphic" class="rocket-animation">🚀</div>
-        </div>
-
-        <div class="card" style="margin-bottom: 0;">
-            <label style="display:block; margin-bottom:8px; color:#a1a1aa; font-size:14px;">Ваша ставка:</label>
-            <div class="input-group">
-                <input type="number" id="bet-amount" value="100" min="10">
-            </div>
-            <div style="display:flex; gap:10px;">
-                <button id="btn-start" class="btn" onclick="startRocket()">ЗАПУСТИТЬ</button>
-                <button id="btn-cashout" class="btn" style="background:#22c55e;" onclick="cashoutRocket()" disabled>ЗАБРАТЬ</button>
-            </div>
+        <div class="game-item">
+            <h3>🎁 Промокод</h3>
+            <button style="width:100%; padding: 10px; background:#333; color:white; border:none; border-radius:5px;">Активировать</button>
         </div>
     </div>
 
-    <!-- ВКЛАДКА: КЕЙСЫ -->
-    <div id="cases" class="tab-content">
-        <h3>Кейсы 📦</h3>
-        <div class="card">
-            <h4>Кейсик (100 🪙)</h4>
-            <p>Награда до 1000 🪙</p>
-            <button class="btn">Открыть</button>
+    <!-- ЭКРАН 2: КЕЙСЫ -->
+    <div id="page-cases" class="tab-page">
+        <h2>Кейсы 📦</h2>
+        <p style="color: #888; font-size: 14px;">Открывайте сундуки и получайте виртуальные призы.</p>
+
+        <div class="case-item">
+            <h3>Кейсик</h3>
+            <p>Стоимость: <strong>100 🪙</strong></p>
+            <p style="color: #aaa; font-size: 14px;">Награда до 1000 🪙</p>
+        </div>
+        <div class="case-item">
+            <h3>Всё или ничего</h3>
+            <p>Стоимость: <strong>500 🪙</strong></p>
+            <p style="color: #aaa; font-size: 14px;">1 🪙 или 1500 🪙</p>
         </div>
     </div>
 
-    <!-- ВКЛАДКА: ЛИДЕРБОРД -->
-    <div id="leaderboard" class="tab-content">
-        <h3>🏆 Лидерборд</h3>
-        <div class="card" style="padding: 5px;">
-            <table class="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>Место</th>
-                        <th>Игрок</th>
-                        <th>Баланс</th>
-                    </tr>
-                </thead>
-                <tbody id="leaderboard-list"></tbody>
-            </table>
+    <!-- ЭКРАН 3: ПРОФИЛЬ -->
+    <div id="page-profile" class="tab-page">
+        <h2>Профиль 👤</h2>
+        <div class="game-item">
+            <p>Имя игрока: <strong id="p-name">Player</strong></p>
+            <p>Telegram ID: <strong id="p-id">Демо-режим</strong></p>
+            <p>Игр сыграно: <strong>0</strong></p>
+            <p>Побед: <strong>0</strong></p>
+            <p>Всего выиграно: <strong>0</strong></p>
+            <p>Лучший баланс: <strong>1 000</strong></p>
         </div>
     </div>
 
-    <!-- ВКЛАДКА: ПРОФИЛЬ -->
-    <div id="profile" class="tab-content">
-        <h3>Профиль 👤</h3>
-        <div class="card">
-            <p>Имя: <span id="user-name">Player</span></p>
-            <p>Telegram ID: <span id="user-id">Демо-режим</span></p>
+    <!-- ЭКРАН 4: НАСТРОЙКИ -->
+    <div id="page-settings" class="tab-page">
+        <h2>Настройки ⚙</h2>
+        <p style="color: #888; font-size: 14px;">Управляй аккаунтом, бонусами и доступными возможностями.</p>
+        <div class="game-item">🎟 Промокод (Получи бонус)</div>
+        <div class="game-item">👤 Профиль (Аккаунт и данные)</div>
+        <div class="game-item">🔔 Уведомления (Важные события)</div>
+        <div class="game-item">🎨 Внешний вид (Тёмная тема включена)</div>
+        <div class="game-item">🛡 Безопасность (Локальный режим)</div>
+    </div>
+
+    <!-- СКРЫТЫЙ ЭКРАН: АДМИНКА -->
+    <div id="page-admin" class="tab-page">
+        <h2>Панель Администратора 🛡</h2>
+        <div class="game-item" style="border-color: #dc2626;">
+            <h3>Управление балансом</h3>
+            <button onclick="addAdminCoins()" style="width:100%; padding: 12px; background:#dc2626; color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">Начислить себе +10 000 🪙</button>
         </div>
     </div>
 
-    <!-- ВКЛАДКА: НАСТРОЙКИ -->
-    <div id="settings" class="tab-content">
-        <h3>Настройки ⚙</h3>
-        <div class="card">
-            <p>Тёмная тема включена 🎨</p>
-        </div>
-    </div>
-
-    <!-- ВКЛАДКА: АДМИН-ПАНЕЛЬ -->
-    <div id="admin" class="tab-content">
-        <h3>Админ-Панель <span class="admin-badge">PRO</span></h3>
-        <div class="card">
-            <h4>Управление балансом</h4>
-            <button class="btn" style="background:#dc2626;" onclick="addCoins()">Начислить +10k монет</button>
-        </div>
-    </div>
-
-    <!-- НИЖНЯЯ ПАНЕЛЬ -->
+    <!-- НАВИГАЦИОННАЯ ПАНЕЛЬ -->
     <div class="bottom-nav">
-        <button class="nav-item active" onclick="switchTab('games', this)">
+        <button class="nav-btn active" onclick="openTab('page-games', this)">
             <span>🎮</span>Игры
         </button>
-        <button class="nav-item" onclick="switchTab('cases', this)">
+        <button class="nav-btn" onclick="openTab('page-cases', this)">
             <span>📦</span>Кейсы
         </button>
-        <button class="nav-item" onclick="switchTab('leaderboard', this)">
-            <span>🏆</span>Топ
-        </button>
-        <button class="nav-item" onclick="switchTab('profile', this)">
+        <button class="nav-btn" onclick="openTab('page-profile', this)">
             <span>👤</span>Профиль
         </button>
-        <button class="nav-item" onclick="switchTab('settings', this)">
+        <button class="nav-btn" onclick="openTab('page-settings', this)">
             <span>⚙</span>Настройки
         </button>
-        <button id="admin-nav-btn" class="nav-item" onclick="switchTab('admin', this)">
+        <!-- Появится только для ID 8849284922 -->
+        <button id="admin-btn" class="nav-btn" onclick="openTab('page-admin', this)">
             <span>🛡</span>Админ
         </button>
     </div>
@@ -285,50 +173,44 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const ADMIN_ID = 8849284922;
-        let myBalance = 1000;
-        let myName = "Player";
+        // Ваш точный ID для авторизации
+        const MY_ADMIN_ID = 8849284922;
+        let currentBalance = 1000;
 
-        // Переменные логики ракеты
-        let rocketInterval;
-        let currentMultiplier = 1.00;
-        let crashPoint = 0;
-        let currentBet = 0;
-        let isPlaying = false;
+        // Рабочее переключение вкладок
+        function openTab(pageId, btnElement) {
+            document.querySelectorAll('.tab-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
 
-        let fakePlayers = [
-            { name: "👑 Zeon_Crypto", balance: 250000 },
-            { name: "⚡ Whales_Shark", balance: 120000 },
-            { name: "💎 Skrappy", balance: 45000 },
-            { name: "Luna_X", balance: 12500 }
-        ];
-
-        function updateBalanceUI() {
-            document.getElementById('balance').innerText = myBalance.toLocaleString();
+            document.getElementById(pageId).classList.add('active');
+            btnElement.classList.add('active');
         }
 
-        // Логика запуска Ракеты
-        function startRocket() {
-            if (isPlaying) return;
+        // Функция админки
+        function addAdminCoins() {
+            currentBalance += 10000;
+            document.getElementById('user-balance').innerText = currentBalance.toLocaleString();
+            alert('Баланс пополнен!');
+        }
 
-            const betInput = document.getElementById('bet-amount');
-            currentBet = parseInt(betInput.value);
+        // Проверка аккаунта в Telegram
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const user = tg.initDataUnsafe.user;
+            document.getElementById('p-name').innerText = user.first_name;
+            document.getElementById('p-id').innerText = user.id;
 
-            if (isNaN(currentBet) || currentBet <= 0) {
-                alert('Введите корректную ставку!');
-                return;
+            // Если зашли вы — показываем кнопку управления
+            if (user.id === MY_ADMIN_ID) {
+                document.getElementById('admin-btn').style.display = 'flex';
             }
-            if (currentBet > myBalance) {
-                alert('Недостаточно монет на балансе!');
-                return;
-            }
-
-            // Списываем ставку
-            myBalance -= currentBet;
-            updateBalanceUI();
-            isPlaying = true;
-
-            // Сбрасываем UI ракеты
-            const rMult = document.getElementById('rocket-mult');
-            const rGraph = document.getElementById('rocket-graphic');
-rMult.classList.remove('crashed');rMult.innerText = "1.00x";rGraph.style.transform = "translate(0px, 0px) scale(1)";// Блокируем/разблокируем кнопкиdocument.getElementById('btn-start').disabled = true;document.getElementById('btn-cashout').disabled = false;betInput.disabled = true;currentMultiplier = 1.00;// Математика генерации краша (от 1.01x до 10.00x+)const rand = Math.random();if (rand < 0.05) {crashPoint = 1.00; // Моментальный краш (5% шанс)} else {crashPoint = parseFloat((1.01 + (Math.random() * 5) * (Math.random() * 2)).toFixed(2));}// Игровой цикл (обновление каждые 80мс)rocketInterval = setInterval(() => {currentMultiplier += 0.02;rMult.innerText = currentMultiplier.toFixed(2) + "x";// Анимация полета вверх и вправоlet progress = (currentMultiplier - 1) * 25;rGraph.style.transform = translate(${progress}px, -${progress}px);// Проверка на крашif (currentMultiplier >= crashPoint) {clearInterval(rocketInterval);isPlaying = false;rMult.classList.add('crashed');rMult.innerText = "CRASH " + crashPoint.toFixed(2) + "x";rGraph.style.transform = "scale(0)"; // Ракета исчезает// Возвращаем кнопкиdocument.getElementById('btn-start').disabled = false;document.getElementById('btn-cashout').disabled = true;betInput.disabled = false;}}, 80);}// Логика кнопки «ЗАБРАТЬ»function cashoutRocket() {if (!isPlaying) return;clearInterval(rocketInterval);isPlaying = false;const winAmount = Math.floor(currentBet * currentMultiplier);myBalance += winAmount;updateBalanceUI();alert(Вы успешно забрали выигрыш на коэффициенте ${currentMultiplier.toFixed(2)}x!\nПолучено: 🪙 ${winAmount});// Сброс кнопок до окончания полетаdocument.getElementById('btn-start').disabled = false;document.getElementById('btn-cashout').disabled = true;document.getElementById('bet-amount').disabled = false;}// Остальные функции структуры приложенияfunction renderLeaderboard() {const listContainer = document.getElementById('leaderboard-list');listContainer.innerHTML = "";let allPlayers = [...fakePlayers, { name: myName + " (Вы)", balance: myBalance, isMe: true }];allPlayers.sort((a, b) => b.balance - a.balance);allPlayers.forEach((player, index) => {let rankDisplay = index + 1;if (index === 0) rankDisplay = "🥇";if (index === 1) rankDisplay = "🥈";if (index === 2) rankDisplay = "🥉";const row = document.createElement('tr');row.className = player.isMe ? 'leader-row me' : '';row.innerHTML = <td>${rankDisplay}</td><td>${player.name}</td><td style="font-weight:bold;">🪙 ${player.balance.toLocaleString()}</td>;listContainer.appendChild(row);});}function switchTab(tabId, buttonElement) {document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));document.getElementById(tabId).classList.add('active');buttonElement.classList.add('active');if (tabId === 'leaderboard') renderLeaderboard();}function addCoins() {myBalance += 10000;updateBalanceUI();alert('Баланс успешно пополнен на 10 000 🪙!');}if (tg.initDataUnsafe && tg.initDataUnsafe.user) {const user = tg.initDataUnsafe.user;myName = user.first_name;document.getElementById('user-name').innerText = user.first_name;document.getElementById('user-id').innerText = user.id;if (user.id === ADMIN_ID) {document.getElementById('admin-nav-btn').style.display = 'flex';}} else {document.getElementById('admin-nav-btn').style.display = 'flex';}updateBalanceUI();
+        } else {
+            // Для тестов вне Телеграма кнопка видна
+            document.getElementById('admin-btn').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
