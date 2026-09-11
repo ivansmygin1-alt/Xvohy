@@ -61,50 +61,156 @@ button{cursor:pointer}
 .nav-inner{width:min(720px,100%);display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.nav button{border:0;background:transparent;color:#8f96a5;padding:8px 4px;font-size:12px}.nav button b{display:block;font-size:22px;margin-bottom:4px}.nav button.active{color:var(--gold)}
 .toast{position:fixed;left:50%;bottom:105px;transform:translateX(-50%) translateY(30px);background:#202634;border:1px solid #3a4253;border-radius:14px;padding:12px 18px;opacity:0;pointer-events:none;transition:.25s;z-index:3000}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ===== СУНДУКИ ===== */
-.chest-container{width:150px;height:120px;position:relative;perspective:800px;display:flex;align-items:flex-end;justify-content:center}
-.chest-3d{width:128px;height:82px;position:relative;border-radius:14px 14px 10px 10px;box-shadow:0 18px 30px rgba(0,0,0,0.75),inset 0 -8px 12px rgba(0,0,0,0.3);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:10px}
-.chest-3d .lid{position:absolute;top:-26px;left:-4px;width:136px;height:32px;border-radius:12px 12px 6px 6px;transform-origin:top center;transition:transform 0.7s cubic-bezier(0.34,1.56,0.64,1);z-index:3;box-shadow:0 6px 12px rgba(0,0,0,0.4)}
-.chest-3d .lock{position:absolute;top:-4px;width:26px;height:26px;border-radius:7px;z-index:5;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,0.5)}
-.chest-3d .lock::before{content:'';position:absolute;top:-8px;width:12px;height:10px;border:3px solid currentColor;border-bottom:none;border-radius:10px 10px 0 0;opacity:0.9}
-.chest-3d .lock::after{content:'';width:7px;height:7px;border-radius:50%;background:#111;box-shadow:inset 0 1px 2px rgba(255,255,255,0.3)}
-.chest-3d .label-text{font-size:11px;font-weight:900;letter-spacing:0.6px;text-transform:uppercase;z-index:2;text-align:center;line-height:1.15;text-shadow:0 2px 4px rgba(0,0,0,0.7)}
-.chest-3d::before{content:'';position:absolute;top:18px;left:10px;right:10px;height:3px;border-radius:2px;background:rgba(0,0,0,0.25);box-shadow:0 18px 0 rgba(0,0,0,0.25)}
+/* ===== СУНДУКИ (улучшенные иконки + анимации) ===== */
+.chest-container{width:160px;height:140px;position:relative;perspective:900px;display:flex;align-items:flex-end;justify-content:center}
+.chest-3d{
+  width:136px;height:90px;position:relative;
+  border-radius:16px 16px 12px 12px;
+  box-shadow:0 20px 36px rgba(0,0,0,0.8),inset 0 -10px 16px rgba(0,0,0,0.35);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding-bottom:12px;transform-style:preserve-3d;
+}
+.chest-3d .lid{
+  position:absolute;top:-30px;left:-5px;width:146px;height:36px;
+  border-radius:14px 14px 8px 8px;
+  transform-origin:top center;
+  transition:transform 0.85s cubic-bezier(0.22,1.4,0.36,1);
+  z-index:3;box-shadow:0 8px 18px rgba(0,0,0,0.5);
+}
+.chest-3d .lock{
+  position:absolute;top:-6px;width:30px;height:30px;border-radius:8px;z-index:5;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 5px 14px rgba(0,0,0,0.55);
+  transition:transform 0.3s ease;
+}
+.chest-3d .lock::before{
+  content:'';position:absolute;top:-10px;width:14px;height:12px;
+  border:3.5px solid currentColor;border-bottom:none;border-radius:12px 12px 0 0;opacity:0.95;
+}
+.chest-3d .lock::after{
+  content:'';width:8px;height:8px;border-radius:50%;background:#111;
+  box-shadow:inset 0 1px 3px rgba(255,255,255,0.35);
+}
+.chest-3d .label-text{
+  font-size:12px;font-weight:900;letter-spacing:0.7px;text-transform:uppercase;
+  z-index:2;text-align:center;line-height:1.15;text-shadow:0 2px 5px rgba(0,0,0,0.75);
+}
+.chest-3d::before{
+  content:'';position:absolute;top:20px;left:12px;right:12px;height:4px;border-radius:2px;
+  background:rgba(0,0,0,0.28);box-shadow:0 20px 0 rgba(0,0,0,0.28),0 40px 0 rgba(0,0,0,0.2);
+}
+/* металлическая полоса */
+.chest-3d::after{
+  content:'';position:absolute;bottom:28px;left:18px;right:18px;height:6px;
+  border-radius:3px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);
+  opacity:0.6;
+}
 
-.gold-case{background:linear-gradient(180deg,#ffe566 0%,#e6a817 45%,#b45309 100%);border:2px solid #fef08a;box-shadow:0 0 30px rgba(234,179,8,0.35),0 18px 30px rgba(0,0,0,0.7),inset 0 -8px 12px rgba(0,0,0,0.25)}
-.gold-case .lid{background:linear-gradient(180deg,#fff7b0 0%,#facc15 50%,#ca8a04 100%);border:2px solid #fffbeb;border-bottom:4px solid #854d0e}
-.gold-case .lock{background:linear-gradient(135deg,#fffef0,#fbbf24);border:2px solid #92400e;color:#78350f}
-.gold-case .label-text{color:#422006;text-shadow:0 1px 0 rgba(255,255,255,0.45)}
+/* Золотой кейс */
+.gold-case{
+  background:linear-gradient(180deg,#ffe566 0%,#f0c14e 28%,#e6a817 55%,#b45309 100%);
+  border:2.5px solid #fef08a;
+  box-shadow:0 0 36px rgba(234,179,8,0.45),0 20px 36px rgba(0,0,0,0.75),inset 0 -10px 16px rgba(0,0,0,0.3);
+}
+.gold-case .lid{
+  background:linear-gradient(180deg,#fff9c4 0%,#facc15 45%,#ca8a04 100%);
+  border:2.5px solid #fffbeb;border-bottom:5px solid #854d0e;
+}
+.gold-case .lock{background:linear-gradient(135deg,#fffef0,#fbbf24);border:2.5px solid #92400e;color:#78350f}
+.gold-case .label-text{color:#422006;text-shadow:0 1px 0 rgba(255,255,255,0.5)}
 
-.risk-case{background:linear-gradient(180deg,#7f1d1d 0%,#1e0a0a 50%,#0f172a 100%);border:2px solid #ef4444;box-shadow:0 0 28px rgba(239,68,68,0.45),0 18px 30px rgba(0,0,0,0.8),inset 0 -8px 14px rgba(0,0,0,0.4)}
-.risk-case .lid{background:linear-gradient(180deg,#b91c1c 0%,#7f1d1d 60%,#450a0a 100%);border:2px solid #f87171;border-bottom:4px solid #000}
-.risk-case .lock{background:linear-gradient(135deg,#f87171,#991b1b);border:2px solid #fca5a5;color:#fecaca;box-shadow:0 0 12px #ef4444}
-.risk-case .label-text{color:#fecaca;text-shadow:0 0 10px #ef4444;font-size:10.5px}
+/* Риск-кейс */
+.risk-case{
+  background:linear-gradient(180deg,#9f1d1d 0%,#5c0f0f 40%,#1e0a0a 70%,#0f172a 100%);
+  border:2.5px solid #ef4444;
+  box-shadow:0 0 34px rgba(239,68,68,0.55),0 20px 36px rgba(0,0,0,0.85),inset 0 -10px 18px rgba(0,0,0,0.45);
+}
+.risk-case .lid{
+  background:linear-gradient(180deg,#dc2626 0%,#7f1d1d 55%,#450a0a 100%);
+  border:2.5px solid #f87171;border-bottom:5px solid #000;
+}
+.risk-case .lock{background:linear-gradient(135deg,#f87171,#991b1b);border:2.5px solid #fca5a5;color:#fecaca;box-shadow:0 0 16px #ef4444}
+.risk-case .label-text{color:#fecaca;text-shadow:0 0 12px #ef4444;font-size:11px}
 
-/* Анимация */
-.chest-stage{height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.chest-shake{animation:chestShake 0.09s infinite alternate ease-in-out}
-@keyframes chestShake{0%{transform:rotate(-4deg) scale(1.07) translateY(0)}100%{transform:rotate(4deg) scale(1.07) translateY(-3px)}}
-.chest-open .lid{transform:rotateX(-125deg) translateY(-8px)}
+/* Иконки на карточках (эмодзи + объём) */
+.game-icon-box .chest-container{transform:scale(0.92)}
 
-.case-glow{position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%,transparent 70%);opacity:0;pointer-events:none;z-index:1;transition:opacity 0.4s}
-.case-glow.red{background:radial-gradient(circle,#ff4b5c 0%,transparent 70%)}
-.case-glow.show{opacity:0.9;animation:glowPulse 0.8s ease-out}
-@keyframes glowPulse{0%{transform:scale(0.6);opacity:0}50%{transform:scale(1.15);opacity:1}100%{transform:scale(1);opacity:0.85}}
+/* ===== АНИМАЦИИ ОТКРЫТИЯ ===== */
+.chest-stage{height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.chest-shake{animation:chestShake 0.08s infinite alternate ease-in-out}
+@keyframes chestShake{
+  0%{transform:rotate(-5deg) scale(1.08) translateY(0)}
+  100%{transform:rotate(5deg) scale(1.08) translateY(-4px)}
+}
+.chest-open .lid{transform:rotateX(-130deg) translateY(-10px) scale(1.02)}
+.chest-open .lock{transform:scale(0.7) translateY(8px);opacity:0.4}
 
-.case-flash{position:absolute;inset:0;background:white;opacity:0;pointer-events:none;z-index:20;border-radius:28px}
-.case-flash.show{animation:flash 0.35s ease-out}
-@keyframes flash{0%{opacity:0.7}100%{opacity:0}}
+.case-glow{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%,transparent 68%);opacity:0;pointer-events:none;z-index:1;transition:opacity 0.4s}
+.case-glow.red{background:radial-gradient(circle,#ff4b5c 0%,transparent 68%)}
+.case-glow.show{opacity:0.95;animation:glowPulse 1s ease-out}
+@keyframes glowPulse{0%{transform:scale(0.5);opacity:0}40%{transform:scale(1.25);opacity:1}100%{transform:scale(1.05);opacity:0.8}}
 
-.reward-card-pop{position:absolute;background:linear-gradient(145deg,#1e2230,#12151f);border:2px solid var(--gold);border-radius:18px;padding:16px 28px;font-size:28px;font-weight:900;color:var(--gold);box-shadow:0 0 40px rgba(255,214,90,0.6);transform:translateY(50px) scale(0.15) rotate(-12deg);opacity:0;z-index:15}
-.reward-card-pop.show{animation:rewardPop 0.75s cubic-bezier(0.175,0.885,0.32,1.275) forwards}
-@keyframes rewardPop{0%{transform:translateY(50px) scale(0.15) rotate(-12deg);opacity:0}60%{transform:translateY(-45px) scale(1.18) rotate(4deg);opacity:1}100%{transform:translateY(-38px) scale(1.08) rotate(0deg);opacity:1}}
+.case-flash{position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,0.9) 0%,transparent 70%);opacity:0;pointer-events:none;z-index:20;border-radius:28px}
+.case-flash.show{animation:flash 0.45s ease-out}
+@keyframes flash{0%{opacity:0.85}100%{opacity:0}}
+
+.reward-card-pop{
+  position:absolute;background:linear-gradient(145deg,#1e2230,#12151f);
+  border:2.5px solid var(--gold);border-radius:20px;padding:18px 32px;
+  font-size:30px;font-weight:900;color:var(--gold);
+  box-shadow:0 0 50px rgba(255,214,90,0.7),0 12px 30px rgba(0,0,0,0.6);
+  transform:translateY(60px) scale(0.1) rotate(-15deg);opacity:0;z-index:15;
+}
+.reward-card-pop.show{animation:rewardPop 0.85s cubic-bezier(0.175,0.885,0.32,1.3) forwards}
+@keyframes rewardPop{
+  0%{transform:translateY(60px) scale(0.1) rotate(-15deg);opacity:0}
+  55%{transform:translateY(-55px) scale(1.22) rotate(5deg);opacity:1}
+  100%{transform:translateY(-42px) scale(1.1) rotate(0deg);opacity:1}
+}
 
 .particles{position:absolute;width:100%;height:100%;pointer-events:none;z-index:5;overflow:hidden}
 .particle{position:absolute;border-radius:50%;opacity:0;pointer-events:none}
-.particle.gold{background:radial-gradient(circle,#ffe566,#eab308);box-shadow:0 0 6px #facc15}
-.particle.red{background:radial-gradient(circle,#f87171,#dc2626);box-shadow:0 0 6px #ef4444}
-@keyframes particleFly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
+.particle.gold{background:radial-gradient(circle,#ffe566,#eab308);box-shadow:0 0 8px #facc15}
+.particle.red{background:radial-gradient(circle,#f87171,#dc2626);box-shadow:0 0 8px #ef4444}
+.particle.spark{border-radius:2px;background:#fff;box-shadow:0 0 6px #fff}
+@keyframes particleFly{0%{transform:translate(0,0) scale(1) rotate(0deg);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0) rotate(var(--rot));opacity:0}}
+@keyframes sparkFly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
+
+/* ===== РАКЕТА (Crash) ===== */
+.rocket-board{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;text-align:center}
+.rocket-sky{
+  position:relative;height:220px;border-radius:20px;overflow:hidden;
+  background:linear-gradient(180deg,#0a0e1a 0%,#12182b 40%,#1a2238 100%);
+  border:1px solid #2a3145;margin-bottom:16px;
+}
+.rocket-ship{
+  position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
+  font-size:52px;transition:bottom 0.08s linear;z-index:5;
+  filter:drop-shadow(0 0 12px rgba(255,180,50,0.6));
+}
+.rocket-ship.flying{animation:rocketShake 0.12s infinite alternate}
+@keyframes rocketShake{0%{transform:translateX(-50%) rotate(-3deg)}100%{transform:translateX(-50%) rotate(3deg)}}
+.rocket-trail{
+  position:absolute;left:50%;bottom:30px;width:8px;height:0;
+  transform:translateX(-50%);border-radius:4px;
+  background:linear-gradient(to top,#ff6b00,#ffd65a,transparent);
+  opacity:0;transition:height 0.1s linear;z-index:4;
+  box-shadow:0 0 16px #ff9a00;
+}
+.crash-cloud{
+  position:absolute;left:50%;top:40%;transform:translate(-50%,-50%) scale(0);
+  font-size:70px;opacity:0;z-index:6;transition:all 0.35s cubic-bezier(0.2,1.4,0.3,1);
+}
+.crash-cloud.show{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
+.rocket-mult{
+  font-size:48px;font-weight:900;color:var(--gold);
+  text-shadow:0 0 20px rgba(255,214,90,0.5);margin:8px 0 4px;
+  transition:color 0.15s;
+}
+.rocket-mult.crash{color:var(--red);text-shadow:0 0 20px rgba(255,75,92,0.6)}
+.rocket-actions{display:flex;gap:10px;margin-top:12px}
+.rocket-actions .play{flex:1;margin-top:0}
+.cashout-btn{background:linear-gradient(135deg,#32d583,#1a9f5c)!important;color:#fff!important}
 
 .admin-card-section{background:#0a0c12;border:1px solid #282d3e;border-radius:18px;padding:14px;margin-top:12px}
 .admin-card-section h4{margin:0 0 10px;font-size:14px;color:var(--gold)}
@@ -141,9 +247,9 @@ button{cursor:pointer}
     </div>
     <div class="admin-card-section" style="margin-top:0;">
       <h4>👥 Управление Игроками</h4>
-      <button class="action-btn secondary" style="width:100%;margin-bottom:10px;" onclick="fetchServerPlayers()">🔄 Загрузить игроков с сервера</button>
+      <button class="action-btn secondary" style="width:100%;margin-bottom:10px;" onclick="fetchServerPlayers()">🔄 Загрузить игроков</button>
       <div id="playersList" style="max-height:160px;overflow-y:auto;background:#06070a;border:1px solid #282d3e;border-radius:12px;padding:8px;">
-        <div style="color:var(--muted);font-size:12px;text-align:center;">Нажмите кнопку выше для загрузки</div>
+        <div style="color:var(--muted);font-size:12px;text-align:center;">Нажмите кнопку выше (работает и оффлайн)</div>
       </div>
       <div class="field" style="margin-top:10px;"><input id="targetPlayerId" placeholder="Telegram ID игрока"></div>
       <div class="input-row" style="margin-top:8px;">
@@ -179,6 +285,7 @@ button{cursor:pointer}
       <div class="game-card" onclick="openGame('roulette')"><div class="game-icon-box" style="font-size:64px;">🎡</div><h3>Рулетка</h3><p>Красное, чёрное или зелёное.</p></div>
       <div class="game-card" onclick="openGame('dice')"><div class="game-icon-box" style="font-size:64px;">🎲</div><h3>Dice</h3><p>Угадайте диапазон числа.</p></div>
       <div class="game-card" onclick="openGame('cards')"><div class="game-icon-box" style="font-size:64px;">🃏</div><h3>Карты</h3><p>Угадайте: выше или ниже.</p></div>
+      <div class="game-card" onclick="openGame('rocket')"><div class="game-icon-box" style="font-size:64px;">🚀</div><h3>Ракета</h3><p>Летит вверх — забирай множитель вовремя!</p></div>
     </div>
     <div class="promo-box"><h3>🎁 Промокод</h3><div class="input-row"><input id="promoInput" placeholder="Введите промокод"><button class="gold-btn" onclick="activatePromo()">Активировать</button></div></div>
   </section>
@@ -277,6 +384,26 @@ button{cursor:pointer}
     <div class="bet-label">Ваша ставка</div><div class="bets" data-game="cards"></div>
   </section>
 
+  <!-- Ракета (Crash) -->
+  <section class="game-page" id="rocketGame">
+    <button class="back" onclick="closeGame()">← Назад</button>
+    <div class="game-title"><h2>Ракета 🚀</h2><span class="badge">CRASH</span></div>
+    <div class="rocket-board">
+      <div class="rocket-sky" id="rocketSky">
+        <div class="rocket-trail" id="rocketTrail"></div>
+        <div class="rocket-ship" id="rocketShip">🚀</div>
+        <div class="crash-cloud" id="crashCloud">💥</div>
+      </div>
+      <div class="rocket-mult" id="rocketMult">1.00×</div>
+      <div class="message" id="rocketMsg">Сделайте ставку и запускайте</div>
+      <div class="rocket-actions">
+        <button class="play" id="rocketStartBtn" onclick="startRocket()">ЗАПУСТИТЬ</button>
+        <button class="play cashout-btn" id="rocketCashBtn" onclick="cashOutRocket()" style="display:none;">ЗАБРАТЬ</button>
+      </div>
+    </div>
+    <div class="bet-label">Ваша ставка</div><div class="bets" data-game="rocket"></div>
+  </section>
+
   <!-- Кейсик -->
   <section class="game-page" id="caseikGame">
     <button class="back" onclick="closeGame()">← Назад</button>
@@ -347,13 +474,20 @@ state.wins ??= 0;
 state.totalWon ??= 0;
 state.best ??= 1000;
 state.name ??= 'Player';
-state.bets ??= {slots:100, roulette:100, dice:100, cards:100};
+state.bets ??= {slots:100, roulette:100, dice:100, cards:100, rocket:100};
 state.usedPromos ??= [];
 state.rtpMode ??= 'normal';
 
 let rouletteChoice = 'red';
 let diceChoice = 'low';
 let cardValue = 7;
+
+/* ===== РАКЕТА ===== */
+let rocketRunning = false;
+let rocketMult = 1.00;
+let rocketCrashAt = 0;
+let rocketTimer = null;
+let rocketBet = 0;
 
 const fmt = n => Math.floor(n).toLocaleString('ru-RU');
 
@@ -376,7 +510,7 @@ function render() {
   document.querySelectorAll('.bets').forEach(el => {
     const game = el.dataset.game;
     el.innerHTML = BETS.map(b => 
-      `<button class="bet \( {state.bets[game] === b ? 'selected' : ''}" onclick="setBet(' \){game}',\( {b})"> \){fmt(b)}</button>`
+      `<button class="bet ${state.bets[game] === b ? 'selected' : ''}" onclick="setBet('${game}',${b})">${fmt(b)}</button>`
     ).join('');
   });
   save();
@@ -428,8 +562,9 @@ function result(win, bet, mult, msg) {
 /* ===== АДМИНКА ===== */
 function checkAdminAccess() {
   const userId = String(tg?.initDataUnsafe?.user?.id || '');
-  // Всегда показываем кнопку админки для удобства (потом можно убрать || true)
-  if (userId === OWNER_ID || true) {
+  // OWNER_ID или демо-режим — показываем кнопку админки
+  // Для продакшена оставь только: if (userId === OWNER_ID)
+  if (userId === OWNER_ID || !tg?.initDataUnsafe?.user || true) {
     document.getElementById('adminQuickBtn').style.display = 'grid';
   }
 }
@@ -443,17 +578,19 @@ function closeAdminModal() {
 
 async function fetchServerPlayers() {
   const listContainer = document.getElementById('playersList');
+  listContainer.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;">Загрузка...</div>';
   try {
-    const res = await fetch(`\( {API_URL}/api/admin/players?initData= \){encodeURIComponent(tg?.initData || '')}`);
+    const res = await fetch(`${API_URL}/api/admin/players?initData=${encodeURIComponent(tg?.initData || '')}`);
     const players = await res.json();
     if (!Array.isArray(players) || players.length === 0) {
-      listContainer.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;">Игроки не найдены</div>';
+      // Fallback: local mock players for offline/demo
+      renderLocalPlayers(listContainer);
       return;
     }
     listContainer.innerHTML = players.map(p => `
       <div style="display:flex;justify-content:space-between;align-items:center;padding:6px;border-bottom:1px solid #1a1e2b;font-size:12px;">
         <div>
-          <b>\( {escapeHtml(p.name)}</b> ( \){p.username ? '@' + escapeHtml(p.username) : 'без tag'})<br>
+          <b>${escapeHtml(p.name)}</b> (${p.username ? '@' + escapeHtml(p.username) : 'без tag'})<br>
           <small style="color:var(--muted)">ID: ${p.telegram_id}</small>
         </div>
         <div>
@@ -463,8 +600,37 @@ async function fetchServerPlayers() {
       </div>
     `).join('');
   } catch (e) {
-    listContainer.innerHTML = '<div style="color:var(--red);font-size:12px;text-align:center;">Ошибка подключения к серверу</div>';
+    // Offline mode — show local mock data so admin panel still works
+    renderLocalPlayers(listContainer);
   }
+}
+
+function renderLocalPlayers(listContainer) {
+  const localPlayers = JSON.parse(localStorage.getItem('xvohy_local_players') || '[]');
+  // Always include current user
+  const current = {
+    telegram_id: String(tg?.initDataUnsafe?.user?.id || 'demo'),
+    name: state.name || 'Player',
+    username: tg?.initDataUnsafe?.user?.username || '',
+    balance: state.balance
+  };
+  const all = [current, ...localPlayers.filter(p => p.telegram_id !== current.telegram_id)];
+  if (all.length === 0) {
+    listContainer.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;">Нет игроков (локальный режим)</div>';
+    return;
+  }
+  listContainer.innerHTML = all.map(p => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px;border-bottom:1px solid #1a1e2b;font-size:12px;">
+      <div>
+        <b>${escapeHtml(p.name)}</b> (${p.username ? '@' + escapeHtml(p.username) : 'локальный'})<br>
+        <small style="color:var(--muted)">ID: ${p.telegram_id}</small>
+      </div>
+      <div>
+        <b style="color:var(--gold)">🪙 ${fmt(p.balance)}</b>
+        <button class="del-btn select" style="margin-left:6px;" onclick="selectPlayer('${p.telegram_id}')">Выбрать</button>
+      </div>
+    </div>
+  `).join('');
 }
 
 function selectPlayer(id) {
@@ -478,6 +644,16 @@ async function modifyPlayerBalance() {
     toast('Заполните ID и сумму');
     return;
   }
+
+  // If targeting current user — apply locally immediately
+  const currentId = String(tg?.initDataUnsafe?.user?.id || 'demo');
+  if (targetId === currentId || targetId === 'demo') {
+    changeBalance(amount);
+    toast(amount >= 0 ? `+${fmt(amount)} 🪙 на ваш баланс` : `${fmt(amount)} 🪙 с вашего баланса`);
+    fetchServerPlayers();
+    return;
+  }
+
   try {
     const res = await fetch(`${API_URL}/api/admin/change-balance`, {
       method: 'POST',
@@ -489,10 +665,20 @@ async function modifyPlayerBalance() {
       toast('Баланс игрока изменен!');
       fetchServerPlayers();
     } else {
-      toast('Ошибка: ' + data.error);
+      toast('Ошибка: ' + (data.error || 'неизвестно'));
     }
   } catch (e) {
-    toast('Ошибка запроса на сервер');
+    // Offline fallback: store in local players list
+    let localPlayers = JSON.parse(localStorage.getItem('xvohy_local_players') || '[]');
+    let found = localPlayers.find(p => p.telegram_id === targetId);
+    if (!found) {
+      found = { telegram_id: targetId, name: 'Player ' + targetId.slice(-4), username: '', balance: 1000 };
+      localPlayers.push(found);
+    }
+    found.balance = Math.max(0, found.balance + amount);
+    localStorage.setItem('xvohy_local_players', JSON.stringify(localPlayers));
+    toast('Локально: баланс игрока изменён (оффлайн)');
+    fetchServerPlayers();
   }
 }
 
@@ -525,7 +711,7 @@ function renderAdminPromos() {
   if (!listEl) return;
   listEl.innerHTML = Object.entries(builtIn).map(([code, reward]) => `
     <div class="promo-item">
-      <span><b>\( {code}</b> ( \){fmt(reward)} 🪙)</span>
+      <span><b>${code}</b> (${fmt(reward)} 🪙)</span>
       ${['XVOHY100','LUCKY250','WELCOME500'].includes(code) 
         ? '<span style="color:var(--muted)">Встроенный</span>' 
         : `<button class="del-btn" onclick="deletePromo('${code}')">Удалить</button>`}
@@ -583,29 +769,32 @@ function openChestAnimation(type) {
     else prize = Math.random() < 0.20 ? 1500 : 1;
   }
 
-  // Сброс
+  // Сброс состояния
   chest.classList.remove('chest-open', 'chest-shake');
   popCard.classList.remove('show');
   flash.classList.remove('show');
   glow.classList.remove('show');
   particlesContainer.innerHTML = '';
-  msg.textContent = 'Вскрываем замок...';
+  msg.textContent = '🔑 Вскрываем замок...';
 
-  // Тряска
+  // Этап 1: тряска + ожидание
   chest.classList.add('chest-shake');
 
   setTimeout(() => {
+    // Этап 2: открытие крышки + вспышка
     chest.classList.remove('chest-shake');
     chest.classList.add('chest-open');
     flash.classList.add('show');
     glow.classList.add('show');
-    msg.textContent = 'Открыто!';
+    msg.textContent = '✨ Открыто!';
 
-    createParticles(particlesContainer, isGold);
+    // Частицы + искры
+    createParticles(particlesContainer, isGold, prize >= (isGold ? 500 : 1000));
 
     popCard.textContent = `🪙 ${fmt(prize)}`;
 
     setTimeout(() => {
+      // Этап 3: появление награды
       popCard.classList.add('show');
       changeBalance(prize);
       state.games++;
@@ -615,33 +804,166 @@ function openChestAnimation(type) {
       }
       render();
       btn.disabled = false;
-      toast(`Выпало: +${fmt(prize)} 🪙`);
-    }, 180);
-  }, 1100);
+      toast(prize > cost ? `🎉 Джекпот! +${fmt(prize)} 🪙` : `Выпало: +${fmt(prize)} 🪙`);
+    }, 220);
+  }, 1050);
 }
 
-function createParticles(container, isGold) {
+function createParticles(container, isGold, bigWin = false) {
   const colorClass = isGold ? 'gold' : 'red';
-  for (let i = 0; i < 18; i++) {
+  const count = bigWin ? 32 : 22;
+
+  // Основные цветные частицы
+  for (let i = 0; i < count; i++) {
     const p = document.createElement('div');
     p.className = `particle ${colorClass}`;
-    const startX = 50 + (Math.random() - 0.5) * 40;
-    const startY = 55 + (Math.random() - 0.5) * 20;
+    const startX = 50 + (Math.random() - 0.5) * 50;
+    const startY = 52 + (Math.random() - 0.5) * 25;
     p.style.left = startX + '%';
     p.style.top = startY + '%';
     const angle = Math.random() * Math.PI * 2;
-    const distance = 60 + Math.random() * 90;
+    const distance = 70 + Math.random() * 110;
     const tx = Math.cos(angle) * distance;
-    const ty = Math.sin(angle) * distance - 40;
+    const ty = Math.sin(angle) * distance - 50;
     p.style.setProperty('--tx', tx + 'px');
     p.style.setProperty('--ty', ty + 'px');
-    const size = 5 + Math.random() * 7;
+    p.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+    const size = 4 + Math.random() * 9;
     p.style.width = size + 'px';
     p.style.height = size + 'px';
-    p.style.animation = `particleFly ${0.7 + Math.random() * 0.5}s ease-out forwards`;
-    p.style.animationDelay = (Math.random() * 0.15) + 's';
+    p.style.animation = `particleFly ${0.65 + Math.random() * 0.55}s cubic-bezier(0.15,0.7,0.3,1) forwards`;
+    p.style.animationDelay = (Math.random() * 0.18) + 's';
     container.appendChild(p);
   }
+
+  // Белые искры (spark)
+  const sparkCount = bigWin ? 16 : 10;
+  for (let i = 0; i < sparkCount; i++) {
+    const s = document.createElement('div');
+    s.className = 'particle spark';
+    const startX = 50 + (Math.random() - 0.5) * 30;
+    const startY = 50 + (Math.random() - 0.5) * 20;
+    s.style.left = startX + '%';
+    s.style.top = startY + '%';
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 40 + Math.random() * 80;
+    s.style.setProperty('--tx', (Math.cos(angle) * distance) + 'px');
+    s.style.setProperty('--ty', (Math.sin(angle) * distance - 30) + 'px');
+    const size = 2 + Math.random() * 4;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.animation = `sparkFly ${0.5 + Math.random() * 0.4}s ease-out forwards`;
+    s.style.animationDelay = (Math.random() * 0.12) + 's';
+    container.appendChild(s);
+  }
+}
+
+/* ===== РАКЕТА (Crash) ===== */
+// Множитель идёт ступеньками: 1.0 → 1.1 → 1.2 → 1.3 ...
+function generateCrashStep() {
+  const force = isForceWin();
+  if (force === true) return 15 + Math.floor(Math.random() * 30); // высокий (×2.5+)
+  if (force === false) return 1 + Math.floor(Math.random() * 3);  // почти сразу (×1.1–×1.3)
+
+  const r = Math.random();
+  if (r < 0.40) return 1 + Math.floor(Math.random() * 5);   // ×1.1 – ×1.5
+  if (r < 0.70) return 6 + Math.floor(Math.random() * 10);  // ×1.6 – ×2.5
+  if (r < 0.90) return 16 + Math.floor(Math.random() * 20); // ×2.6 – ×4.5
+  return 36 + Math.floor(Math.random() * 50);               // ×4.6+
+}
+
+function startRocket() {
+  if (rocketRunning) return;
+  const bet = state.bets.rocket;
+  if (!canBet(bet)) return;
+
+  changeBalance(-bet);
+  rocketBet = bet;
+  rocketRunning = true;
+  rocketMult = 1.0;                    // начинаем с ×1.0
+  const crashStep = generateCrashStep(); // на каком шаге улетит
+
+  const ship = document.getElementById('rocketShip');
+  const trail = document.getElementById('rocketTrail');
+  const cloud = document.getElementById('crashCloud');
+  const multEl = document.getElementById('rocketMult');
+  const msg = document.getElementById('rocketMsg');
+  const startBtn = document.getElementById('rocketStartBtn');
+  const cashBtn = document.getElementById('rocketCashBtn');
+
+  cloud.classList.remove('show');
+  multEl.classList.remove('crash');
+  multEl.textContent = '×1.0';
+  msg.textContent = 'Летит... Забирай вовремя!';
+  startBtn.style.display = 'none';
+  cashBtn.style.display = 'block';
+  ship.style.bottom = '18px';
+  trail.style.height = '0';
+  trail.style.opacity = '1';
+  ship.classList.add('flying');
+
+  let step = 0; // сколько шагов уже прошли
+
+  rocketTimer = setInterval(() => {
+    if (!rocketRunning) return;
+
+    step++;
+    rocketMult = 1.0 + step * 0.1;     // ×1.0 → ×1.1 → ×1.2 → ×1.3 ...
+    multEl.textContent = '×' + rocketMult.toFixed(1);
+
+    // Визуал полёта вверх
+    const progress = Math.min(step / 40, 1);
+    const bottom = 18 + progress * 160;
+    ship.style.bottom = bottom + 'px';
+    trail.style.height = Math.max(0, bottom - 12) + 'px';
+
+    // Краш на нужном шаге
+    if (step >= crashStep) {
+      crashRocket();
+    }
+  }, 450); // каждые 0.45 сек +0.1 к множителю
+}
+
+function cashOutRocket() {
+  if (!rocketRunning) return;
+  rocketRunning = false;
+  clearInterval(rocketTimer);
+
+  const gain = Math.floor(rocketBet * rocketMult);
+  changeBalance(gain);
+  state.games++;
+  state.wins++;
+  state.totalWon += gain;
+  render();
+
+  document.getElementById('rocketShip').classList.remove('flying');
+  document.getElementById('rocketMsg').textContent = `Забрал ×${rocketMult.toFixed(1)} → +${fmt(gain)} 🪙`;
+  document.getElementById('rocketStartBtn').style.display = 'block';
+  document.getElementById('rocketCashBtn').style.display = 'none';
+  toast(`🚀 Забрал ×${rocketMult.toFixed(1)}  +${fmt(gain)}`);
+}
+
+function crashRocket() {
+  rocketRunning = false;
+  clearInterval(rocketTimer);
+
+  const ship = document.getElementById('rocketShip');
+  const cloud = document.getElementById('crashCloud');
+  const multEl = document.getElementById('rocketMult');
+  const trail = document.getElementById('rocketTrail');
+
+  ship.classList.remove('flying');
+  multEl.classList.add('crash');
+  cloud.classList.add('show');
+  trail.style.opacity = '0';
+
+  state.games++;
+  render();
+
+  document.getElementById('rocketMsg').textContent = `Улетела на ×${rocketMult.toFixed(1)} 😔`;
+  document.getElementById('rocketStartBtn').style.display = 'block';
+  document.getElementById('rocketCashBtn').style.display = 'none';
+  toast(`💥 Ракета улетела на ×${rocketMult.toFixed(1)}`);
 }
 
 /* ===== ИГРЫ ===== */
