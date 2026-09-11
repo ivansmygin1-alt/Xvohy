@@ -62,110 +62,154 @@ button{cursor:pointer}
 .toast{position:fixed;left:50%;bottom:105px;transform:translateX(-50%) translateY(30px);background:#202634;border:1px solid #3a4253;border-radius:14px;padding:12px 18px;opacity:0;pointer-events:none;transition:.25s;z-index:3000}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* =========================================================
-   НОВЫЕ СТИЛЬНЫЕ 3D СУНДУКИ И АНИМАЦИЯ ОТКРЫТИЯ
+   ОБНОВЛЁННЫЕ 3D СУНДУКИ + КРУТАЯ АНИМАЦИЯ
 ========================================================= */
 .chest-container {
-  width: 140px;
-  height: 110px;
+  width: 150px;
+  height: 120px;
   position: relative;
-  perspective: 600px;
+  perspective: 800px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
-/* Базовый сундук */
 .chest-3d {
-  width: 120px;
-  height: 75px;
+  width: 128px;
+  height: 82px;
   position: relative;
-  border-radius: 12px;
-  box-shadow: 0 15px 25px rgba(0,0,0,0.7);
+  border-radius: 14px 14px 10px 10px;
+  box-shadow: 
+    0 18px 30px rgba(0,0,0,0.75),
+    inset 0 -8px 12px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
 }
 
-/* Крышка сундука */
 .chest-3d .lid {
   position: absolute;
-  top: -22px;
-  left: -2px;
-  width: 124px;
-  height: 28px;
-  border-radius: 10px 10px 4px 4px;
+  top: -26px;
+  left: -4px;
+  width: 136px;
+  height: 32px;
+  border-radius: 12px 12px 6px 6px;
   transform-origin: top center;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 3;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
 
-/* Замок */
 .chest-3d .lock {
   position: absolute;
-  top: -2px;
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  z-index: 4;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  top: -4px;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.chest-3d .lock::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  width: 12px;
+  height: 10px;
+  border: 3px solid currentColor;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  opacity: 0.9;
 }
 .chest-3d .lock::after {
-  content: ''; width: 6px; height: 6px; border-radius: 50%; background: #000;
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #111;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
 }
 
-/* Надпись на сундуке */
 .chest-3d .label-text {
   font-size: 11px;
   font-weight: 900;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
   z-index: 2;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  text-align: center;
+  line-height: 1.15;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
 }
 
-/* --- ВАР-1: ЗОЛОТОЙ "КЕЙСИК" --- */
+.chest-3d::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 10px;
+  right: 10px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(0,0,0,0.25);
+  box-shadow: 0 18px 0 rgba(0,0,0,0.25);
+}
+
+/* Золотой кейс */
 .gold-case {
-  background: linear-gradient(180deg, #ffe066 0%, #ca8a04 100%);
+  background: linear-gradient(180deg, #ffe566 0%, #e6a817 45%, #b45309 100%);
   border: 2px solid #fef08a;
-  box-shadow: 0 0 25px rgba(234, 179, 8, 0.3);
+  box-shadow: 
+    0 0 30px rgba(234, 179, 8, 0.35),
+    0 18px 30px rgba(0,0,0,0.7),
+    inset 0 -8px 12px rgba(0,0,0,0.25);
 }
 .gold-case .lid {
-  background: linear-gradient(180deg, #fef08a 0%, #eab308 100%);
-  border: 2px solid #fff;
-  border-bottom: 3px solid #854d0e;
+  background: linear-gradient(180deg, #fff7b0 0%, #facc15 50%, #ca8a04 100%);
+  border: 2px solid #fffbeb;
+  border-bottom: 4px solid #854d0e;
 }
 .gold-case .lock {
-  background: linear-gradient(135deg, #ffffff, #eab308);
-  border: 2px solid #713f12;
+  background: linear-gradient(135deg, #fffef0, #fbbf24);
+  border: 2px solid #92400e;
+  color: #78350f;
 }
-.gold-case .label-text { color: #422006; text-shadow: 0 1px 0 rgba(255,255,255,0.4); }
+.gold-case .label-text {
+  color: #422006;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.45);
+}
 
-/* --- ВАР-2: ЧЁРНО-КРАСНЫЙ "ВСЁ ИЛИ НИЧЕГО" --- */
+/* Риск-кейс */
 .risk-case {
-  background: linear-gradient(180deg, #450a0a 0%, #0f172a 100%);
-  border: 2px solid #dc2626;
-  box-shadow: 0 0 25px rgba(220, 38, 38, 0.4);
+  background: linear-gradient(180deg, #7f1d1d 0%, #1e0a0a 50%, #0f172a 100%);
+  border: 2px solid #ef4444;
+  box-shadow: 
+    0 0 28px rgba(239, 68, 68, 0.45),
+    0 18px 30px rgba(0,0,0,0.8),
+    inset 0 -8px 14px rgba(0,0,0,0.4);
 }
 .risk-case .lid {
-  background: linear-gradient(180deg, #991b1b 0%, #450a0a 100%);
-  border: 2px solid #ef4444;
-  border-bottom: 3px solid #000;
+  background: linear-gradient(180deg, #b91c1c 0%, #7f1d1d 60%, #450a0a 100%);
+  border: 2px solid #f87171;
+  border-bottom: 4px solid #000;
 }
 .risk-case .lock {
-  background: linear-gradient(135deg, #ef4444, #7f1d1d);
-  border: 2px solid #f87171;
-  box-shadow: 0 0 10px #dc2626;
+  background: linear-gradient(135deg, #f87171, #991b1b);
+  border: 2px solid #fca5a5;
+  color: #fecaca;
+  box-shadow: 0 0 12px #ef4444;
 }
-.risk-case .label-text { color: #fecaca; text-shadow: 0 0 8px #dc2626; line-height: 1.1; }
+.risk-case .label-text {
+  color: #fecaca;
+  text-shadow: 0 0 10px #ef4444;
+  font-size: 10.5px;
+}
 
-/* АНИМАЦИИ ОТКРЫТИЯ */
+/* ===== АНИМАЦИЯ ОТКРЫТИЯ ===== */
 .chest-stage {
-  height: 220px;
+  height: 260px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,53 +218,116 @@ button{cursor:pointer}
   overflow: hidden;
 }
 
-/* Тряска при открытии */
 .chest-shake {
-  animation: chestShake 0.12s infinite alternate ease-in-out;
+  animation: chestShake 0.09s infinite alternate ease-in-out;
 }
 @keyframes chestShake {
-  0% { transform: rotate(-3deg) scale(1.05); }
-  100% { transform: rotate(3deg) scale(1.05); }
+  0%   { transform: rotate(-4deg) scale(1.07) translateY(0); }
+  100% { transform: rotate(4deg) scale(1.07) translateY(-3px); }
 }
 
-/* Крышка откидывается */
 .chest-open .lid {
-  transform: rotateX(-110deg) translateY(-5px);
+  transform: rotateX(-125deg) translateY(-8px);
 }
 
-/* Вспышка света из сундука */
 .case-glow {
   position: absolute;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
   background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
   opacity: 0;
-  transition: opacity 0.5s;
   pointer-events: none;
+  transition: opacity 0.4s;
+  z-index: 1;
+}
+.case-glow.red {
+  background: radial-gradient(circle, #ff4b5c 0%, transparent 70%);
 }
 .chest-open + .case-glow {
-  opacity: 0.8;
+  opacity: 0.9;
+  animation: glowPulse 0.8s ease-out;
+}
+@keyframes glowPulse {
+  0%   { transform: scale(0.6); opacity: 0; }
+  50%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.85; }
 }
 
-/* Вылетающая награда */
+.case-flash {
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+  border-radius: 28px;
+}
+.case-flash.show {
+  animation: flash 0.35s ease-out;
+}
+@keyframes flash {
+  0%   { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
 .reward-card-pop {
   position: absolute;
-  background: #181b26;
+  background: linear-gradient(145deg, #1e2230, #12151f);
   border: 2px solid var(--gold);
-  border-radius: 16px;
-  padding: 15px 25px;
-  font-size: 26px;
+  border-radius: 18px;
+  padding: 16px 28px;
+  font-size: 28px;
   font-weight: 900;
   color: var(--gold);
-  box-shadow: 0 0 30px rgba(255,214,90,0.5);
-  transform: translateY(40px) scale(0.2);
+  box-shadow: 0 0 40px rgba(255, 214, 90, 0.6);
+  transform: translateY(50px) scale(0.15) rotate(-12deg);
   opacity: 0;
-  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
-  z-index: 10;
+  z-index: 15;
+  transition: none;
 }
 .reward-card-pop.show {
-  transform: translateY(-30px) scale(1.1);
-  opacity: 1;
+  animation: rewardPop 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes rewardPop {
+  0%   { transform: translateY(50px) scale(0.15) rotate(-12deg); opacity: 0; }
+  60%  { transform: translateY(-45px) scale(1.18) rotate(4deg); opacity: 1; }
+  100% { transform: translateY(-38px) scale(1.08) rotate(0deg); opacity: 1; }
+}
+
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+.particle.gold {
+  background: radial-gradient(circle, #ffe566, #eab308);
+  box-shadow: 0 0 6px #facc15;
+}
+.particle.red {
+  background: radial-gradient(circle, #f87171, #dc2626);
+  box-shadow: 0 0 6px #ef4444;
+}
+@keyframes particleFly {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
 }
 
 .admin-card-section{background:#0a0c12;border:1px solid #282d3e;border-radius:18px;padding:14px;margin-top:12px}
@@ -238,7 +345,6 @@ button{cursor:pointer}
     <div class="userbox"><div class="avatar" id="avatar">P</div><div><div class="username" id="profileNameTop">Player</div><div class="usertag" id="profileTag">@demo</div></div></div>
   </header>
 
-  <!-- БАЛАНС И АДМИНКА -->
   <section class="balance">
     <div>
       <div class="balance-label">ВАШ БАЛАНС</div>
@@ -251,7 +357,6 @@ button{cursor:pointer}
     </div>
   </section>
 
-  <!-- МОДАЛЬНАЯ АДМИН-ПАНЕЛЬ -->
   <div id="adminModal" class="panel" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:92%;max-width:500px;max-height:85vh;overflow-y:auto;z-index:2000;border:2px solid var(--gold);box-shadow:0 0 30px rgba(0,0,0,0.95);">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
       <h3 style="margin:0;">👑 Owner Admin Panel</h3>
@@ -295,7 +400,6 @@ button{cursor:pointer}
     <button class="action-btn danger" style="width:100%;margin-top:12px;" onclick="adminResetAll()">🔥 Полный сброс приложения</button>
   </div>
 
-  <!-- ОСНОВНЫЕ СТРАНИЦЫ -->
   <section class="page active" id="gamesPage">
     <div class="welcome"><h2>Выберите игру 🎮</h2><p>Все игры используют только виртуальные монеты.</p></div>
     <div class="grid">
@@ -307,12 +411,10 @@ button{cursor:pointer}
     <div class="promo-box"><h3>🎁 Промокод</h3><div class="input-row"><input id="promoInput" placeholder="Введите промокод"><button class="gold-btn" onclick="activatePromo()">Активировать</button></div></div>
   </section>
 
-  <!-- СТРАНИЦА КЕЙСОВ С ОБНОВЛЕННЫМИ 3D СУНДУКАМИ -->
   <section class="page" id="casesPage">
     <div class="welcome"><h2>Кейсы 📦</h2><p>Открывайте сундуки и получайте ценные призы.</p></div>
     <div class="grid">
       
-      <!-- 1. Золотой сундук "Кейсик" -->
       <div class="game-card" onclick="openGame('caseik')">
         <div class="game-icon-box">
           <div class="chest-container">
@@ -327,7 +429,6 @@ button{cursor:pointer}
         <p>Стоимость: <b>100 🪙</b><br>Получите случайную награду.</p>
       </div>
 
-      <!-- 2. Черно-красный сундук "Всё или Ничего" -->
       <div class="game-card" onclick="openGame('allornothing')">
         <div class="game-icon-box">
           <div class="chest-container">
@@ -360,7 +461,6 @@ button{cursor:pointer}
     <div class="panel"><h3>🏆 Лидерборд</h3><div id="leaderboard"></div><button class="action-btn secondary" style="width:100%;margin-top:14px" onclick="loadLeaderboard()">↻ Обновить</button></div>
   </section>
 
-  <!-- ИГРОВЫЕ СЕКЦИИ -->
   <section class="game-page" id="slotsGame">
     <button class="back" onclick="closeGame()">← Назад</button><div class="game-title"><h2>Слоты 🎰</h2><span class="badge">DEMO</span></div>
     <div class="machine"><div class="reels"><div class="reel" id="r1">🍒</div><div class="reel" id="r2">💎</div><div class="reel" id="r3">🍋</div></div><div class="message" id="slotsMsg">Нажмите SPIN</div></div>
@@ -385,12 +485,16 @@ button{cursor:pointer}
     <div class="bet-label">Ваша ставка</div><div class="bets" data-game="cards"></div>
   </section>
 
-  <!-- ИНТЕРАКТИВНОЕ ОТКРЫТИЕ ЗОЛОТОГО СУНДУКА -->
+  <!-- ЗОЛОТОЙ КЕЙС -->
   <section class="game-page" id="caseikGame">
-    <button class="back" onclick="closeGame()">← Назад</button><div class="game-title"><h2>Кейсик 📦</h2><span class="badge">100 🪙</span></div>
+    <button class="back" onclick="closeGame()">← Назад</button>
+    <div class="game-title"><h2>Кейсик 📦</h2><span class="badge">100 🪙</span></div>
     <div class="case-board">
       <div class="chest-stage">
+        <div class="case-flash" id="flash1"></div>
         <div class="case-glow"></div>
+        <div class="particles" id="particles1"></div>
+        
         <div class="chest-container" id="stageGoldChest">
           <div class="chest-3d gold-case">
             <div class="lid"></div>
@@ -398,20 +502,32 @@ button{cursor:pointer}
             <div class="label-text">КЕЙСИК</div>
           </div>
         </div>
+        
         <div class="reward-card-pop" id="popReward1">🪙 0</div>
       </div>
-      <div class="rewards"><span class="reward">50 🪙</span><span class="reward">100 🪙</span><span class="reward">250 🪙</span><span class="reward">500 🪙</span><span class="reward">1000 🪙</span></div>
+      
+      <div class="rewards">
+        <span class="reward">50 🪙</span>
+        <span class="reward">100 🪙</span>
+        <span class="reward">250 🪙</span>
+        <span class="reward">500 🪙</span>
+        <span class="reward">1000 🪙</span>
+      </div>
       <div class="message" id="caseMsg1">Нажмите кнопку, чтобы открыть сундук</div>
       <button class="play" id="btnOpen1" onclick="openChestAnimation('caseik')">ОТКРЫТЬ ЗА 100 🪙</button>
     </div>
   </section>
 
-  <!-- ИНТЕРАКТИВНОЕ ОТКРЫТИЕ РИСК-СУНДУКА -->
+  <!-- РИСК КЕЙС -->
   <section class="game-page" id="allornothingGame">
-    <button class="back" onclick="closeGame()">← Назад</button><div class="game-title"><h2>Всё или ничего 🟥⚫</h2><span class="badge">500 🪙</span></div>
+    <button class="back" onclick="closeGame()">← Назад</button>
+    <div class="game-title"><h2>Всё или ничего 🟥⚫</h2><span class="badge">500 🪙</span></div>
     <div class="case-board">
       <div class="chest-stage">
-        <div class="case-glow" style="background: radial-gradient(circle, var(--red) 0%, transparent 70%);"></div>
+        <div class="case-flash" id="flash2"></div>
+        <div class="case-glow red"></div>
+        <div class="particles" id="particles2"></div>
+        
         <div class="chest-container" id="stageRiskChest">
           <div class="chest-3d risk-case">
             <div class="lid"></div>
@@ -419,9 +535,14 @@ button{cursor:pointer}
             <div class="label-text">ВСЁ ИЛИ<br>НИЧЕГО</div>
           </div>
         </div>
+        
         <div class="reward-card-pop" id="popReward2">🪙 0</div>
       </div>
-      <div class="rewards"><span class="reward">1 🪙 — 80%</span><span class="reward">1500 🪙 — 20%</span></div>
+      
+      <div class="rewards">
+        <span class="reward">1 🪙 — 80%</span>
+        <span class="reward">1500 🪙 — 20%</span>
+      </div>
       <div class="message" id="caseMsg2">Испытай удачу за 500 🪙</div>
       <button class="play" id="btnOpen2" onclick="openChestAnimation('allornothing')">ИГРАТЬ ЗА 500 🪙</button>
     </div>
@@ -469,7 +590,7 @@ function render(){
 
  document.querySelectorAll('.bets').forEach(el=>{
    const game=el.dataset.game;
-   el.innerHTML=BETS.map(b=>`<button class="bet ${state.bets[game]===b?'selected':''}" onclick="setBet('${game}',${b})">${fmt(b)}</button>`).join('');
+   el.innerHTML=BETS.map(b=>`<button class="bet \( {state.bets[game]===b?'selected':''}" onclick="setBet(' \){game}',\( {b})"> \){fmt(b)}</button>`).join('');
  });
  save();
  renderAdminPromos();
@@ -503,7 +624,7 @@ function closeAdminModal(){ document.getElementById('adminModal').style.display=
 async function fetchServerPlayers(){
   const listContainer = document.getElementById('playersList');
   try {
-    const res = await fetch(`${API_URL}/api/admin/players?initData=${encodeURIComponent(tg?.initData||'')}`);
+    const res = await fetch(`\( {API_URL}/api/admin/players?initData= \){encodeURIComponent(tg?.initData||'')}`);
     const players = await res.json();
     if(!Array.isArray(players) || players.length===0){
       listContainer.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;">Игроки не найдены</div>';
@@ -512,7 +633,7 @@ async function fetchServerPlayers(){
     listContainer.innerHTML = players.map(p=>`
       <div style="display:flex;justify-content:space-between;align-items:center;padding:6px;border-bottom:1px solid #1a1e2b;font-size:12px;">
         <div>
-          <b>${escapeHtml(p.name)}</b> (${p.username ? '@'+escapeHtml(p.username) : 'без tag'})<br>
+          <b>\( {escapeHtml(p.name)}</b> ( \){p.username ? '@'+escapeHtml(p.username) : 'без tag'})<br>
           <small style="color:var(--muted)">ID: ${p.telegram_id}</small>
         </div>
         <div>
@@ -569,8 +690,8 @@ function renderAdminPromos(){
   if(!listEl) return;
   listEl.innerHTML=Object.entries(builtIn).map(([code, reward])=>`
     <div class="promo-item">
-      <span><b>${code}</b> (${fmt(reward)} 🪙)</span>
-      ${['XVOHY100','LUCKY250','WELCOME500'].includes(code) ? '<span style="color:var(--muted)">Встроенный</span>' : `<button class="del-btn" onclick="deletePromo('${code}')">Удалить</button>`}
+      <span><b>\( {code}</b> ( \){fmt(reward)} 🪙)</span>
+      \( {['XVOHY100','LUCKY250','WELCOME500'].includes(code) ? '<span style="color:var(--muted)">Встроенный</span>' : `<button class="del-btn" onclick="deletePromo(' \){code}')">Удалить</button>`}
     </div>
   `).join('');
 }
@@ -588,7 +709,7 @@ function adminResetAll(){
   location.reload();
 }
 
-/* ==================== РЕАЛИСТИЧНАЯ АНИМАЦИЯ СУНДУКА ==================== */
+/* ==================== КРУТАЯ АНИМАЦИЯ СУНДУКА ==================== */
 function isForceWin(){
   if(state.rtpMode==='always_win') return true;
   if(state.rtpMode==='always_lose') return false;
@@ -596,59 +717,105 @@ function isForceWin(){
 }
 
 function openChestAnimation(type){
-  const isGold = type==='caseik';
+  const isGold = type === 'caseik';
   const cost = isGold ? 100 : 500;
   const btn = document.getElementById(isGold ? 'btnOpen1' : 'btnOpen2');
   const chest = document.getElementById(isGold ? 'stageGoldChest' : 'stageRiskChest').querySelector('.chest-3d');
   const popCard = document.getElementById(isGold ? 'popReward1' : 'popReward2');
   const msg = document.getElementById(isGold ? 'caseMsg1' : 'caseMsg2');
+  const flash = document.getElementById(isGold ? 'flash1' : 'flash2');
+  const particlesContainer = document.getElementById(isGold ? 'particles1' : 'particles2');
 
   if(!canBet(cost)) return;
   changeBalance(-cost);
   btn.disabled = true;
 
-  // Рассчет приза
   let prize = 0;
   const force = isForceWin();
   if(isGold){
     if(force===true) prize = 1000;
     else if(force===false) prize = 50;
-    else { const pool = [50, 100, 250, 500, 1000]; prize = pool[Math.floor(Math.random()*pool.length)]; }
+    else {
+      const pool = [50, 100, 250, 500, 1000];
+      prize = pool[Math.floor(Math.random()*pool.length)];
+    }
   } else {
     if(force===true) prize = 1500;
     else if(force===false) prize = 1;
     else prize = Math.random() < 0.20 ? 1500 : 1;
   }
 
-  // 1. Сброс состояния анимаций
+  // Сброс
   chest.classList.remove('chest-open', 'chest-shake');
   popCard.classList.remove('show');
+  flash.classList.remove('show');
+  particlesContainer.innerHTML = '';
   msg.textContent = 'Вскрываем замок...';
 
-  // 2. Фаза тряски сундука
+  // 1. Тряска
   chest.classList.add('chest-shake');
 
   setTimeout(() => {
-    // 3. Фаза откидывания крышки
+    // 2. Открытие + вспышка
     chest.classList.remove('chest-shake');
     chest.classList.add('chest-open');
+    flash.classList.add('show');
     msg.textContent = 'Открыто!';
 
-    // 4. Появление вылетающей карточки награды
+    // 3. Частицы
+    createParticles(particlesContainer, isGold);
+
+    // 4. Награда
     popCard.textContent = `🪙 ${fmt(prize)}`;
+    
     setTimeout(() => {
       popCard.classList.add('show');
-      
-      // Зачисление денег и обновление статистики
+
       changeBalance(prize);
       state.games++;
-      if(prize > cost){ state.wins++; state.totalWon += prize; }
+      if(prize > cost){
+        state.wins++;
+        state.totalWon += prize;
+      }
       render();
       btn.disabled = false;
       toast(`Выпало: +${fmt(prize)} 🪙`);
-    }, 200);
+    }, 180);
 
-  }, 1200);
+  }, 1100);
+}
+
+function createParticles(container, isGold){
+  const colorClass = isGold ? 'gold' : 'red';
+  const count = 18;
+
+  for(let i = 0; i < count; i++){
+    const p = document.createElement('div');
+    p.className = `particle ${colorClass}`;
+    
+    const startX = 50 + (Math.random() - 0.5) * 40;
+    const startY = 55 + (Math.random() - 0.5) * 20;
+    
+    p.style.left = startX + '%';
+    p.style.top = startY + '%';
+    
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 60 + Math.random() * 90;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance - 40;
+    
+    p.style.setProperty('--tx', tx + 'px');
+    p.style.setProperty('--ty', ty + 'px');
+    
+    const size = 5 + Math.random() * 7;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    
+    p.style.animation = `particleFly ${0.7 + Math.random() * 0.5}s ease-out forwards`;
+    p.style.animationDelay = (Math.random() * 0.15) + 's';
+    
+    container.appendChild(p);
+  }
 }
 
 /* ==================== ИГРЫ ==================== */
