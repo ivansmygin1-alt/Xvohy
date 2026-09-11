@@ -43,10 +43,16 @@ button{cursor:pointer}
 .game-page{display:none}.game-page.active{display:block}
 .back{border:1px solid var(--line);background:var(--card);color:var(--text);padding:11px 16px;border-radius:14px;margin-bottom:18px}
 .game-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.game-title h2{margin:0;font-size:28px}.badge{font-size:11px;color:#17130a;background:var(--gold);border-radius:999px;padding:6px 9px;font-weight:900}
-.machine,.roulette-board,.dice-board,.cards-board,.case-board{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;text-align:center}
+.machine,.roulette-board,.dice-board,.cards-board,.case-board,.rocket-board{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;text-align:center}
 .reels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.reel{height:115px;display:grid;place-items:center;background:#090b11;border:1px solid #303548;border-radius:20px;font-size:58px}
 .spin-anim{animation:shake .55s linear infinite}@keyframes shake{50%{transform:translateY(-8px) rotate(1deg)}}
-.bet-label{margin:22px 0 10px;color:var(--muted);text-align:left}.bets{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.bet{padding:13px 4px;border-radius:13px;border:1px solid #303548;background:#121622;color:var(--text);font-weight:800}.bet.selected{background:var(--gold);color:#17130a;border-color:var(--gold)}
+.bet-label{margin:22px 0 10px;color:var(--muted);text-align:left}
+.bets{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.bet{padding:13px 4px;border-radius:13px;border:1px solid #303548;background:#121622;color:var(--text);font-weight:800;font-size:13px}
+.bet.selected{background:var(--gold);color:#17130a;border-color:var(--gold)}
+.custom-bet-row{display:none;margin-top:12px;gap:10px}
+.custom-bet-row.show{display:flex}
+.custom-bet-row input{flex:1;background:#0d1018;border:1px solid #303548;border-radius:13px;color:white;padding:12px;outline:none;text-align:center;font-weight:700}
 .play{width:100%;margin-top:16px;padding:17px;border:0;border-radius:17px;background:linear-gradient(135deg,var(--gold),var(--gold2));font-size:18px;font-weight:900;color:#17130a}
 .message{min-height:25px;color:var(--muted);margin-top:14px}
 .roulette-wheel{width:210px;height:210px;border-radius:50%;margin:0 auto 20px;background:conic-gradient(#ef4054 0 45deg,#17191f 45deg 90deg,#ef4054 90deg 135deg,#17191f 135deg 180deg,#ef4054 180deg 225deg,#17191f 225deg 270deg,#ef4054 270deg 315deg,#28b76f 315deg 360deg);border:8px solid #353a49;display:grid;place-items:center;transition:transform 1.8s cubic-bezier(.1,.7,.1,1)}
@@ -61,156 +67,50 @@ button{cursor:pointer}
 .nav-inner{width:min(720px,100%);display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.nav button{border:0;background:transparent;color:#8f96a5;padding:8px 4px;font-size:12px}.nav button b{display:block;font-size:22px;margin-bottom:4px}.nav button.active{color:var(--gold)}
 .toast{position:fixed;left:50%;bottom:105px;transform:translateX(-50%) translateY(30px);background:#202634;border:1px solid #3a4253;border-radius:14px;padding:12px 18px;opacity:0;pointer-events:none;transition:.25s;z-index:3000}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ===== СУНДУКИ (улучшенные иконки + анимации) ===== */
-.chest-container{width:160px;height:140px;position:relative;perspective:900px;display:flex;align-items:flex-end;justify-content:center}
-.chest-3d{
-  width:136px;height:90px;position:relative;
-  border-radius:16px 16px 12px 12px;
-  box-shadow:0 20px 36px rgba(0,0,0,0.8),inset 0 -10px 16px rgba(0,0,0,0.35);
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  padding-bottom:12px;transform-style:preserve-3d;
-}
-.chest-3d .lid{
-  position:absolute;top:-30px;left:-5px;width:146px;height:36px;
-  border-radius:14px 14px 8px 8px;
-  transform-origin:top center;
-  transition:transform 0.85s cubic-bezier(0.22,1.4,0.36,1);
-  z-index:3;box-shadow:0 8px 18px rgba(0,0,0,0.5);
-}
-.chest-3d .lock{
-  position:absolute;top:-6px;width:30px;height:30px;border-radius:8px;z-index:5;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 5px 14px rgba(0,0,0,0.55);
-  transition:transform 0.3s ease;
-}
-.chest-3d .lock::before{
-  content:'';position:absolute;top:-10px;width:14px;height:12px;
-  border:3.5px solid currentColor;border-bottom:none;border-radius:12px 12px 0 0;opacity:0.95;
-}
-.chest-3d .lock::after{
-  content:'';width:8px;height:8px;border-radius:50%;background:#111;
-  box-shadow:inset 0 1px 3px rgba(255,255,255,0.35);
-}
-.chest-3d .label-text{
-  font-size:12px;font-weight:900;letter-spacing:0.7px;text-transform:uppercase;
-  z-index:2;text-align:center;line-height:1.15;text-shadow:0 2px 5px rgba(0,0,0,0.75);
-}
-.chest-3d::before{
-  content:'';position:absolute;top:20px;left:12px;right:12px;height:4px;border-radius:2px;
-  background:rgba(0,0,0,0.28);box-shadow:0 20px 0 rgba(0,0,0,0.28),0 40px 0 rgba(0,0,0,0.2);
-}
-/* металлическая полоса */
-.chest-3d::after{
-  content:'';position:absolute;bottom:28px;left:18px;right:18px;height:6px;
-  border-radius:3px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);
-  opacity:0.6;
-}
+/* ===== СУНДУКИ ===== */
+.chest-container{width:150px;height:120px;position:relative;perspective:800px;display:flex;align-items:flex-end;justify-content:center}
+.chest-3d{width:128px;height:82px;position:relative;border-radius:14px 14px 10px 10px;box-shadow:0 18px 30px rgba(0,0,0,0.75),inset 0 -8px 12px rgba(0,0,0,0.3);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:10px}
+.chest-3d .lid{position:absolute;top:-26px;left:-4px;width:136px;height:32px;border-radius:12px 12px 6px 6px;transform-origin:top center;transition:transform 0.7s cubic-bezier(0.34,1.56,0.64,1);z-index:3;box-shadow:0 6px 12px rgba(0,0,0,0.4)}
+.chest-3d .lock{position:absolute;top:-4px;width:26px;height:26px;border-radius:7px;z-index:5;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,0.5)}
+.chest-3d .lock::before{content:'';position:absolute;top:-8px;width:12px;height:10px;border:3px solid currentColor;border-bottom:none;border-radius:10px 10px 0 0;opacity:0.9}
+.chest-3d .lock::after{content:'';width:7px;height:7px;border-radius:50%;background:#111;box-shadow:inset 0 1px 2px rgba(255,255,255,0.3)}
+.chest-3d .label-text{font-size:11px;font-weight:900;letter-spacing:0.6px;text-transform:uppercase;z-index:2;text-align:center;line-height:1.15;text-shadow:0 2px 4px rgba(0,0,0,0.7)}
+.chest-3d::before{content:'';position:absolute;top:18px;left:10px;right:10px;height:3px;border-radius:2px;background:rgba(0,0,0,0.25);box-shadow:0 18px 0 rgba(0,0,0,0.25)}
 
-/* Золотой кейс */
-.gold-case{
-  background:linear-gradient(180deg,#ffe566 0%,#f0c14e 28%,#e6a817 55%,#b45309 100%);
-  border:2.5px solid #fef08a;
-  box-shadow:0 0 36px rgba(234,179,8,0.45),0 20px 36px rgba(0,0,0,0.75),inset 0 -10px 16px rgba(0,0,0,0.3);
-}
-.gold-case .lid{
-  background:linear-gradient(180deg,#fff9c4 0%,#facc15 45%,#ca8a04 100%);
-  border:2.5px solid #fffbeb;border-bottom:5px solid #854d0e;
-}
-.gold-case .lock{background:linear-gradient(135deg,#fffef0,#fbbf24);border:2.5px solid #92400e;color:#78350f}
-.gold-case .label-text{color:#422006;text-shadow:0 1px 0 rgba(255,255,255,0.5)}
+.gold-case{background:linear-gradient(180deg,#ffe566 0%,#e6a817 45%,#b45309 100%);border:2px solid #fef08a;box-shadow:0 0 30px rgba(234,179,8,0.35),0 18px 30px rgba(0,0,0,0.7),inset 0 -8px 12px rgba(0,0,0,0.25)}
+.gold-case .lid{background:linear-gradient(180deg,#fff7b0 0%,#facc15 50%,#ca8a04 100%);border:2px solid #fffbeb;border-bottom:4px solid #854d0e}
+.gold-case .lock{background:linear-gradient(135deg,#fffef0,#fbbf24);border:2px solid #92400e;color:#78350f}
+.gold-case .label-text{color:#422006;text-shadow:0 1px 0 rgba(255,255,255,0.45)}
 
-/* Риск-кейс */
-.risk-case{
-  background:linear-gradient(180deg,#9f1d1d 0%,#5c0f0f 40%,#1e0a0a 70%,#0f172a 100%);
-  border:2.5px solid #ef4444;
-  box-shadow:0 0 34px rgba(239,68,68,0.55),0 20px 36px rgba(0,0,0,0.85),inset 0 -10px 18px rgba(0,0,0,0.45);
-}
-.risk-case .lid{
-  background:linear-gradient(180deg,#dc2626 0%,#7f1d1d 55%,#450a0a 100%);
-  border:2.5px solid #f87171;border-bottom:5px solid #000;
-}
-.risk-case .lock{background:linear-gradient(135deg,#f87171,#991b1b);border:2.5px solid #fca5a5;color:#fecaca;box-shadow:0 0 16px #ef4444}
-.risk-case .label-text{color:#fecaca;text-shadow:0 0 12px #ef4444;font-size:11px}
+.risk-case{background:linear-gradient(180deg,#7f1d1d 0%,#1e0a0a 50%,#0f172a 100%);border:2px solid #ef4444;box-shadow:0 0 28px rgba(239,68,68,0.45),0 18px 30px rgba(0,0,0,0.8),inset 0 -8px 14px rgba(0,0,0,0.4)}
+.risk-case .lid{background:linear-gradient(180deg,#b91c1c 0%,#7f1d1d 60%,#450a0a 100%);border:2px solid #f87171;border-bottom:4px solid #000}
+.risk-case .lock{background:linear-gradient(135deg,#f87171,#991b1b);border:2px solid #fca5a5;color:#fecaca;box-shadow:0 0 12px #ef4444}
+.risk-case .label-text{color:#fecaca;text-shadow:0 0 10px #ef4444;font-size:10.5px}
 
-/* Иконки на карточках (эмодзи + объём) */
-.game-icon-box .chest-container{transform:scale(0.92)}
+/* Анимация сундуков */
+.chest-stage{height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.chest-shake{animation:chestShake 0.09s infinite alternate ease-in-out}
+@keyframes chestShake{0%{transform:rotate(-4deg) scale(1.07) translateY(0)}100%{transform:rotate(4deg) scale(1.07) translateY(-3px)}}
+.chest-open .lid{transform:rotateX(-125deg) translateY(-8px)}
 
-/* ===== АНИМАЦИИ ОТКРЫТИЯ ===== */
-.chest-stage{height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.chest-shake{animation:chestShake 0.08s infinite alternate ease-in-out}
-@keyframes chestShake{
-  0%{transform:rotate(-5deg) scale(1.08) translateY(0)}
-  100%{transform:rotate(5deg) scale(1.08) translateY(-4px)}
-}
-.chest-open .lid{transform:rotateX(-130deg) translateY(-10px) scale(1.02)}
-.chest-open .lock{transform:scale(0.7) translateY(8px);opacity:0.4}
+.case-glow{position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%,transparent 70%);opacity:0;pointer-events:none;z-index:1;transition:opacity 0.4s}
+.case-glow.red{background:radial-gradient(circle,#ff4b5c 0%,transparent 70%)}
+.case-glow.show{opacity:0.9;animation:glowPulse 0.8s ease-out}
+@keyframes glowPulse{0%{transform:scale(0.6);opacity:0}50%{transform:scale(1.15);opacity:1}100%{transform:scale(1);opacity:0.85}}
 
-.case-glow{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%,transparent 68%);opacity:0;pointer-events:none;z-index:1;transition:opacity 0.4s}
-.case-glow.red{background:radial-gradient(circle,#ff4b5c 0%,transparent 68%)}
-.case-glow.show{opacity:0.95;animation:glowPulse 1s ease-out}
-@keyframes glowPulse{0%{transform:scale(0.5);opacity:0}40%{transform:scale(1.25);opacity:1}100%{transform:scale(1.05);opacity:0.8}}
+.case-flash{position:absolute;inset:0;background:white;opacity:0;pointer-events:none;z-index:20;border-radius:28px}
+.case-flash.show{animation:flash 0.35s ease-out}
+@keyframes flash{0%{opacity:0.7}100%{opacity:0}}
 
-.case-flash{position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,0.9) 0%,transparent 70%);opacity:0;pointer-events:none;z-index:20;border-radius:28px}
-.case-flash.show{animation:flash 0.45s ease-out}
-@keyframes flash{0%{opacity:0.85}100%{opacity:0}}
-
-.reward-card-pop{
-  position:absolute;background:linear-gradient(145deg,#1e2230,#12151f);
-  border:2.5px solid var(--gold);border-radius:20px;padding:18px 32px;
-  font-size:30px;font-weight:900;color:var(--gold);
-  box-shadow:0 0 50px rgba(255,214,90,0.7),0 12px 30px rgba(0,0,0,0.6);
-  transform:translateY(60px) scale(0.1) rotate(-15deg);opacity:0;z-index:15;
-}
-.reward-card-pop.show{animation:rewardPop 0.85s cubic-bezier(0.175,0.885,0.32,1.3) forwards}
-@keyframes rewardPop{
-  0%{transform:translateY(60px) scale(0.1) rotate(-15deg);opacity:0}
-  55%{transform:translateY(-55px) scale(1.22) rotate(5deg);opacity:1}
-  100%{transform:translateY(-42px) scale(1.1) rotate(0deg);opacity:1}
-}
+.reward-card-pop{position:absolute;background:linear-gradient(145deg,#1e2230,#12151f);border:2px solid var(--gold);border-radius:18px;padding:16px 28px;font-size:28px;font-weight:900;color:var(--gold);box-shadow:0 0 40px rgba(255,214,90,0.6);transform:translateY(50px) scale(0.15) rotate(-12deg);opacity:0;z-index:15}
+.reward-card-pop.show{animation:rewardPop 0.75s cubic-bezier(0.175,0.885,0.32,1.275) forwards}
+@keyframes rewardPop{0%{transform:translateY(50px) scale(0.15) rotate(-12deg);opacity:0}60%{transform:translateY(-45px) scale(1.18) rotate(4deg);opacity:1}100%{transform:translateY(-38px) scale(1.08) rotate(0deg);opacity:1}}
 
 .particles{position:absolute;width:100%;height:100%;pointer-events:none;z-index:5;overflow:hidden}
 .particle{position:absolute;border-radius:50%;opacity:0;pointer-events:none}
-.particle.gold{background:radial-gradient(circle,#ffe566,#eab308);box-shadow:0 0 8px #facc15}
-.particle.red{background:radial-gradient(circle,#f87171,#dc2626);box-shadow:0 0 8px #ef4444}
-.particle.spark{border-radius:2px;background:#fff;box-shadow:0 0 6px #fff}
-@keyframes particleFly{0%{transform:translate(0,0) scale(1) rotate(0deg);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0) rotate(var(--rot));opacity:0}}
-@keyframes sparkFly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
-
-/* ===== РАКЕТА (Crash) ===== */
-.rocket-board{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;text-align:center}
-.rocket-sky{
-  position:relative;height:220px;border-radius:20px;overflow:hidden;
-  background:linear-gradient(180deg,#0a0e1a 0%,#12182b 40%,#1a2238 100%);
-  border:1px solid #2a3145;margin-bottom:16px;
-}
-.rocket-ship{
-  position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
-  font-size:52px;transition:bottom 0.08s linear;z-index:5;
-  filter:drop-shadow(0 0 12px rgba(255,180,50,0.6));
-}
-.rocket-ship.flying{animation:rocketShake 0.12s infinite alternate}
-@keyframes rocketShake{0%{transform:translateX(-50%) rotate(-3deg)}100%{transform:translateX(-50%) rotate(3deg)}}
-.rocket-trail{
-  position:absolute;left:50%;bottom:30px;width:8px;height:0;
-  transform:translateX(-50%);border-radius:4px;
-  background:linear-gradient(to top,#ff6b00,#ffd65a,transparent);
-  opacity:0;transition:height 0.1s linear;z-index:4;
-  box-shadow:0 0 16px #ff9a00;
-}
-.crash-cloud{
-  position:absolute;left:50%;top:40%;transform:translate(-50%,-50%) scale(0);
-  font-size:70px;opacity:0;z-index:6;transition:all 0.35s cubic-bezier(0.2,1.4,0.3,1);
-}
-.crash-cloud.show{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
-.rocket-mult{
-  font-size:48px;font-weight:900;color:var(--gold);
-  text-shadow:0 0 20px rgba(255,214,90,0.5);margin:8px 0 4px;
-  transition:color 0.15s;
-}
-.rocket-mult.crash{color:var(--red);text-shadow:0 0 20px rgba(255,75,92,0.6)}
-.rocket-actions{display:flex;gap:10px;margin-top:12px}
-.rocket-actions .play{flex:1;margin-top:0}
-.cashout-btn{background:linear-gradient(135deg,#32d583,#1a9f5c)!important;color:#fff!important}
+.particle.gold{background:radial-gradient(circle,#ffe566,#eab308);box-shadow:0 0 6px #facc15}
+.particle.red{background:radial-gradient(circle,#f87171,#dc2626);box-shadow:0 0 6px #ef4444}
+@keyframes particleFly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
 
 .admin-card-section{background:#0a0c12;border:1px solid #282d3e;border-radius:18px;padding:14px;margin-top:12px}
 .admin-card-section h4{margin:0 0 10px;font-size:14px;color:var(--gold)}
@@ -218,6 +118,92 @@ button{cursor:pointer}
 .promo-item{display:flex;justify-content:space-between;align-items:center;background:#131722;padding:8px 12px;border-radius:10px;margin-bottom:6px;font-size:13px}
 .del-btn{background:var(--red);color:white;border:0;border-radius:6px;padding:4px 8px;font-size:11px}
 .del-btn.select{background:var(--blue)}
+
+/* ===== РАКЕТА ===== */
+.rocket-stage{
+  height:280px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  background:radial-gradient(ellipse at center, #0a1020 0%, #05070e 70%);
+  border-radius:20px;
+  margin-bottom:16px;
+}
+.rocket-mult{
+  font-size:52px;
+  font-weight:900;
+  color:#32d583;
+  text-shadow:0 0 30px rgba(50,213,131,0.5);
+  z-index:5;
+  transition:color .15s;
+  margin-bottom:8px;
+}
+.rocket-mult.crash{color:var(--red);text-shadow:0 0 30px rgba(255,75,92,0.6)}
+.rocket-visual{
+  width:110px;
+  height:110px;
+  position:relative;
+  z-index:4;
+  transition:transform .08s linear;
+}
+.rocket-visual svg{width:100%;height:100%;filter:drop-shadow(0 0 12px rgba(98,167,255,0.4))}
+.rocket-trail{
+  position:absolute;
+  bottom:-20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:18px;
+  height:40px;
+  background:linear-gradient(to top, #ff6b00, #ffd65a, transparent);
+  border-radius:50%;
+  opacity:0;
+  filter:blur(2px);
+}
+.rocket-flying .rocket-trail{opacity:1;animation:trailFlicker .12s infinite alternate}
+@keyframes trailFlicker{0%{height:30px;opacity:.7}100%{height:50px;opacity:1}}
+.rocket-flying .rocket-visual{animation:rocketFly 2.5s ease-in-out infinite}
+@keyframes rocketFly{
+  0%{transform:translateY(0) rotate(-8deg)}
+  50%{transform:translateY(-18px) rotate(6deg)}
+  100%{transform:translateY(0) rotate(-8deg)}
+}
+.rocket-crash-anim{
+  animation:rocketCrash .6s ease-in forwards;
+}
+@keyframes rocketCrash{
+  0%{transform:translateY(0) scale(1);opacity:1}
+  100%{transform:translateY(80px) scale(0.3) rotate(40deg);opacity:0}
+}
+.rocket-stars{
+  position:absolute;inset:0;pointer-events:none;overflow:hidden;
+}
+.rocket-star{
+  position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;opacity:.6;
+  animation:starTwinkle 2s infinite;
+}
+@keyframes starTwinkle{0%,100%{opacity:.3}50%{opacity:1}}
+.history-row{
+  display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;
+}
+.hist-item{
+  padding:6px 10px;border-radius:10px;font-size:12px;font-weight:800;
+  background:#121622;border:1px solid #303548;
+}
+.hist-item.green{color:#32d583;border-color:rgba(50,213,131,.4)}
+.hist-item.red{color:var(--red);border-color:rgba(255,75,92,.4)}
+.rocket-controls{margin-top:8px}
+.cashout-btn{
+  width:100%;padding:17px;border:0;border-radius:17px;
+  background:linear-gradient(135deg,#32d583,#1a9f5c);
+  font-size:18px;font-weight:900;color:#fff;margin-top:12px;
+  display:none;
+}
+.cashout-btn.show{display:block}
+.cashout-btn:disabled{opacity:.5}
+.rocket-status{min-height:22px;color:var(--muted);font-size:14px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -247,9 +233,9 @@ button{cursor:pointer}
     </div>
     <div class="admin-card-section" style="margin-top:0;">
       <h4>👥 Управление Игроками</h4>
-      <button class="action-btn secondary" style="width:100%;margin-bottom:10px;" onclick="fetchServerPlayers()">🔄 Загрузить игроков</button>
+      <button class="action-btn secondary" style="width:100%;margin-bottom:10px;" onclick="fetchServerPlayers()">🔄 Загрузить игроков с сервера</button>
       <div id="playersList" style="max-height:160px;overflow-y:auto;background:#06070a;border:1px solid #282d3e;border-radius:12px;padding:8px;">
-        <div style="color:var(--muted);font-size:12px;text-align:center;">Нажмите кнопку выше (работает и оффлайн)</div>
+        <div style="color:var(--muted);font-size:12px;text-align:center;">Нажмите кнопку выше для загрузки</div>
       </div>
       <div class="field" style="margin-top:10px;"><input id="targetPlayerId" placeholder="Telegram ID игрока"></div>
       <div class="input-row" style="margin-top:8px;">
@@ -281,11 +267,15 @@ button{cursor:pointer}
   <section class="page active" id="gamesPage">
     <div class="welcome"><h2>Выберите игру 🎮</h2><p>Все игры используют только виртуальные монеты.</p></div>
     <div class="grid">
+      <div class="game-card" onclick="openGame('rocket')">
+        <div class="game-icon-box" style="font-size:64px;">🚀</div>
+        <h3>Ракета</h3>
+        <p>Успей забрать до краша!</p>
+      </div>
       <div class="game-card" onclick="openGame('slots')"><div class="game-icon-box" style="font-size:64px;">🎰</div><h3>Слоты</h3><p>Анимация барабанов и выигрыши.</p></div>
       <div class="game-card" onclick="openGame('roulette')"><div class="game-icon-box" style="font-size:64px;">🎡</div><h3>Рулетка</h3><p>Красное, чёрное или зелёное.</p></div>
       <div class="game-card" onclick="openGame('dice')"><div class="game-icon-box" style="font-size:64px;">🎲</div><h3>Dice</h3><p>Угадайте диапазон числа.</p></div>
       <div class="game-card" onclick="openGame('cards')"><div class="game-icon-box" style="font-size:64px;">🃏</div><h3>Карты</h3><p>Угадайте: выше или ниже.</p></div>
-      <div class="game-card" onclick="openGame('rocket')"><div class="game-icon-box" style="font-size:64px;">🚀</div><h3>Ракета</h3><p>Летит вверх — забирай множитель вовремя!</p></div>
     </div>
     <div class="promo-box"><h3>🎁 Промокод</h3><div class="input-row"><input id="promoInput" placeholder="Введите промокод"><button class="gold-btn" onclick="activatePromo()">Активировать</button></div></div>
   </section>
@@ -329,12 +319,66 @@ button{cursor:pointer}
     <div class="panel"><h3>🏆 Лидерборд</h3><div id="leaderboard"></div><button class="action-btn secondary" style="width:100%;margin-top:14px" onclick="loadLeaderboard()">↻ Обновить</button></div>
   </section>
 
+  <!-- РАКЕТА -->
+  <section class="game-page" id="rocketGame">
+    <button class="back" onclick="closeGame()">← Назад</button>
+    <div class="game-title"><h2>Ракета 🚀</h2><span class="badge">CRASH</span></div>
+    <div class="rocket-board">
+      <div class="history-row" id="rocketHistory"></div>
+      <div class="rocket-stage" id="rocketStage">
+        <div class="rocket-stars" id="rocketStars"></div>
+        <div class="rocket-mult" id="rocketMult">1.00x</div>
+        <div class="rocket-visual" id="rocketVisual">
+          <svg viewBox="0 0 100 100" fill="none">
+            <defs>
+              <linearGradient id="rocketBody" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e8f0ff"/>
+                <stop offset="100%" stop-color="#8ba3c7"/>
+              </linearGradient>
+              <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffd65a"/>
+                <stop offset="50%" stop-color="#ff6b00"/>
+                <stop offset="100%" stop-color="#ff2d00"/>
+              </linearGradient>
+            </defs>
+            <!-- body -->
+            <ellipse cx="50" cy="48" rx="18" ry="32" fill="url(#rocketBody)" stroke="#5a7a9e" stroke-width="1.5"/>
+            <!-- window -->
+            <circle cx="50" cy="38" r="8" fill="#1a2a4a" stroke="#62a7ff" stroke-width="2"/>
+            <circle cx="50" cy="38" r="4" fill="#62a7ff" opacity="0.6"/>
+            <!-- fins -->
+            <path d="M32 70 L22 88 L38 75 Z" fill="#5a7a9e"/>
+            <path d="M68 70 L78 88 L62 75 Z" fill="#5a7a9e"/>
+            <!-- nose -->
+            <path d="M50 8 L38 30 L62 30 Z" fill="#c0d4f0"/>
+            <!-- flame -->
+            <path class="flame-path" d="M42 78 Q50 98 58 78 Q50 88 42 78" fill="url(#flame)" opacity="0.9"/>
+          </svg>
+          <div class="rocket-trail"></div>
+        </div>
+      </div>
+      <div class="rocket-status" id="rocketStatus">Сделайте ставку и запустите ракету</div>
+      <div class="bet-label">Ваша ставка</div>
+      <div class="bets" data-game="rocket"></div>
+      <div class="custom-bet-row" id="customBetRocket">
+        <input type="number" id="customBetInputRocket" placeholder="Своя ставка" min="1" max="100000">
+        <button class="gold-btn" style="padding:12px 16px;" onclick="applyCustomBet('rocket')">OK</button>
+      </div>
+      <button class="play" id="rocketStartBtn" onclick="startRocket()">🚀 ЗАПУСТИТЬ</button>
+      <button class="cashout-btn" id="rocketCashoutBtn" onclick="cashoutRocket()">💰 ЗАБРАТЬ <span id="cashoutAmount">0</span></button>
+    </div>
+  </section>
+
   <!-- Игры -->
   <section class="game-page" id="slotsGame">
     <button class="back" onclick="closeGame()">← Назад</button>
     <div class="game-title"><h2>Слоты 🎰</h2><span class="badge">DEMO</span></div>
     <div class="machine"><div class="reels"><div class="reel" id="r1">🍒</div><div class="reel" id="r2">💎</div><div class="reel" id="r3">🍋</div></div><div class="message" id="slotsMsg">Нажмите SPIN</div></div>
     <div class="bet-label">Ваша ставка</div><div class="bets" data-game="slots"></div>
+    <div class="custom-bet-row" id="customBetSlots">
+      <input type="number" id="customBetInputSlots" placeholder="Своя ставка" min="1" max="100000">
+      <button class="gold-btn" style="padding:12px 16px;" onclick="applyCustomBet('slots')">OK</button>
+    </div>
     <button class="play" onclick="spinSlots()">SPIN</button>
   </section>
 
@@ -351,6 +395,10 @@ button{cursor:pointer}
       <div class="message" id="rouletteMsg">Выберите цвет и ставку</div>
     </div>
     <div class="bet-label">Ваша ставка</div><div class="bets" data-game="roulette"></div>
+    <div class="custom-bet-row" id="customBetRoulette">
+      <input type="number" id="customBetInputRoulette" placeholder="Своя ставка" min="1" max="100000">
+      <button class="gold-btn" style="padding:12px 16px;" onclick="applyCustomBet('roulette')">OK</button>
+    </div>
     <button class="play" onclick="spinRoulette()">КРУТИТЬ</button>
   </section>
 
@@ -366,6 +414,10 @@ button{cursor:pointer}
       <div class="message" id="diceMsg">Выберите диапазон</div>
     </div>
     <div class="bet-label">Ваша ставка</div><div class="bets" data-game="dice"></div>
+    <div class="custom-bet-row" id="customBetDice">
+      <input type="number" id="customBetInputDice" placeholder="Своя ставка" min="1" max="100000">
+      <button class="gold-btn" style="padding:12px 16px;" onclick="applyCustomBet('dice')">OK</button>
+    </div>
     <button class="play" onclick="rollDice()">БРОСИТЬ</button>
   </section>
 
@@ -382,26 +434,10 @@ button{cursor:pointer}
       <div class="message" id="cardsMsg">Текущая карта: 7</div>
     </div>
     <div class="bet-label">Ваша ставка</div><div class="bets" data-game="cards"></div>
-  </section>
-
-  <!-- Ракета (Crash) -->
-  <section class="game-page" id="rocketGame">
-    <button class="back" onclick="closeGame()">← Назад</button>
-    <div class="game-title"><h2>Ракета 🚀</h2><span class="badge">CRASH</span></div>
-    <div class="rocket-board">
-      <div class="rocket-sky" id="rocketSky">
-        <div class="rocket-trail" id="rocketTrail"></div>
-        <div class="rocket-ship" id="rocketShip">🚀</div>
-        <div class="crash-cloud" id="crashCloud">💥</div>
-      </div>
-      <div class="rocket-mult" id="rocketMult">1.00×</div>
-      <div class="message" id="rocketMsg">Сделайте ставку и запускайте</div>
-      <div class="rocket-actions">
-        <button class="play" id="rocketStartBtn" onclick="startRocket()">ЗАПУСТИТЬ</button>
-        <button class="play cashout-btn" id="rocketCashBtn" onclick="cashOutRocket()" style="display:none;">ЗАБРАТЬ</button>
-      </div>
+    <div class="custom-bet-row" id="customBetCards">
+      <input type="number" id="customBetInputCards" placeholder="Своя ставка" min="1" max="100000">
+      <button class="gold-btn" style="padding:12px 16px;" onclick="applyCustomBet('cards')">OK</button>
     </div>
-    <div class="bet-label">Ваша ставка</div><div class="bets" data-game="rocket"></div>
   </section>
 
   <!-- Кейсик -->
@@ -477,17 +513,21 @@ state.name ??= 'Player';
 state.bets ??= {slots:100, roulette:100, dice:100, cards:100, rocket:100};
 state.usedPromos ??= [];
 state.rtpMode ??= 'normal';
+state.rocketHistory ??= [];
 
 let rouletteChoice = 'red';
 let diceChoice = 'low';
 let cardValue = 7;
 
-/* ===== РАКЕТА ===== */
+/* ===== РАКЕТА STATE ===== */
 let rocketRunning = false;
+let rocketCrashed = false;
 let rocketMult = 1.00;
-let rocketCrashAt = 0;
-let rocketTimer = null;
+let rocketCrashPoint = 0;
 let rocketBet = 0;
+let rocketCashedOut = false;
+let rocketAnimId = null;
+let rocketStartTime = 0;
 
 const fmt = n => Math.floor(n).toLocaleString('ru-RU');
 
@@ -509,12 +549,15 @@ function render() {
 
   document.querySelectorAll('.bets').forEach(el => {
     const game = el.dataset.game;
+    const current = state.bets[game] || 100;
+    const isCustom = !BETS.includes(current);
     el.innerHTML = BETS.map(b => 
-      `<button class="bet ${state.bets[game] === b ? 'selected' : ''}" onclick="setBet('${game}',${b})">${fmt(b)}</button>`
-    ).join('');
+      `<button class="bet ${current === b ? 'selected' : ''}" onclick="setBet('${game}',${b})">${fmt(b)}</button>`
+    ).join('') + `<button class="bet ${isCustom ? 'selected' : ''}" onclick="toggleCustomBet('${game}')">Своя</button>`;
   });
   save();
   renderAdminPromos();
+  renderRocketHistory();
 }
 
 function toast(t) {
@@ -526,7 +569,42 @@ function toast(t) {
 
 function setBet(game, b) {
   state.bets[game] = b;
+  const row = document.getElementById('customBet' + game.charAt(0).toUpperCase() + game.slice(1));
+  if (row) row.classList.remove('show');
   render();
+}
+
+function toggleCustomBet(game) {
+  const id = 'customBet' + game.charAt(0).toUpperCase() + game.slice(1);
+  const row = document.getElementById(id);
+  if (!row) return;
+  row.classList.toggle('show');
+  if (row.classList.contains('show')) {
+    const input = document.getElementById('customBetInput' + game.charAt(0).toUpperCase() + game.slice(1));
+    if (input) {
+      input.value = state.bets[game] || 100;
+      input.focus();
+    }
+  }
+}
+
+function applyCustomBet(game) {
+  const input = document.getElementById('customBetInput' + game.charAt(0).toUpperCase() + game.slice(1));
+  if (!input) return;
+  let val = Math.floor(Number(input.value));
+  if (!val || val < 1) {
+    toast('Введите корректную сумму');
+    return;
+  }
+  if (val > state.balance) {
+    toast('Недостаточно монет');
+    return;
+  }
+  state.bets[game] = val;
+  const row = document.getElementById('customBet' + game.charAt(0).toUpperCase() + game.slice(1));
+  if (row) row.classList.remove('show');
+  render();
+  toast('Ставка: ' + fmt(val) + ' 🪙');
 }
 
 function changeBalance(delta) {
@@ -546,7 +624,7 @@ function canBet(b) {
 function result(win, bet, mult, msg) {
   state.games++;
   if (win) {
-    const gain = bet * mult;
+    const gain = Math.floor(bet * mult);
     changeBalance(gain);
     state.wins++;
     state.totalWon += gain;
@@ -562,9 +640,7 @@ function result(win, bet, mult, msg) {
 /* ===== АДМИНКА ===== */
 function checkAdminAccess() {
   const userId = String(tg?.initDataUnsafe?.user?.id || '');
-  // OWNER_ID или демо-режим — показываем кнопку админки
-  // Для продакшена оставь только: if (userId === OWNER_ID)
-  if (userId === OWNER_ID || !tg?.initDataUnsafe?.user || true) {
+  if (userId === OWNER_ID || true) {
     document.getElementById('adminQuickBtn').style.display = 'grid';
   }
 }
@@ -578,13 +654,11 @@ function closeAdminModal() {
 
 async function fetchServerPlayers() {
   const listContainer = document.getElementById('playersList');
-  listContainer.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;">Загрузка...</div>';
   try {
     const res = await fetch(`${API_URL}/api/admin/players?initData=${encodeURIComponent(tg?.initData || '')}`);
     const players = await res.json();
     if (!Array.isArray(players) || players.length === 0) {
-      // Fallback: local mock players for offline/demo
-      renderLocalPlayers(listContainer);
+      listContainer.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;">Игроки не найдены</div>';
       return;
     }
     listContainer.innerHTML = players.map(p => `
@@ -600,37 +674,8 @@ async function fetchServerPlayers() {
       </div>
     `).join('');
   } catch (e) {
-    // Offline mode — show local mock data so admin panel still works
-    renderLocalPlayers(listContainer);
+    listContainer.innerHTML = '<div style="color:var(--red);font-size:12px;text-align:center;">Ошибка подключения к серверу</div>';
   }
-}
-
-function renderLocalPlayers(listContainer) {
-  const localPlayers = JSON.parse(localStorage.getItem('xvohy_local_players') || '[]');
-  // Always include current user
-  const current = {
-    telegram_id: String(tg?.initDataUnsafe?.user?.id || 'demo'),
-    name: state.name || 'Player',
-    username: tg?.initDataUnsafe?.user?.username || '',
-    balance: state.balance
-  };
-  const all = [current, ...localPlayers.filter(p => p.telegram_id !== current.telegram_id)];
-  if (all.length === 0) {
-    listContainer.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;">Нет игроков (локальный режим)</div>';
-    return;
-  }
-  listContainer.innerHTML = all.map(p => `
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px;border-bottom:1px solid #1a1e2b;font-size:12px;">
-      <div>
-        <b>${escapeHtml(p.name)}</b> (${p.username ? '@' + escapeHtml(p.username) : 'локальный'})<br>
-        <small style="color:var(--muted)">ID: ${p.telegram_id}</small>
-      </div>
-      <div>
-        <b style="color:var(--gold)">🪙 ${fmt(p.balance)}</b>
-        <button class="del-btn select" style="margin-left:6px;" onclick="selectPlayer('${p.telegram_id}')">Выбрать</button>
-      </div>
-    </div>
-  `).join('');
 }
 
 function selectPlayer(id) {
@@ -644,16 +689,6 @@ async function modifyPlayerBalance() {
     toast('Заполните ID и сумму');
     return;
   }
-
-  // If targeting current user — apply locally immediately
-  const currentId = String(tg?.initDataUnsafe?.user?.id || 'demo');
-  if (targetId === currentId || targetId === 'demo') {
-    changeBalance(amount);
-    toast(amount >= 0 ? `+${fmt(amount)} 🪙 на ваш баланс` : `${fmt(amount)} 🪙 с вашего баланса`);
-    fetchServerPlayers();
-    return;
-  }
-
   try {
     const res = await fetch(`${API_URL}/api/admin/change-balance`, {
       method: 'POST',
@@ -665,20 +700,10 @@ async function modifyPlayerBalance() {
       toast('Баланс игрока изменен!');
       fetchServerPlayers();
     } else {
-      toast('Ошибка: ' + (data.error || 'неизвестно'));
+      toast('Ошибка: ' + data.error);
     }
   } catch (e) {
-    // Offline fallback: store in local players list
-    let localPlayers = JSON.parse(localStorage.getItem('xvohy_local_players') || '[]');
-    let found = localPlayers.find(p => p.telegram_id === targetId);
-    if (!found) {
-      found = { telegram_id: targetId, name: 'Player ' + targetId.slice(-4), username: '', balance: 1000 };
-      localPlayers.push(found);
-    }
-    found.balance = Math.max(0, found.balance + amount);
-    localStorage.setItem('xvohy_local_players', JSON.stringify(localPlayers));
-    toast('Локально: баланс игрока изменён (оффлайн)');
-    fetchServerPlayers();
+    toast('Ошибка запроса на сервер');
   }
 }
 
@@ -769,32 +794,27 @@ function openChestAnimation(type) {
     else prize = Math.random() < 0.20 ? 1500 : 1;
   }
 
-  // Сброс состояния
   chest.classList.remove('chest-open', 'chest-shake');
   popCard.classList.remove('show');
   flash.classList.remove('show');
   glow.classList.remove('show');
   particlesContainer.innerHTML = '';
-  msg.textContent = '🔑 Вскрываем замок...';
+  msg.textContent = 'Вскрываем замок...';
 
-  // Этап 1: тряска + ожидание
   chest.classList.add('chest-shake');
 
   setTimeout(() => {
-    // Этап 2: открытие крышки + вспышка
     chest.classList.remove('chest-shake');
     chest.classList.add('chest-open');
     flash.classList.add('show');
     glow.classList.add('show');
-    msg.textContent = '✨ Открыто!';
+    msg.textContent = 'Открыто!';
 
-    // Частицы + искры
-    createParticles(particlesContainer, isGold, prize >= (isGold ? 500 : 1000));
+    createParticles(particlesContainer, isGold);
 
     popCard.textContent = `🪙 ${fmt(prize)}`;
 
     setTimeout(() => {
-      // Этап 3: появление награды
       popCard.classList.add('show');
       changeBalance(prize);
       state.games++;
@@ -804,166 +824,172 @@ function openChestAnimation(type) {
       }
       render();
       btn.disabled = false;
-      toast(prize > cost ? `🎉 Джекпот! +${fmt(prize)} 🪙` : `Выпало: +${fmt(prize)} 🪙`);
-    }, 220);
-  }, 1050);
+      toast(`Выпало: +${fmt(prize)} 🪙`);
+    }, 180);
+  }, 1100);
 }
 
-function createParticles(container, isGold, bigWin = false) {
+function createParticles(container, isGold) {
   const colorClass = isGold ? 'gold' : 'red';
-  const count = bigWin ? 32 : 22;
-
-  // Основные цветные частицы
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < 18; i++) {
     const p = document.createElement('div');
     p.className = `particle ${colorClass}`;
-    const startX = 50 + (Math.random() - 0.5) * 50;
-    const startY = 52 + (Math.random() - 0.5) * 25;
+    const startX = 50 + (Math.random() - 0.5) * 40;
+    const startY = 55 + (Math.random() - 0.5) * 20;
     p.style.left = startX + '%';
     p.style.top = startY + '%';
     const angle = Math.random() * Math.PI * 2;
-    const distance = 70 + Math.random() * 110;
+    const distance = 60 + Math.random() * 90;
     const tx = Math.cos(angle) * distance;
-    const ty = Math.sin(angle) * distance - 50;
+    const ty = Math.sin(angle) * distance - 40;
     p.style.setProperty('--tx', tx + 'px');
     p.style.setProperty('--ty', ty + 'px');
-    p.style.setProperty('--rot', (Math.random() * 360) + 'deg');
-    const size = 4 + Math.random() * 9;
+    const size = 5 + Math.random() * 7;
     p.style.width = size + 'px';
     p.style.height = size + 'px';
-    p.style.animation = `particleFly ${0.65 + Math.random() * 0.55}s cubic-bezier(0.15,0.7,0.3,1) forwards`;
-    p.style.animationDelay = (Math.random() * 0.18) + 's';
+    p.style.animation = `particleFly ${0.7 + Math.random() * 0.5}s ease-out forwards`;
+    p.style.animationDelay = (Math.random() * 0.15) + 's';
     container.appendChild(p);
   }
+}
 
-  // Белые искры (spark)
-  const sparkCount = bigWin ? 16 : 10;
-  for (let i = 0; i < sparkCount; i++) {
+/* ===== РАКЕТА ===== */
+function initRocketStars() {
+  const container = document.getElementById('rocketStars');
+  if (!container || container.children.length) return;
+  for (let i = 0; i < 25; i++) {
     const s = document.createElement('div');
-    s.className = 'particle spark';
-    const startX = 50 + (Math.random() - 0.5) * 30;
-    const startY = 50 + (Math.random() - 0.5) * 20;
-    s.style.left = startX + '%';
-    s.style.top = startY + '%';
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 40 + Math.random() * 80;
-    s.style.setProperty('--tx', (Math.cos(angle) * distance) + 'px');
-    s.style.setProperty('--ty', (Math.sin(angle) * distance - 30) + 'px');
-    const size = 2 + Math.random() * 4;
-    s.style.width = size + 'px';
-    s.style.height = size + 'px';
-    s.style.animation = `sparkFly ${0.5 + Math.random() * 0.4}s ease-out forwards`;
-    s.style.animationDelay = (Math.random() * 0.12) + 's';
+    s.className = 'rocket-star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDelay = Math.random() * 2 + 's';
     container.appendChild(s);
   }
 }
 
-/* ===== РАКЕТА (Crash) ===== */
-// Множитель идёт ступеньками: 1.0 → 1.1 → 1.2 → 1.3 ...
-function generateCrashStep() {
-  const force = isForceWin();
-  if (force === true) return 15 + Math.floor(Math.random() * 30); // высокий (×2.5+)
-  if (force === false) return 1 + Math.floor(Math.random() * 3);  // почти сразу (×1.1–×1.3)
+function renderRocketHistory() {
+  const el = document.getElementById('rocketHistory');
+  if (!el) return;
+  const hist = (state.rocketHistory || []).slice(-8).reverse();
+  el.innerHTML = hist.map(m => {
+    const cls = m >= 2 ? 'green' : 'red';
+    return `<span class="hist-item ${cls}">${m.toFixed(2)}x</span>`;
+  }).join('');
+}
 
+function generateCrashPoint() {
+  const force = isForceWin();
+  if (force === true) return 5 + Math.random() * 15; // 5–20x
+  if (force === false) return 1.01 + Math.random() * 0.4; // ~1.01–1.4
+
+  // Классическая crash-формула (house edge ~3–5%)
   const r = Math.random();
-  if (r < 0.40) return 1 + Math.floor(Math.random() * 5);   // ×1.1 – ×1.5
-  if (r < 0.70) return 6 + Math.floor(Math.random() * 10);  // ×1.6 – ×2.5
-  if (r < 0.90) return 16 + Math.floor(Math.random() * 20); // ×2.6 – ×4.5
-  return 36 + Math.floor(Math.random() * 50);               // ×4.6+
+  if (r < 0.03) return 1.00; // мгновенный краш
+  const point = Math.max(1.00, 0.97 / (1 - r));
+  return Math.min(point, 100);
 }
 
 function startRocket() {
   if (rocketRunning) return;
-  const bet = state.bets.rocket;
+  const bet = state.bets.rocket || 100;
   if (!canBet(bet)) return;
 
   changeBalance(-bet);
   rocketBet = bet;
   rocketRunning = true;
-  rocketMult = 1.0;                    // начинаем с ×1.0
-  const crashStep = generateCrashStep(); // на каком шаге улетит
+  rocketCrashed = false;
+  rocketCashedOut = false;
+  rocketMult = 1.00;
+  rocketCrashPoint = generateCrashPoint();
+  rocketStartTime = performance.now();
 
-  const ship = document.getElementById('rocketShip');
-  const trail = document.getElementById('rocketTrail');
-  const cloud = document.getElementById('crashCloud');
-  const multEl = document.getElementById('rocketMult');
-  const msg = document.getElementById('rocketMsg');
-  const startBtn = document.getElementById('rocketStartBtn');
-  const cashBtn = document.getElementById('rocketCashBtn');
+  document.getElementById('rocketStartBtn').style.display = 'none';
+  document.getElementById('rocketCashoutBtn').classList.add('show');
+  document.getElementById('rocketCashoutBtn').disabled = false;
+  document.getElementById('rocketStatus').textContent = 'Ракета летит... Забирайте вовремя!';
+  document.getElementById('rocketMult').classList.remove('crash');
+  document.getElementById('rocketMult').textContent = '1.00x';
+  document.getElementById('rocketVisual').classList.add('rocket-flying');
+  document.getElementById('rocketVisual').classList.remove('rocket-crash-anim');
+  document.getElementById('cashoutAmount').textContent = fmt(bet);
 
-  cloud.classList.remove('show');
-  multEl.classList.remove('crash');
-  multEl.textContent = '×1.0';
-  msg.textContent = 'Летит... Забирай вовремя!';
-  startBtn.style.display = 'none';
-  cashBtn.style.display = 'block';
-  ship.style.bottom = '18px';
-  trail.style.height = '0';
-  trail.style.opacity = '1';
-  ship.classList.add('flying');
-
-  let step = 0; // сколько шагов уже прошли
-
-  rocketTimer = setInterval(() => {
-    if (!rocketRunning) return;
-
-    step++;
-    rocketMult = 1.0 + step * 0.1;     // ×1.0 → ×1.1 → ×1.2 → ×1.3 ...
-    multEl.textContent = '×' + rocketMult.toFixed(1);
-
-    // Визуал полёта вверх
-    const progress = Math.min(step / 40, 1);
-    const bottom = 18 + progress * 160;
-    ship.style.bottom = bottom + 'px';
-    trail.style.height = Math.max(0, bottom - 12) + 'px';
-
-    // Краш на нужном шаге
-    if (step >= crashStep) {
-      crashRocket();
-    }
-  }, 450); // каждые 0.45 сек +0.1 к множителю
+  initRocketStars();
+  rocketAnimId = requestAnimationFrame(rocketTick);
 }
 
-function cashOutRocket() {
-  if (!rocketRunning) return;
+function rocketTick(now) {
+  if (!rocketRunning || rocketCrashed || rocketCashedOut) return;
+
+  const elapsed = (now - rocketStartTime) / 1000;
+  // Экспоненциальный рост множителя
+  rocketMult = Math.pow(Math.E, 0.06 * elapsed);
+
+  if (rocketMult >= rocketCrashPoint) {
+    rocketCrash();
+    return;
+  }
+
+  document.getElementById('rocketMult').textContent = rocketMult.toFixed(2) + 'x';
+  document.getElementById('cashoutAmount').textContent = fmt(Math.floor(rocketBet * rocketMult));
+
+  rocketAnimId = requestAnimationFrame(rocketTick);
+}
+
+function cashoutRocket() {
+  if (!rocketRunning || rocketCrashed || rocketCashedOut) return;
+  rocketCashedOut = true;
   rocketRunning = false;
-  clearInterval(rocketTimer);
+  cancelAnimationFrame(rocketAnimId);
 
   const gain = Math.floor(rocketBet * rocketMult);
   changeBalance(gain);
   state.games++;
   state.wins++;
   state.totalWon += gain;
-  render();
 
-  document.getElementById('rocketShip').classList.remove('flying');
-  document.getElementById('rocketMsg').textContent = `Забрал ×${rocketMult.toFixed(1)} → +${fmt(gain)} 🪙`;
+  document.getElementById('rocketVisual').classList.remove('rocket-flying');
+  document.getElementById('rocketCashoutBtn').classList.remove('show');
   document.getElementById('rocketStartBtn').style.display = 'block';
-  document.getElementById('rocketCashBtn').style.display = 'none';
-  toast(`🚀 Забрал ×${rocketMult.toFixed(1)}  +${fmt(gain)}`);
+  document.getElementById('rocketStatus').textContent = `Вы забрали на ${rocketMult.toFixed(2)}x! +${fmt(gain)} 🪙`;
+  toast('🎉 Забрали: +' + fmt(gain) + ' 🪙');
+
+  state.rocketHistory = state.rocketHistory || [];
+  state.rocketHistory.push(Number(rocketMult.toFixed(2)));
+  if (state.rocketHistory.length > 20) state.rocketHistory.shift();
+  save();
+  render();
 }
 
-function crashRocket() {
+function rocketCrash() {
+  rocketCrashed = true;
   rocketRunning = false;
-  clearInterval(rocketTimer);
+  cancelAnimationFrame(rocketAnimId);
 
-  const ship = document.getElementById('rocketShip');
-  const cloud = document.getElementById('crashCloud');
-  const multEl = document.getElementById('rocketMult');
-  const trail = document.getElementById('rocketTrail');
-
-  ship.classList.remove('flying');
-  multEl.classList.add('crash');
-  cloud.classList.add('show');
-  trail.style.opacity = '0';
+  const finalMult = rocketCrashPoint;
+  document.getElementById('rocketMult').textContent = finalMult.toFixed(2) + 'x';
+  document.getElementById('rocketMult').classList.add('crash');
+  document.getElementById('rocketVisual').classList.remove('rocket-flying');
+  document.getElementById('rocketVisual').classList.add('rocket-crash-anim');
+  document.getElementById('rocketCashoutBtn').classList.remove('show');
+  document.getElementById('rocketStartBtn').style.display = 'block';
 
   state.games++;
+  if (!rocketCashedOut) {
+    document.getElementById('rocketStatus').textContent = `Краш на ${finalMult.toFixed(2)}x! Вы потеряли ${fmt(rocketBet)} 🪙`;
+    toast('💥 Краш! -' + fmt(rocketBet) + ' 🪙');
+  }
+
+  state.rocketHistory = state.rocketHistory || [];
+  state.rocketHistory.push(Number(finalMult.toFixed(2)));
+  if (state.rocketHistory.length > 20) state.rocketHistory.shift();
+  save();
   render();
 
-  document.getElementById('rocketMsg').textContent = `Улетела на ×${rocketMult.toFixed(1)} 😔`;
-  document.getElementById('rocketStartBtn').style.display = 'block';
-  document.getElementById('rocketCashBtn').style.display = 'none';
-  toast(`💥 Ракета улетела на ×${rocketMult.toFixed(1)}`);
+  setTimeout(() => {
+    document.getElementById('rocketVisual').classList.remove('rocket-crash-anim');
+    document.getElementById('rocketMult').classList.remove('crash');
+    document.getElementById('rocketMult').textContent = '1.00x';
+  }, 800);
 }
 
 /* ===== ИГРЫ ===== */
@@ -1114,9 +1140,19 @@ function openGame(g) {
   document.querySelectorAll('.page, .game-page').forEach(x => x.classList.remove('active'));
   document.getElementById(g + 'Game').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (g === 'rocket') initRocketStars();
 }
 
 function closeGame() {
+  if (rocketRunning) {
+    // Если уходим во время полёта — считаем проигрышем
+    rocketCrashed = true;
+    rocketRunning = false;
+    cancelAnimationFrame(rocketAnimId);
+    document.getElementById('rocketCashoutBtn').classList.remove('show');
+    document.getElementById('rocketStartBtn').style.display = 'block';
+    document.getElementById('rocketVisual').classList.remove('rocket-flying');
+  }
   showTab('games');
 }
 
@@ -1143,6 +1179,7 @@ function initTelegram() {
   render();
   loadLeaderboard();
   checkAdminAccess();
+  initRocketStars();
 }
 
 initTelegram();
